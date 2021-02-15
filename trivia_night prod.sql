@@ -3,7 +3,8 @@ create database trivia_night;
 use trivia_night;
 
 create table category (
-	category_id int primary key auto_increment
+	category_id int primary key auto_increment,
+    category_name varchar(50)
 );
 
 create table question (
