@@ -1,4 +1,4 @@
-package main.java.learn.trivia.models;
+package learn.trivia.models;
 
 public class User {
     private int userId;

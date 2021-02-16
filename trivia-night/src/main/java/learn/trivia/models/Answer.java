@@ -1,4 +1,4 @@
-package main.java.learn.trivia.models;
+package learn.trivia.models;
 
 public class Answer {
     private int answerId;

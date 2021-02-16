@@ -1,4 +1,4 @@
-package main.java.learn.trivia.models;
+package learn.trivia.models;
 
 import java.util.List;
 
