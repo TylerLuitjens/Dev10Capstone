@@ -1,8 +1,11 @@
 package learn.trivia.data;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,4 +23,44 @@ class UserJdbcTemplateRepositoryTest {
         knownGoodState.set();
     }
 
+    @Test
+    void shouldFindAll() {
+        List<User> users = repository.findAll();
+        assertNotNull(users);
+    }
+
+    @Test
+    void shouldFindFirstUser() {
+        User firstUser = repository.findById(1);
+        assertEquals(1, firstUser.getUserId);
+        assertEquals("First User", firstUser.getUsername);
+        assertEquals("Clear_text", firstUser.getPassword);
+    }
+
+    @Test
+    void shouldCreateUser() {
+        User user = makeUser();
+        User actual = repository.create(user);
+        assertNotNull(actual);
+    }
+
+    @Test
+    void shouldUpdate() {
+        User user = makeUser();
+        user.setUserId(1);
+        assertTrue(repository.update(user));
+    }
+
+    @Test
+    void shouldDelete() {
+        assertTrue(repository.delete(3));
+        assertFalse(repository.delete(3));
+    }
+
+    private User makeUser() {
+        User user = new User();
+        user.setUsername("Test Username");
+        user.setPassword("Test Password");
+        return user;
+    }
 }

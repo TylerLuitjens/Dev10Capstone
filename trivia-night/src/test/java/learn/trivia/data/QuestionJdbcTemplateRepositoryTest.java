@@ -21,4 +21,10 @@ class QuestionJdbcTemplateRepositoryTest {
         knownGoodState.set();
     }
 
+    @Test
+    void shouldFindCelebritiesCategory() {
+        List<Question> questions = repository.findByCategory("Celebrities");
+        assertTrue(questions.size > 0);
+    }
+
 }
