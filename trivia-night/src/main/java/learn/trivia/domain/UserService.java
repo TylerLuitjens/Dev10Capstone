@@ -12,9 +12,9 @@ import java.util.Set;
 
 @Service
 public class UserService {
-    private final UserRepository repository;
+    private final UserJdbcTemplateRepository repository;
 
-    public UserService(UserRepository repository) {
+    public UserService(UserJdbcTemplateRepository repository) {
         this.repository = repository;
     }
 
@@ -33,6 +33,12 @@ public class UserService {
             return result;
         }
 
+        result = validateDuplicateCreate(user);
+
+        if (!result.isSuccess()) {
+            return result;
+        }
+
         if (user.getUserId() != 0) {
             result.addMessage("User Id cannot be set for 'create' operation.", ResultType.INVALID);
             return result;
@@ -45,6 +51,12 @@ public class UserService {
 
     public Result<User> update(User user) {
         Result<User> result = validate(user);
+
+        if (!result.isSuccess()) {
+            return result;
+        }
+
+        result = validateDuplicateUpdate(user);
 
         if (!result.isSuccess()) {
             return result;
@@ -69,6 +81,29 @@ public class UserService {
     }
 
 
+    private Result<User> validateDuplicateCreate(User user) {
+        Result<User> result = new Result<>();
+
+        for (User userFromRecords : findAll()) {
+            if (userFromRecords.getUsername().equalsIgnoreCase(user.getName())) {
+                result.addMessage("Username cannot be duplicate.", ResultType.INVALID);
+            }
+        }
+        return result;
+    }
+
+    private Result<User> validateDuplicateUpdate(User user) {
+        Result<User> result = new Result<>();
+
+        User existingUser = findById(user.getUserId());
+
+        if (existingUser == null || !existingUser.getUsername().equalsIgnoreCase(user.getUsername())) {
+            result = validateDuplicateCreate(user);
+        }
+
+        return result;
+    }
+
     private Result<User> validate (User user) {
         Result<User> result = new Result<>();
 
@@ -83,13 +118,6 @@ public class UserService {
             }
             return result;
         }
-
-        for (User userFromRecords : findAll()) {
-            if (userFromRecords.getUsername().equalsIgnoreCase(user.getName())) {
-                result.addMessage("Username cannot be duplicate.", ResultType.INVALID);
-            }
-        }
-
         return result;
     }
 }
