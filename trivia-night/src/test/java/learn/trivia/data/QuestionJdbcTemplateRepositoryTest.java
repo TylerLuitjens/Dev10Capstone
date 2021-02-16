@@ -1,0 +1,30 @@
+package learn.trivia.data;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
+class QuestionJdbcTemplateRepositoryTest {
+
+    @Autowired
+    QuestionJdbcTemplateRepository repository;
+
+    @Autowired
+    KnownGoodState knownGoodState;
+
+    @BeforeEach
+    void setup() {
+        knownGoodState.set();
+    }
+
+    @Test
+    void shouldFindCelebritiesCategory() {
+        List<Question> questions = repository.findByCategory("Celebrities");
+        assertTrue(questions.size > 0);
+    }
+
+}
