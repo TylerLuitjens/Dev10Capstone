@@ -2,8 +2,13 @@ package learn.trivia.data;
 
 import learn.trivia.data.mappers.AnswerMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 
-public class AnswerJdbcTemplateRepository implements AnswerRepository{
+import java.sql.PreparedStatement;
+import java.sql.Statement;
+
+public class AnswerJdbcTemplateRepository implements AnswerRepository {
 
     private final JdbcTemplate jdbcTemplate;
 

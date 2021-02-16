@@ -4,6 +4,7 @@ import java.util.List;
 
 public interface QuestionRepository {
 
-    List<Question> findByCategory(int categoryId);
+    List<Question> findByCategory(int question_id);
 
+    Question addQuestion(Question question);
 }
