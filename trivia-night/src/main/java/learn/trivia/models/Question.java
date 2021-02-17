@@ -1,11 +1,15 @@
 package learn.trivia.models;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 public class Question {
     private int questionId;
+    @NotBlank
     private String question;
     private List<Answer> answers;
+    @NotBlank
     private String category;
 
     public int getQuestionId() {

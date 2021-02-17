@@ -51,7 +51,7 @@ class UserJdbcTemplateRepositoryTest {
     @Test
     void shouldUpdate() {
         User user = makeUser();
-        user.setUserId(1);
+        user.setUserId(2);
         assertTrue(repository.update(user));
     }
 
@@ -65,6 +65,8 @@ class UserJdbcTemplateRepositoryTest {
         User user = new User();
         user.setUserName("Test Username");
         user.setPassword("Test Password");
+        user.setNumAnswered(100);
+        user.setNumCorrect(1);
         return user;
     }
 }

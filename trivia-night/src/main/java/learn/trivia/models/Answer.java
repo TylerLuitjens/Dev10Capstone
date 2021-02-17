@@ -1,9 +1,14 @@
 package learn.trivia.models;
 
+import javax.validation.constraints.NotBlank;
+
 public class Answer {
+
     private int answerId;
     private boolean isCorrect;
+    @NotBlank
     private String answer;
+    private int questionId;
 
     public String getAnswer() {
         return answer;
@@ -11,6 +16,14 @@ public class Answer {
 
     public void setAnswer(String answer) {
         this.answer = answer;
+    }
+
+    public int getQuestionId() {
+        return questionId;
+    }
+
+    public void setQuestionId(int questionId) {
+        this.questionId = questionId;
     }
 
     public int getAnswerId() {

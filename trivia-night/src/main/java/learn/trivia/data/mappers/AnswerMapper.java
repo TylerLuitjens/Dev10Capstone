@@ -11,6 +11,7 @@ public class AnswerMapper implements RowMapper<Answer> {
     public Answer mapRow(ResultSet resultSet, int i) throws SQLException {
         Answer answer = new Answer();
         answer.setAnswerId(resultSet.getInt("answer_id"));
+        answer.setAnswer(resultSet.getString("answer"));
         int correctInt = (resultSet.getInt("isCorrect"));
         answer.setCorrect(correctInt == 1);
         return answer;
