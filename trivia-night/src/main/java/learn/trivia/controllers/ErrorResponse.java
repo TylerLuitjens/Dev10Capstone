@@ -17,6 +17,6 @@ public class ErrorResponse {
         } else if (result.getType() == ResultType.NOT_FOUND) {
             status = HttpStatus.NOT_FOUND;
         }
-        return new ResponseEntity<User>(result.getMessages(), status);
+        return new ResponseEntity<>(result.getMessages(), status);
     }
 }

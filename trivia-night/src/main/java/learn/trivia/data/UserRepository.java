@@ -1,5 +1,9 @@
 package learn.trivia.data;
 
+import learn.trivia.models.User;
+
+import java.util.List;
+
 public interface UserRepository {
 
     List<User> findAll();

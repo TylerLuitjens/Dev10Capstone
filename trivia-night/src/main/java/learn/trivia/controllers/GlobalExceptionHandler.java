@@ -1,4 +1,4 @@
-package main.java.learn.trivia.controllers;
+package learn.trivia.controllers;
 
 public class GlobalExceptionHandler {
 }

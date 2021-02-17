@@ -1,7 +1,11 @@
 package learn.trivia.domain;
 
+import learn.trivia.data.QuestionJdbcTemplateRepository;
 import learn.trivia.data.QuestionRepository;
+import learn.trivia.models.Question;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class QuestionService {
@@ -11,8 +15,8 @@ public class QuestionService {
         this.repository = repository;
     }
 
-    public List<Question> findByCategory(int categoryId) {
-        return repository.findByCategory(categoryId);
+    public List<Question> findByCategory(String category) {
+        return repository.findByCategory(category);
     }
 
     public Result<Question> addQuestion(Question question) {

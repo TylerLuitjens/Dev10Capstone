@@ -1,13 +1,17 @@
 package learn.trivia.data;
 
 import learn.trivia.data.mappers.AnswerMapper;
+import learn.trivia.models.Answer;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.util.List;
 
+@Repository
 public class AnswerJdbcTemplateRepository implements AnswerRepository {
 
     private final JdbcTemplate jdbcTemplate;
@@ -31,7 +35,8 @@ public class AnswerJdbcTemplateRepository implements AnswerRepository {
                 + "from answer "
                 + "where answer_id = ?;";
 
-        Answer answer = jdbcTemplate.query(sql, new AnswerMapper(), answerId);
+        Answer answer = jdbcTemplate.query(sql, new AnswerMapper(), answerId).stream()
+                .findFirst().orElse(null);
 
         return answer;
     }

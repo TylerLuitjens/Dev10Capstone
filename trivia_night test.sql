@@ -41,12 +41,13 @@ create table user (
 delimiter //
 create procedure set_known_good_state()
 begin 
-	delete from category;
-    alter table category auto_increment = 1;
+
+	delete from answer;
+    alter table answer auto_increment = 1;
     delete from question;
     alter table question auto_increment = 1;
-    delete from answer;
-    alter table answer auto_increment = 1;
+	delete from category;
+    alter table category auto_increment = 1;
     delete from user;
     alter table user auto_increment = 1;
     

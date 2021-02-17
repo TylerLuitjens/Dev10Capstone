@@ -1,5 +1,6 @@
 package learn.trivia.data;
 
+import learn.trivia.models.Answer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ class AnswerJdbcTemplateRepositoryTest {
     @Test
     void shouldFindAnswerByQuestionId() {
         List<Answer> answers = repository.findByQuestionId(1);
-        assertTrue(answers.size > 0);
+        assertTrue(answers.size() > 0);
     }
 
     @Test
