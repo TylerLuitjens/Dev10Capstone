@@ -22,7 +22,7 @@ public class AnswerJdbcTemplateRepository implements AnswerRepository {
 
     @Override
     public List<Answer> findByQuestionId(int questionId) {
-        final String sql = "select answer_id "
+        final String sql = "select answer_id, question_id, category_id, answer, isCorrect "
                 + "from answer "
                 + "where question_id = ?;";
 
@@ -31,7 +31,7 @@ public class AnswerJdbcTemplateRepository implements AnswerRepository {
 
     @Override
     public Answer findByAnswerId(int answerId) {
-        final String sql = "select answer_id "
+        final String sql = "select answer_id, question_id, category_id, answer, isCorrect "
                 + "from answer "
                 + "where answer_id = ?;";
 
@@ -40,7 +40,37 @@ public class AnswerJdbcTemplateRepository implements AnswerRepository {
     }
 
     @Override
+    public Answer findByAnswer(String answer) {
+        final String sql = "select answer_id, question_id, category_id, answer, isCorrect "
+                + "from answer "
+                + "where answer = ?;";
+
+        return jdbcTemplate.query(sql, new AnswerMapper(), answer).stream()
+                .findFirst().orElse(null);
+    }
+
+    @Override
     public Answer addAnswer(Answer answer) {
-        return null;
+        final String sql = "insert into answer (answer, isCorrect) "
+                + "values (?,?);";
+
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        int rowsAffected = jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, answer.getAnswer());
+            if (answer.isCorrect()) {
+                ps.setInt(2, 1);
+            } else {
+                ps.setInt(2, 0);
+            }
+            return ps;
+        }, keyHolder);
+
+        if (rowsAffected <= 0) {
+            return null;
+        }
+
+        answer.setAnswerId(keyHolder.getKey().intValue());
+        return answer;
     }
 }

@@ -38,4 +38,32 @@ class AnswerJdbcTemplateRepositoryTest {
         assertTrue(answer.isCorrect());
     }
 
+    @Test
+    void shouldFindAnswer() {
+        Answer answer = repository.findByAnswer("James");
+        assertNotNull(answer);
+        assertEquals(1, answer.getAnswerId());
+        assertTrue(answer.isCorrect());
+    }
+
+    @Test
+    void shouldNotFindAnswer() {
+        Answer answer = repository.findByAnswer("NOT FOUND");
+        assertNull(answer);
+    }
+
+    @Test
+    void shouldAddAnswer() {
+        Answer answer = makeAnswer();
+        Answer actual = repository.addAnswer(answer);
+        assertNotNull(actual);
+    }
+
+    private Answer makeAnswer() {
+        Answer answer = new Answer();
+        answer.setAnswer("Totally Correct");
+        answer.setCorrect(true);
+        return answer;
+    }
+
 }

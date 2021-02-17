@@ -67,11 +67,17 @@ public class UserJdbcTemplateRepository implements UserRepository{
 
         final String sql = "update user set "
                 + "username = ?, "
-                + "password = ?;";
+                + "password = ?, "
+                + "questions_answered = ?, "
+                + "questions_correct = ? "
+                + "where user_id = ?;";
 
         return jdbcTemplate.update(sql,
                 user.getUserName(),
-                user.getPassword()) > 0;
+                user.getPassword(),
+                user.getNumAnswered(),
+                user.getNumCorrect(),
+                user.getUserId()) > 0;
     }
 
     @Override
