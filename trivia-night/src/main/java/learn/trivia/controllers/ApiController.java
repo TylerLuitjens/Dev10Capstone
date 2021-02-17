@@ -43,8 +43,6 @@ public class ApiController {
     @PutMapping("/user/")
     public ResponseEntity<Object> updateUser (User user) {
         boolean success = userService.updateUser(user);
-
-
     }
 
 
