@@ -3,6 +3,15 @@ package learn.trivia.models;
 public class Answer {
     private int answerId;
     private boolean isCorrect;
+    private String answer;
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
 
     public int getAnswerId() {
         return answerId;
