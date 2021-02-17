@@ -63,25 +63,6 @@ public class GameService {
         return result;
     }
 
-    public Result<GameQuestion> createGameQuestion(String gameCode, String category) {
-        Result<GameQuestion> result = new Result<>();
-
-        for (Game game : findAllGames()) {
-            if (gameCode.equals(game.getGameCode())) {
-                if (questionRepository.findByCategory(category).size() > 0) {
-                    GameQuestion gameQuestion = gameQuestionRepository.create(gameCode, category);
-                    result.setPayload(gameQuestion);
-                    return result;
-                }
-                String message = String.format("Category %s not found", category);
-                result.addMessage(message, ResultType.INVALID);
-                return result;
-            }
-        }
-        String message = String.format("Game code %s not found", gameCode);
-        result.addMessage(message, ResultType.INVALID);
-        return result;
-    }
 
     public Result<GameUser> createGameUser(String gameCode, int userId) {
         Result<GameUser> result = validate(userId);
