@@ -10,6 +10,8 @@ public interface AnswerRepository {
 
     Answer findByAnswerId(int answerId);
 
+    Answer findByAnswer(String answer);
+
     Answer addAnswer(Answer answer);
 
 }

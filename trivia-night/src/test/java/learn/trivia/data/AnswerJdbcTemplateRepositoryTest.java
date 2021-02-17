@@ -26,7 +26,7 @@ class AnswerJdbcTemplateRepositoryTest {
 
     @Test
     void shouldFindAnswerByQuestionId() {
-        List<Answer> answers = repository.findByQuestionId(1);
+        List<Answer> answers = repository.findByQuestionId(2);
         assertTrue(answers.size() > 0);
         assertEquals(4, answers.size());
     }
@@ -36,6 +36,34 @@ class AnswerJdbcTemplateRepositoryTest {
         Answer answer = repository.findByAnswerId(1);
         assertNotNull(answer);
         assertTrue(answer.isCorrect());
+    }
+
+    @Test
+    void shouldFindAnswer() {
+        Answer answer = repository.findByAnswer("James");
+        assertNotNull(answer);
+        assertEquals(1, answer.getAnswerId());
+        assertTrue(answer.isCorrect());
+    }
+
+    @Test
+    void shouldNotFindAnswer() {
+        Answer answer = repository.findByAnswer("NOT FOUND");
+        assertNull(answer);
+    }
+
+    @Test
+    void shouldAddAnswer() {
+        Answer answer = makeAnswer();
+        Answer actual = repository.addAnswer(answer);
+        assertNotNull(actual);
+    }
+
+    private Answer makeAnswer() {
+        Answer answer = new Answer();
+        answer.setAnswer("Totally Correct");
+        answer.setCorrect(true);
+        return answer;
     }
 
 }
