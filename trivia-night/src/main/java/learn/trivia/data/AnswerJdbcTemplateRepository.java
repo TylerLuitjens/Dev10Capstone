@@ -22,7 +22,7 @@ public class AnswerJdbcTemplateRepository implements AnswerRepository {
 
     @Override
     public List<Answer> findByQuestionId(int questionId) {
-        final String sql = "select answer_id, question_id, category_id, answer, isCorrect "
+        final String sql = "select answer_id, question_id, answer, isCorrect "
                 + "from answer "
                 + "where question_id = ?;";
 
@@ -31,7 +31,7 @@ public class AnswerJdbcTemplateRepository implements AnswerRepository {
 
     @Override
     public Answer findByAnswerId(int answerId) {
-        final String sql = "select answer_id, question_id, category_id, answer, isCorrect "
+        final String sql = "select answer_id, question_id, answer, isCorrect "
                 + "from answer "
                 + "where answer_id = ?;";
 
@@ -41,7 +41,7 @@ public class AnswerJdbcTemplateRepository implements AnswerRepository {
 
     @Override
     public Answer findByAnswer(String answer) {
-        final String sql = "select answer_id, question_id, category_id, answer, isCorrect "
+        final String sql = "select answer_id, question_id, answer, isCorrect "
                 + "from answer "
                 + "where answer = ?;";
 
@@ -51,17 +51,18 @@ public class AnswerJdbcTemplateRepository implements AnswerRepository {
 
     @Override
     public Answer addAnswer(Answer answer) {
-        final String sql = "insert into answer (answer, isCorrect) "
-                + "values (?,?);";
+        final String sql = "insert into answer (answer, question_id, isCorrect) "
+                + "values (?,?,?);";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int rowsAffected = jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, answer.getAnswer());
+            ps.setInt(2, answer.getQuestionId());
             if (answer.isCorrect()) {
-                ps.setInt(2, 1);
+                ps.setInt(3, 1);
             } else {
-                ps.setInt(2, 0);
+                ps.setInt(3, 0);
             }
             return ps;
         }, keyHolder);

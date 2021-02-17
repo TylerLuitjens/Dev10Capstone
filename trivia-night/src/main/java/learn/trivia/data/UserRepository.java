@@ -10,6 +10,8 @@ public interface UserRepository {
 
     User findById(int userId);
 
+    User findByUserName(String userName);
+
     User create(User user);
 
     boolean update(User user);

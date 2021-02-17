@@ -11,7 +11,7 @@ import java.util.List;
 public class QuestionService {
     private QuestionRepository repository;
 
-    public QuestionService (QuestionJdbcTemplateRepository repository) {
+    public QuestionService (QuestionRepository repository) {
         this.repository = repository;
     }
 
