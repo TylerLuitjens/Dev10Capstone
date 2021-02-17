@@ -27,8 +27,23 @@ class QuestionJdbcTemplateRepositoryTest {
     @Test
     void shouldFindCelebritiesCategory() {
         List<Question> questions = repository.findByCategory("Celebrities");
-        System.out.println(questions);
+        for (Question q : questions) {
+            System.out.println(q.getQuestion());
+        }
         assertTrue(questions.size() > 0);
     }
 
+    @Test
+    void shouldAddQuestion() {
+        Question question = makeQuestion();
+        Question actual = repository.addQuestion(question);
+        assertNotNull(actual);
+    }
+
+    Question makeQuestion() {
+        Question question = new Question();
+        question.setQuestion("What is your name?");
+
+        return question;
+    }
 }

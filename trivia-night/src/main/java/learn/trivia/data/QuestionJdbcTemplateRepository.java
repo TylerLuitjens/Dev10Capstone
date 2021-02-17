@@ -27,7 +27,9 @@ public class QuestionJdbcTemplateRepository implements QuestionRepository{
         final String sql = "select q.question_id, q.question, q.category_id, c.category_name "
                 + "from question q "
                 + "inner join category c on q.category_id = c.category_id "
-                + "where c.category_name = ?;";
+                + "where c.category_name = ? "
+                + "order by rand() "
+                + "limit 10;";
 
         return jdbcTemplate.query(sql, new QuestionMapper(), category);
     }
@@ -53,7 +55,4 @@ public class QuestionJdbcTemplateRepository implements QuestionRepository{
         return question;
     }
 
-    private List<Question> selectQuestions(List<Question> questions) {
-        return questions;
-    }
 }

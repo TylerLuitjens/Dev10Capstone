@@ -4,26 +4,9 @@ import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 public class Game {
-    private List<Question> gameQuestions;
-    private List<User> gameUsers;
-    @NotBlank
     private String gameCode;
-
-    public List<Question> getGameQuestions() {
-        return gameQuestions;
-    }
-
-    public void setGameQuestions(List<Question> gameQuestions) {
-        this.gameQuestions = gameQuestions;
-    }
-
-    public List<User> getGameUsers() {
-        return gameUsers;
-    }
-
-    public void setGameUsers(List<User> gameUsers) {
-        this.gameUsers = gameUsers;
-    }
+    private List<GameQuestion> gameQuestions;
+    private List<GameUser> gameUsers;
 
     public String getGameCode() {
         return gameCode;
@@ -31,5 +14,21 @@ public class Game {
 
     public void setGameCode(String gameCode) {
         this.gameCode = gameCode;
+    }
+
+    public List<GameQuestion> getGameQuestions() {
+        return gameQuestions;
+    }
+
+    public void setGameQuestions(List<GameQuestion> gameQuestions) {
+        this.gameQuestions = gameQuestions;
+    }
+
+    public List<GameUser> getGameUsers() {
+        return gameUsers;
+    }
+
+    public void setGameUsers(List<GameUser> gameUsers) {
+        this.gameUsers = gameUsers;
     }
 }
