@@ -19,23 +19,47 @@ create table question (
 create table answer (
 	answer_id int primary key auto_increment,
     question_id int not null,
-    category_id int not null,
     answer varchar(100) not null,
     isCorrect int not null,
     constraint fk_answer_question_id
 		foreign key (question_id)
-        references question(question_id),
-	constraint fk_answer_category_id
-		foreign key(category_id)
-        references category(category_id)
+        references question(question_id)
 );
 
-create table user (
+create table `user` (
 	user_id int primary key auto_increment,
     username varchar(30) not null,
     `password` varchar(45) not null,
-    questions_answered int,
-    questions_correct int
+    total_questions_answered int,
+    total_questions_correct int
+);
+
+create table game (
+	game_code varchar(4) primary key
+);
+
+create table game_question (
+	game_code varchar(4) not null,
+    question_id int not null,
+    constraint fk_game_question_game_code
+		foreign key (game_code)
+        references game(game_code),
+	constraint fk_game_question_question_id
+		foreign key (question_id)
+        references question(question_id)
+);
+
+create table game_user (
+	user_id int not null,
+    game_code varchar(4) not null,
+    num_answered int,
+    num_correct int,
+    constraint fk_game_user_user_id
+		foreign key (user_id)
+        references `user`(user_id),
+    constraint fk_game_user_game_code
+		foreign key (game_code) 
+        references game(game_code)
 );
 
 delimiter //
@@ -47,8 +71,14 @@ begin
     alter table question auto_increment = 1;
     delete from answer;
     alter table answer auto_increment = 1;
-    delete from user;
-    alter table user auto_increment = 1;
+    delete from `user`;
+    alter table `user` auto_increment = 1;
+    delete from game;
+    alter table game auto_increment = 1;
+    delete from game_question;
+    alter table game_question auto_increment = 1;
+    delete from game_user;
+    alter table game_user auto_increment = 1;
     
     insert into category (category_id, category_name) values
 		(1, 'Celebrities'),(2, 'Computer Science'),(3, 'General Knowledge');
@@ -70,15 +100,15 @@ begin
         (5, "What is the world's most expensive spice by weight?", 3),
         (6, 'What is the full title of the Prime Minister of the UK?', 3);
         
-	insert into answer (answer_id, question_id, category_id, answer, isCorrect) values
-		(1, 1, 1, 'James', 1), (2, 1, 1, 'John', 0), (3, 1, 1, 'Jack', 0), (4, 1, 1, 'Justin', 0),
-        (5, 2, 1, 'Atlanta, Georgia', 1), (6, 2, 1, 'Chicago, Illinois', 0), (7, 2, 1, 'Los Angeles, California', 0), (8, 2, 1, 'Detroit, Michigan', 0),
-        (9, 3, 2, '200', 1), (10, 3, 2, '100', 0), (11, 3, 2, '500', 0), (12, 3, 2, '1000', 0),
-        (13, 4, 2, 'Think', 1), (14, 4, 2, 'Click', 0), (15, 4, 2, 'Logic', 0), (16, 4, 2, 'Pixel', 0),
-        (17, 5, 3, 'Saffron', 1), (18, 5, 3, 'Cinnamon', 0), (19, 5, 3, 'Cardamom', 0), (20, 5, 3, 'Vanilla', 0),
-        (21, 6, 3, 'First Lord of the Treasury', 1), (22, 6, 3, 'Duke of Cambridge', 0), (23, 6, 3, "Her Majesty's Loyal Opposition", 0), (24, 6, 3, 'Manager of the Crown Estate', 0);
+	insert into answer (answer_id, question_id, answer, isCorrect) values
+		(1, 1, 'James', 1), (2, 1, 'John', 0), (3, 1, 'Jack', 0), (4, 1, 'Justin', 0),
+        (5, 2, 'Atlanta, Georgia', 1), (6, 2, 'Chicago, Illinois', 0), (7, 2, 'Los Angeles, California', 0), (8, 2, 'Detroit, Michigan', 0),
+        (9, 3, '200', 1), (10, 3, '100', 0), (11, 3, '500', 0), (12, 3, '1000', 0),
+        (13, 4, 'Think', 1), (14, 4, 'Click', 0), (15, 4, 'Logic', 0), (16, 4, 'Pixel', 0),
+        (17, 5, 'Saffron', 1), (18, 5, 'Cinnamon', 0), (19, 5, 'Cardamom', 0), (20, 5, 'Vanilla', 0),
+        (21, 6, 'First Lord of the Treasury', 1), (22, 6, 'Duke of Cambridge', 0), (23, 6, "Her Majesty's Loyal Opposition", 0), (24, 6, 'Manager of the Crown Estate', 0);
         
-	insert into user (user_id, username, `password`, questions_answered, questions_correct) values
+	insert into user (user_id, username, `password`, total_questions_answered, total_questions_correct) values
 		(1, 'First User', 'Clear_text', 5, 2),
         (2, 'Second User', 'Unsafe_password', 10, 8),
         (3, 'Third User', 'Poor_practice', 8, 4);

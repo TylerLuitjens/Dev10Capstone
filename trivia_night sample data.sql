@@ -33,19 +33,19 @@ insert into question (question_id, question, category_id) values
     (12, 'What country hosted the 2014 Winter Olympics?', 6);
     
 	
-insert into answer (answer_id, question_id, category_id, answer, isCorrect) values
-	(1, 1, 1, 'James', 1), (2, 1, 1, 'John', 0), (3, 1, 1, 'Jack', 0), (4, 1, 1, 'Justin', 0),
-	(5, 2, 1, 'Atlanta, Georgia', 1), (6, 2, 1, 'Chicago, Illinois', 0), (7, 2, 1, 'Los Angeles, California', 0), (8, 2, 1, 'Detroit, Michigan', 0),
-	(9, 3, 2, '200', 1), (10, 3, 2, '100', 0), (11, 3, 2, '500', 0), (12, 3, 2, '1000', 0),
-	(13, 4, 2, 'Think', 1), (14, 4, 2, 'Click', 0), (15, 4, 2, 'Logic', 0), (16, 4, 2, 'Pixel', 0),
-	(17, 5, 3, 'Saffron', 1), (18, 5, 3, 'Cinnamon', 0), (19, 5, 3, 'Cardamom', 0), (20, 5, 3, 'Vanilla', 0),
-	(21, 6, 3, 'First Lord of the Treasury', 1), (22, 6, 3, 'Duke of Cambridge', 0), (23, 6, 3, "Her Majesty's Loyal Opposition", 0), (24, 6, 3, 'Manager of the Crown Estate', 0),
-    (25, 7, 4, 'Robbing Trains', 1), (26, 7, 4, 'Murder for Hire', 0), (27, 7, 4, 'Tax Evasion', 0), (28, 7, 4, 'Identity Fraud', 0),
-    (29, 8, 4, '1836', 1), (30, 8, 4, '1838', 0), (31, 8, 4, '1845', 0), (32, 8, 4, '1844', 0),
-    (33, 9, 5, 'Janus', 1), (34, 9, 5, 'Vulcan', 0), (35, 9, 5, 'Juno', 0), (36, 9, 5, 'Mars', 0),
-    (37, 10, 5, 'Hephaestus', 1), (38, 10, 5, 'Dyntos', 0), (39, 10, 5, 'Vulcan', 0), (40, 10, 5, 'Artagatus', 0),
-    (41, 11, 6, "Shaquille O'Neal", 1), (42, 11, 6, 'Allen Iverson', 0), (43, 11, 6, 'Kobe Bryant', 0), (44, 11, 6, 'Paul Pierce', 0),
-    (45, 12, 6, 'Russia', 1), (46, 12, 6, 'Canada', 0), (47, 12, 6, 'United States', 0), (48, 12, 6, 'Germany', 0);
+insert into answer (answer_id, question_id, answer, isCorrect) values
+	(1, 1, 'James', 1), (2, 1, 'John', 0), (3, 1, 'Jack', 0), (4, 1, 'Justin', 0),
+	(5, 2, 'Atlanta, Georgia', 1), (6, 2, 'Chicago, Illinois', 0), (7, 2, 'Los Angeles, California', 0), (8, 2, 'Detroit, Michigan', 0),
+	(9, 3, '200', 1), (10, 3, '100', 0), (11, 3, '500', 0), (12, 3, '1000', 0),
+	(13, 4, 'Think', 1), (14, 4, 'Click', 0), (15, 4, 'Logic', 0), (16, 4, 'Pixel', 0),
+	(17, 5, 'Saffron', 1), (18, 5, 'Cinnamon', 0), (19, 5, 'Cardamom', 0), (20, 5, 'Vanilla', 0),
+	(21, 6, 'First Lord of the Treasury', 1), (22, 6, 'Duke of Cambridge', 0), (23, 6, "Her Majesty's Loyal Opposition", 0), (24, 6, 'Manager of the Crown Estate', 0),
+    (25, 7, 'Robbing Trains', 1), (26, 7, 'Murder for Hire', 0), (27, 7, 'Tax Evasion', 0), (28, 7, 'Identity Fraud', 0),
+    (29, 8, '1836', 1), (30, 8, '1838', 0), (31, 8, '1845', 0), (32, 8, '1844', 0),
+    (33, 9, 'Janus', 1), (34, 9, 'Vulcan', 0), (35, 9, 'Juno', 0), (36, 9, 'Mars', 0),
+    (37, 10, 'Hephaestus', 1), (38, 10, 'Dyntos', 0), (39, 10, 'Vulcan', 0), (40, 10, 'Artagatus', 0),
+    (41, 11, "Shaquille O'Neal", 1), (42, 11, 'Allen Iverson', 0), (43, 11, 'Kobe Bryant', 0), (44, 11, 'Paul Pierce', 0),
+    (45, 12, 'Russia', 1), (46, 12, 'Canada', 0), (47, 12, 'United States', 0), (48, 12, 'Germany', 0);
     
 	
 insert into user (user_id, username, `password`, questions_answered, questions_correct) values
