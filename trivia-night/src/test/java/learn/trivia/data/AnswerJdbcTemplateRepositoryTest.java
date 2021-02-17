@@ -62,6 +62,7 @@ class AnswerJdbcTemplateRepositoryTest {
     private Answer makeAnswer() {
         Answer answer = new Answer();
         answer.setAnswer("Totally Correct");
+        answer.setQuestionId(2);
         answer.setCorrect(true);
         return answer;
     }
