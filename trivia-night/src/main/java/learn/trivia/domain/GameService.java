@@ -9,104 +9,43 @@ import java.util.Random;
 
 @Service
 public class GameService {
-    private final QuestionRepository questionRepository;
-    private final AnswerRepository answerRepository;
-    private final UserRepository userRepository;
-    private final GameRepository gameRepository;
-    private final GameQuestionRepository gameQuestionRepository;
-    private final GameUserRepository gameUserRepository;
 
-    public GameService (
-            QuestionRepository questionRepository,
-            AnswerRepository answerRepository,
-            UserRepository userRepository,
-            GameRepository gameRepository,
-            GameQuestionRepository gameQuestionRepository,
-            GameUserRepository gameUserRepository) {
-        this.questionRepository = questionRepository;
-        this.answerRepository = answerRepository;
-        this.userRepository = userRepository;
+    private final GameRepository gameRepository;
+
+    public GameService (GameRepository gameRepository) {
         this.gameRepository = gameRepository;
-        this.gameQuestionRepository = gameQuestionRepository;
-        this.gameUserRepository = gameUserRepository;
     }
 
     public List<Game> findAllGames() {
         return gameRepository.findAll();
     }
 
-
     public Game findGameByCode(String gameCode) {
         return gameRepository.findGameByCode(gameCode);
-    }
-
-    public GameUser findGameUser(String gameCode, int userId) {
-        return gameUserRepository.findGameUser(gameCode, userId);
-    }
-
-    public List<GameQuestion> findByGameCode(String gameCode) {
-        return gameQuestionRepository.findByGameCode(gameCode);
     }
 
     public Result<Game> createGame() {
         Result<Game> result = new Result<>();
         String gameCode = gameCodeGenerator();
+        boolean isValid = false;
 
-        for (Game game : findAllGames()) {
-            while (gameCode.equals(game.getGameCode())) {
-                gameCode = gameCodeGenerator();
+        while (!isValid) {
+            int loopCount = 0;
+
+            for (Game game : findAllGames()) {
+                if (game.getGameCode.equals(gameCode)) {
+                    gameCode = gameCodeGenerator();
+                    loopCount = 0;
+                } else {
+                    loopCount++;
+                }
+            } if (loopCount == findAllGames().size()) {
+                isValid = true;
             }
         }
 
         Game game = gameRepository.createGame(gameCode);
         result.setPayload(game);
-        return result;
-    }
-
-
-    public Result<GameUser> createGameUser(String gameCode, int userId) {
-        Result<GameUser> result = validate(userId);
-
-        for (Game game : findAllGames()) {
-            if (gameCode.equals(game.getGameCode())) {
-                if (userRepository.findById(userId) != null) {
-                    GameUser gameUser = gameUserRepository.create(gameCode, userId);
-                    result.setPayload(gameUser);
-                    return result;
-                }
-                String message = String.format("User with id %s not found", userId);
-                result.addMessage(message, ResultType.INVALID);
-                return result;
-            }
-        }
-        String message = String.format("Game code %s not found", gameCode);
-        result.addMessage(message, ResultType.INVALID);
-        return result;
-    }
-
-    public Result<GameUser> updateGameUser(String gameCode, int userId, int numAnswered, int numCorrect) {
-        Result<GameUser> result = validate(userId);
-
-        for (Game game : findAllGames()) {
-            if (gameCode.equals(game.getGameCode())) {
-                if (userRepository.findById(userId) != null) {
-                    GameUser gameUser = findGameUser(gameCode, userId);
-
-                    gameUser.setNumAnswered(numAnswered);
-                    gameUser.setNumCorrect(numCorrect);
-
-                    GameUser gameUserUpdated = gameUserRepository.update(gameUser);
-
-                    result.setPayload(gameUserUpdated);
-                    return result;
-                }
-                String message = String.format("User with id %s not found", userId);
-                result.addMessage(message, ResultType.INVALID);
-                return result;
-            }
-        }
-        String message = String.format("Game code %s not found", gameCode);
-        result.addMessage(message, ResultType.INVALID);
         return result;
     }
 
@@ -122,16 +61,6 @@ public class GameService {
             gameCode = gameCode + selectedChar;
         }
         return gameCode;
-    }
-
-    private Result<GameUser> validate(int userId) {
-        Result<GameUser> result = new Result<>();
-
-        if (userId <= 0) {
-            result.addMessage("User Id must be set for this operation.", ResultType.INVALID);
-            return result;
-        }
-        return result;
     }
 
 }

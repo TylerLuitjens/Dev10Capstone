@@ -15,22 +15,22 @@ use trivia_night;
         "What country hosted the 2014 Winter Olympics?","correct_answer":"Russia","incorrect_answers":["Canada","United States","Germany"]}
        */
 
-insert into category (category_id, category_name) values
-	(1, 'Celebrities'), (2, 'Computer Science'), (3, 'General Knowledge'), (4, 'History'), (5, 'Mythology'), (6, 'Sports');
+-- insert into category (category_id, category_name) values
+-- 	(1, 'Celebrities'), (2, 'Computer Science'), (3, 'General Knowledge'), (4, 'History'), (5, 'Mythology'), (6, 'Sports');
 
-insert into question (question_id, question, category_id) values
-	(1, 'Paul McCartney has always used his middle name. What is his real first name?', 1), 
-	(2, 'Where was Kanye West born?', 1),
-	(3, 'Approximately how many Apple I personal computers were created?', 2),
-	(4, 'What five letter word is the motto of the IBM Computer company', 2),
-	(5, "What is the world's most expensive spice by weight?", 3),
-	(6, 'What is the full title of the Prime Minister of the UK?', 3),
-    (7, 'Joseph Stalin had a criminal past doing what?', 4),
-    (8, 'In what year did Texas secede from Mexico?', 4),
-    (9, "Which of these Roman gods doesn't have a counterpart in Greek mythology?", 5),
-    (10, 'What is the name of the Greek god of blacksmiths?', 5),
-    (11, 'Which NBA player won Most Valuable Player for the 1999-2000 season?', 6),
-    (12, 'What country hosted the 2014 Winter Olympics?', 6);
+insert into question (question_id, question, category_name) values
+	(1, 'Paul McCartney has always used his middle name. What is his real first name?', 'Celebrities'), 
+	(2, 'Where was Kanye West born?', 'Celebrities'),
+	(3, 'Approximately how many Apple I personal computers were created?', 'Computer Science'),
+	(4, 'What five letter word is the motto of the IBM Computer company', 'Computer Science'),
+	(5, "What is the world's most expensive spice by weight?", 'General Knowledge'),
+	(6, 'What is the full title of the Prime Minister of the UK?', 'General Knowledge'),
+    (7, 'Joseph Stalin had a criminal past doing what?', 'History'),
+    (8, 'In what year did Texas secede from Mexico?', 'History'),
+    (9, "Which of these Roman gods doesn't have a counterpart in Greek mythology?", 'Mythology'),
+    (10, 'What is the name of the Greek god of blacksmiths?', 'Mythology'),
+    (11, 'Which NBA player won Most Valuable Player for the 1999-2000 season?', 'Sports'),
+    (12, 'What country hosted the 2014 Winter Olympics?', 'Sports');
     
 	
 insert into answer (answer_id, question_id, answer, isCorrect) values

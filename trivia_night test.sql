@@ -2,18 +2,10 @@ drop database if exists trivia_night_test;
 create database trivia_night_test;
 use trivia_night_test;
 
-create table category (
-	category_id int primary key auto_increment,
-    category_name varchar(50)
-);
-
 create table question (
 	question_id int primary key auto_increment,
     question varchar(500) not null,
-    category_id int not null,
-    constraint fk_question_category_id
-		foreign key (category_id)
-        references category(category_id)
+    category_name varchar(50)
 );
 
 create table answer (
@@ -29,7 +21,7 @@ create table answer (
 create table `user` (
 	user_id int primary key auto_increment,
     username varchar(30) not null,
-    `password` varchar(45) not null,
+    `password` varchar(512) not null,
     total_questions_answered int,
     total_questions_correct int
 );
@@ -60,6 +52,12 @@ create table game_user (
     constraint fk_game_user_game_code
 		foreign key (game_code) 
         references game(game_code)
+);
+
+create table error_log (
+	error_log_id int primary key auto_increment,
+    `description` varchar(2048),
+    error_timestamp varchar(64)
 );
 
 delimiter //
