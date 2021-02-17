@@ -14,9 +14,9 @@ import java.util.Set;
 
 @Service
 public class UserService {
-    private final UserJdbcTemplateRepository repository;
+    private final UserRepository repository;
 
-    public UserService(UserJdbcTemplateRepository repository) {
+    public UserService(UserRepository repository) {
         this.repository = repository;
     }
 

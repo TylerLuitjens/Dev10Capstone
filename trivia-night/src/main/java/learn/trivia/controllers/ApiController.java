@@ -5,6 +5,7 @@ import learn.trivia.domain.Result;
 import learn.trivia.domain.UserService;
 import learn.trivia.models.Game;
 import learn.trivia.models.User;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

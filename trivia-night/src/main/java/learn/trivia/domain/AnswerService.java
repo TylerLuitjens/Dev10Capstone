@@ -8,9 +8,9 @@ import java.util.List;
 
 @Service
 public class AnswerService {
-    private AnswerJdbcTemplateRepository repository;
+    private AnswerRepository repository;
 
-    public AnswerService(AnswerJdbcTemplateRepository repository) {
+    public AnswerService(AnswerRepository repository) {
         this.repository = repository;
     }
 
