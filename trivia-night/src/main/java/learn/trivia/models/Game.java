@@ -1,10 +1,12 @@
 package learn.trivia.models;
 
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 public class Game {
     private List<Question> gameQuestions;
     private List<User> gameUsers;
+    @NotBlank
     private String gameCode;
 
     public List<Question> getGameQuestions() {
