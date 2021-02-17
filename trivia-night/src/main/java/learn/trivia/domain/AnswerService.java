@@ -1,6 +1,10 @@
 package learn.trivia.domain;
 
+import learn.trivia.data.AnswerJdbcTemplateRepository;
+import learn.trivia.models.Answer;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class AnswerService {

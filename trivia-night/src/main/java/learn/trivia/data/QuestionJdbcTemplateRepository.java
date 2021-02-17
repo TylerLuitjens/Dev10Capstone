@@ -1,9 +1,11 @@
 package learn.trivia.data;
 
 import learn.trivia.data.mappers.QuestionMapper;
+import learn.trivia.models.Question;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -11,6 +13,7 @@ import java.sql.Statement;
 import java.util.Collections;
 import java.util.List;
 
+@Repository
 public class QuestionJdbcTemplateRepository implements QuestionRepository{
 
     private final JdbcTemplate jdbcTemplate;
@@ -21,9 +24,9 @@ public class QuestionJdbcTemplateRepository implements QuestionRepository{
 
     @Override
     public List<Question> findByCategory(String category) {
-        final String sql = "select q.question_id, q.question, q.category_id, c.category_name,  "
+        final String sql = "select q.question_id, q.question, q.category_id, c.category_name "
                 + "from question q "
-                + "inner join join category c on q.category_id = c.category_id "
+                + "inner join category c on q.category_id = c.category_id "
                 + "where c.category_name = ?;";
 
         return jdbcTemplate.query(sql, new QuestionMapper(), category);
