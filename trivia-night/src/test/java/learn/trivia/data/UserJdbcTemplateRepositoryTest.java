@@ -42,6 +42,12 @@ class UserJdbcTemplateRepositoryTest {
     }
 
     @Test
+    void shouldFindByUserName() {
+        User user = repository.findByUserName("First User");
+        assertNotNull(user);
+    }
+
+    @Test
     void shouldCreateUser() {
         User user = makeUser();
         User actual = repository.create(user);

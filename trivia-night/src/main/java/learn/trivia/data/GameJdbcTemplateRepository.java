@@ -3,8 +3,12 @@ package learn.trivia.data;
 import learn.trivia.data.mappers.GameMapper;
 import learn.trivia.models.Game;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.List;
 
 @Repository
@@ -37,6 +41,21 @@ public class GameJdbcTemplateRepository implements GameRepository {
 
     @Override
     public Game createGame(Game game) {
-        return null;
+        final String sql = "insert into game (game_code) "
+                + " values (?);";
+
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        int rowsAffected = jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, game.getGameCode());
+            return ps;
+        }, keyHolder);
+
+        if (rowsAffected <= 0) {
+            return null;
+        }
+
+//        game.setGameCode(keyHolder.getKey().toString());
+        return game;
     }
 }
