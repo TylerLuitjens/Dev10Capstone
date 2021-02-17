@@ -1,5 +1,6 @@
 package learn.trivia.models;
 
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 public class Game {

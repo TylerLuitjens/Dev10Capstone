@@ -1,8 +1,12 @@
 package learn.trivia.models;
 
+import javax.validation.constraints.NotBlank;
+
 public class Answer {
+
     private int answerId;
     private boolean isCorrect;
+    @NotBlank
     private String answer;
     private int questionId;
 
