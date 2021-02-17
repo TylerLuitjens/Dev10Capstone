@@ -24,10 +24,9 @@ public class QuestionJdbcTemplateRepository implements QuestionRepository{
 
     @Override
     public List<Question> findByCategory(String category) {
-        final String sql = "select q.question_id, q.question, q.category_id, c.category_name "
-                + "from question q "
-                + "inner join category c on q.category_id = c.category_id "
-                + "where c.category_name = ? "
+        final String sql = "select question_id, question, category_name "
+                + "from question "
+                + "where category_name = ? "
                 + "order by rand() "
                 + "limit 10;";
 
@@ -37,13 +36,14 @@ public class QuestionJdbcTemplateRepository implements QuestionRepository{
     @Override
     public Question addQuestion(Question question) {
 
-        final String sql = "insert into question (question) "
-                + "values (?);";
+        final String sql = "insert into question (question, category_name) "
+                + "values (?, ?);";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int rowsAffected = jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, question.getQuestion());
+            ps.setString(2, question.getCategory());
             return ps;
         }, keyHolder);
 
