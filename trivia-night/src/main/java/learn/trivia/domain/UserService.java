@@ -1,5 +1,6 @@
 package learn.trivia.domain;
 
+import learn.trivia.data.UserJdbcTemplateRepository;
 import learn.trivia.data.UserRepository;
 import learn.trivia.models.User;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -62,7 +64,7 @@ public class UserService {
             return result;
         }
 
-        if (user.getUserId <= 0) {
+        if (user.getUserId() <= 0) {
             result.addMessage("User Id must be set for 'update' operation.", ResultType.INVALID);
             return result;
         }
@@ -85,7 +87,7 @@ public class UserService {
         Result<User> result = new Result<>();
 
         for (User userFromRecords : findAll()) {
-            if (userFromRecords.getUsername().equalsIgnoreCase(user.getName())) {
+            if (userFromRecords.getUserName().equalsIgnoreCase(user.getUserName())) {
                 result.addMessage("Username cannot be duplicate.", ResultType.INVALID);
             }
         }
@@ -97,7 +99,7 @@ public class UserService {
 
         User existingUser = findById(user.getUserId());
 
-        if (existingUser == null || !existingUser.getUsername().equalsIgnoreCase(user.getUsername())) {
+        if (existingUser == null || !existingUser.getUserName().equalsIgnoreCase(user.getUserName())) {
             result = validateDuplicateCreate(user);
         }
 

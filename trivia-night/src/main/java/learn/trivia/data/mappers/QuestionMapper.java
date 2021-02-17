@@ -1,6 +1,8 @@
 package learn.trivia.data.mappers;
 
-import javax.swing.tree.RowMapper;
+import learn.trivia.models.Question;
+
+import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -11,7 +13,7 @@ public class QuestionMapper implements RowMapper<Question> {
         Question question = new Question();
         question.setQuestionId(resultSet.getInt("question_id"));
         question.setQuestion(resultSet.getString("question"));
-        question.setCategory(resultSet.getInt("category_name"));
-        return Question;
+        question.setCategory(resultSet.getString("category_name"));
+        return question;
     }
 }

@@ -1,5 +1,6 @@
 package learn.trivia.data;
 
+import learn.trivia.models.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,14 +28,17 @@ class UserJdbcTemplateRepositoryTest {
     void shouldFindAll() {
         List<User> users = repository.findAll();
         assertNotNull(users);
+        for (User u : users) {
+            System.out.println(u.getUserName());
+        }
     }
 
     @Test
     void shouldFindFirstUser() {
         User firstUser = repository.findById(1);
-        assertEquals(1, firstUser.getUserId);
-        assertEquals("First User", firstUser.getUsername);
-        assertEquals("Clear_text", firstUser.getPassword);
+        assertEquals(1, firstUser.getUserId());
+        assertEquals("First User", firstUser.getUserName());
+        assertEquals("Clear_text", firstUser.getPassword());
     }
 
     @Test
@@ -59,7 +63,7 @@ class UserJdbcTemplateRepositoryTest {
 
     private User makeUser() {
         User user = new User();
-        user.setUsername("Test Username");
+        user.setUserName("Test Username");
         user.setPassword("Test Password");
         return user;
     }

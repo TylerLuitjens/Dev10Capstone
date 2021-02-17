@@ -1,13 +1,17 @@
 package learn.trivia.data;
 
 import learn.trivia.data.mappers.UserMapper;
+import learn.trivia.models.User;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.util.List;
 
+@Repository
 public class UserJdbcTemplateRepository implements UserRepository{
 
     private final JdbcTemplate jdbcTemplate;
@@ -45,7 +49,7 @@ public class UserJdbcTemplateRepository implements UserRepository{
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int rowsAffected = jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, user.getUsername());
+            ps.setString(1, user.getUserName());
             ps.setString(2, user.getPassword());
             return ps;
         }, keyHolder);
@@ -66,8 +70,8 @@ public class UserJdbcTemplateRepository implements UserRepository{
                 + "password = ?;";
 
         return jdbcTemplate.update(sql,
-                agent.getUsername(),
-                agent.getPassword();
+                user.getUserName(),
+                user.getPassword()) > 0;
     }
 
     @Override
