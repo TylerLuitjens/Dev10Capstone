@@ -28,12 +28,14 @@ class AnswerJdbcTemplateRepositoryTest {
     void shouldFindAnswerByQuestionId() {
         List<Answer> answers = repository.findByQuestionId(1);
         assertTrue(answers.size() > 0);
+        assertEquals(4, answers.size());
     }
 
     @Test
     void shouldFindAnswerByAnswerId() {
         Answer answer = repository.findByAnswerId(1);
         assertNotNull(answer);
+        assertTrue(answer.isCorrect());
     }
 
 }

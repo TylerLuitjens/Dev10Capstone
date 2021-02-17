@@ -28,6 +28,9 @@ class UserJdbcTemplateRepositoryTest {
     void shouldFindAll() {
         List<User> users = repository.findAll();
         assertNotNull(users);
+        for (User u : users) {
+            System.out.println(u.getUserName());
+        }
     }
 
     @Test

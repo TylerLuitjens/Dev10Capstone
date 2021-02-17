@@ -22,23 +22,21 @@ public class AnswerJdbcTemplateRepository implements AnswerRepository {
 
     @Override
     public List<Answer> findByQuestionId(int questionId) {
-        final String sql = "select answer "
-                + "from question "
+        final String sql = "select answer_id "
+                + "from answer "
                 + "where question_id = ?;";
 
-        return jdbcTemplate.query(sql, new AnswerMapper());
+        return jdbcTemplate.query(sql, new AnswerMapper(), questionId);
     }
 
     @Override
     public Answer findByAnswerId(int answerId) {
-        final String sql = "select answer "
+        final String sql = "select answer_id "
                 + "from answer "
                 + "where answer_id = ?;";
 
-        Answer answer = jdbcTemplate.query(sql, new AnswerMapper(), answerId).stream()
+        return jdbcTemplate.query(sql, new AnswerMapper(), answerId).stream()
                 .findFirst().orElse(null);
-
-        return answer;
     }
 
     @Override
