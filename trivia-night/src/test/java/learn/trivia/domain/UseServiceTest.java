@@ -92,6 +92,51 @@ public class UseServiceTest {
 
     }
 
+    // should not add with blank userName
+    @Test
+    void shouldNotCreateUserWithBlankUserName() {
+        User user = makeUser();
+
+        user.setUserId(0);
+        user.setUserName("");
+
+        Result<User>actual = service.create(user);
+        assertEquals(ResultType.INVALID, actual.getType());
+    }
+    // should not add with blank password
+    @Test
+    void shouldNotCreateUserWithBlankPassword() {
+        User user = makeUser();
+
+        user.setUserId(0);
+        user.setPassword("");
+
+        Result<User>actual = service.create(user);
+        assertEquals(ResultType.INVALID, actual.getType());
+    }
+    // should not add with numAnswered < 0
+    @Test
+    void shouldNotCreateUserWithNegativeNumAnswered() {
+        User user = makeUser();
+
+        user.setUserId(0);
+        user.setNumAnswered(-1);
+
+        Result<User>actual = service.create(user);
+        assertEquals(ResultType.INVALID, actual.getType());
+    }
+    // should not add with numCorrect < 0
+    @Test
+    void shouldNotCreateUserWithNegativeNumCorrect() {
+        User user = makeUser();
+
+        user.setUserId(0);
+        user.setNumCorrect(-1);
+
+        Result<User>actual = service.create(user);
+        assertEquals(ResultType.INVALID, actual.getType());
+    }
+
     @Test
     void shouldUpdate() {
         User user = makeUser();

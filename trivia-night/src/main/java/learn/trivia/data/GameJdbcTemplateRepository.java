@@ -40,14 +40,14 @@ public class GameJdbcTemplateRepository implements GameRepository {
     }
 
     @Override
-    public Game createGame(Game game) {
+    public Game createGame(String gameCode) {
         final String sql = "insert into game (game_code) "
                 + " values (?);";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int rowsAffected = jdbcTemplate.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, game.getGameCode());
+            ps.setString(1, gameCode);
             return ps;
         }, keyHolder);
 
@@ -56,6 +56,7 @@ public class GameJdbcTemplateRepository implements GameRepository {
         }
 
 //        game.setGameCode(keyHolder.getKey().toString());
-        return game;
+//        return game;
+        return null;
     }
 }

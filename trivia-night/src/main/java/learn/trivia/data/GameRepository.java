@@ -10,5 +10,5 @@ public interface GameRepository {
 
     Game findGameByCode(String gameCode);
 
-    Game createGame(Game game);
+    Game createGame(String gameCode);
 }

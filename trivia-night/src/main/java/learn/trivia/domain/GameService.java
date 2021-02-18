@@ -1,10 +1,13 @@
 package learn.trivia.domain;
 
 import learn.trivia.data.AnswerRepository;
+import learn.trivia.data.GameRepository;
 import learn.trivia.data.QuestionRepository;
 import learn.trivia.data.UserRepository;
+import learn.trivia.models.Game;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -24,7 +27,7 @@ public class GameService {
         return gameRepository.findGameByCode(gameCode);
     }
 
-    public Result<Game> createGame() {
+    public Result<Game> create() {
         Result<Game> result = new Result<>();
         String gameCode = gameCodeGenerator();
         boolean isValid = false;
@@ -33,7 +36,7 @@ public class GameService {
             int loopCount = 0;
 
             for (Game game : findAllGames()) {
-                if (game.getGameCode.equals(gameCode)) {
+                if (game.getGameCode().equals(gameCode)) {
                     gameCode = gameCodeGenerator();
                     loopCount = 0;
                 } else {
