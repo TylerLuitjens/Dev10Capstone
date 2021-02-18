@@ -1,7 +1,6 @@
 package learn.trivia.data;
 
 import learn.trivia.data.mappers.GameQuestionMapper;
-import learn.trivia.data.mappers.GameUserMapper;
 import learn.trivia.models.GameQuestion;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;

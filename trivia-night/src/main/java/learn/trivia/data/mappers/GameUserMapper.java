@@ -1,7 +1,5 @@
 package learn.trivia.data.mappers;
 
-
-import learn.trivia.models.GameQuestion;
 import learn.trivia.models.GameUser;
 import org.springframework.jdbc.core.RowMapper;
 
