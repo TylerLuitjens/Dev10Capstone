@@ -1,0 +1,52 @@
+package learn.trivia.controllers;
+
+import learn.trivia.domain.Result;
+import learn.trivia.domain.UserService;
+import learn.trivia.models.User;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/user")
+public class UserController {
+    private UserService userService;
+
+    public UserController (UserService userService) {
+        this.userService = userService;
+    }
+
+    @GetMapping("/{userId}")
+    public User findUserById (@PathVariable int userId) {
+        return userService.findById (userId);
+    }
+
+    @GetMapping("/")
+    public List<User> findAllUsers() {
+        return userService.findAll();
+    }
+
+    @PostMapping("/")
+    public ResponseEntity<Object> createUser (@RequestBody User user) {
+        Result result  = userService.create(user);
+
+        if (!result.isSuccess()) {
+            return new ResponseEntity<>(ErrorResponse.build(result), HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(result.getPayload(), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/")
+    public ResponseEntity<Object> updateUser (User user) {
+        Result result = userService.update(user);
+
+        if (!result.isSuccess()) {
+            return new ResponseEntity<>(ErrorResponse.build(result), HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+}
