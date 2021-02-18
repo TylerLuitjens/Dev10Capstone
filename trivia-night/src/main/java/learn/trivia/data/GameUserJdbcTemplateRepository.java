@@ -1,8 +1,12 @@
 package learn.trivia.data;
 
+import learn.trivia.data.mappers.GameUserMapper;
+import learn.trivia.data.mappers.QuestionMapper;
 import learn.trivia.models.GameUser;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.List;
 
 public class GameUserJdbcTemplateRepository implements GameUserRepository{
@@ -16,28 +20,46 @@ public class GameUserJdbcTemplateRepository implements GameUserRepository{
     @Override
     public GameUser getGameUser(String gameCode, int userId) {
         String sql = "SELECT * FROM game_user WHERE game_code = ? AND user_id = ?;";
-        return null;
+
+        return template.query(sql, new GameUserMapper(), gameCode, userId).stream().findFirst().orElse(null);
     }
 
     @Override
     public List<GameUser> getGameUsersByGame(String gameCode) {
         String sql = "SELECT * FROM game_user WHERE game_code = ?;";
 
-        return null;
+        return template.query(sql, new GameUserMapper(), gameCode);
+
     }
 
     @Override
     public boolean addGameUser(String gameCode, int userId) {
         String sql = "INSERT INTO game_user (game_code,user_id, num_answered, num_correct) " +
                 "VALUES (?,?,0,0);";
-        return false;
+
+        int rowsAffected = template.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, gameCode);
+            ps.setInt(2, userId);
+            return ps;
+        });
+
+        return rowsAffected > 0;
     }
 
     @Override
     public boolean addGameUser(GameUser gameUser) {
         String sql = "INSERT INTO game_user (game_code,user_id, num_answered, num_correct) " +
                 "VALUES (?,?,0,0);";
-        return false;
+
+        int rowsAffected = template.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, gameUser.getGameCode());
+            ps.setInt(2, gameUser.getUserId());
+            return ps;
+        });
+
+        return rowsAffected > 0;
     }
 
     @Override
@@ -46,6 +68,18 @@ public class GameUserJdbcTemplateRepository implements GameUserRepository{
                 "num_answered = ?," +
                 "num_correct = ?" +
                 "WHERE user_id = ? AND game_code = ?";
-        return false;
+
+        int rowsAffected = template.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(sql);
+
+            ps.setInt(1, gameUser.getNumAnswered());
+            ps.setInt(2, gameUser.getNumCorrect());
+            ps.setInt(3, gameUser.getUserId());
+            ps.setString(4, gameUser.getGameCode());
+
+            return ps;
+        });
+
+        return rowsAffected > 0;
     }
 }
