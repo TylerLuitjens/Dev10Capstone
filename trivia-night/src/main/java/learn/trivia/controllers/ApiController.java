@@ -56,12 +56,12 @@ public class ApiController {
 
     @GetMapping("/game/{gameId}")
     public Game getGame(@PathVariable String gameId) {
-        return gameService.getGame(gameId);
+        return gameService.findGameByCode(gameId);
     }
 
     @PostMapping("/game/{category}")
     public ResponseEntity<Object> createGame(@PathVariable String category) {
-        Result result = gameService.create(category);
+        Result result = gameService.createGame(category);
 
         if (!result.isSuccess()) {
             return new ResponseEntity<>(ErrorResponse.build(result), HttpStatus.BAD_REQUEST);
