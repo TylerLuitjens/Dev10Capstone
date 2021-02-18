@@ -59,6 +59,13 @@ public class GameServiceTest {
     }
 
     // should create game
+    @Test
+    void shouldCreateGame() {
+        Result<Game> actual = service.create();
+
+        assertTrue(actual.isSuccess());
+    }
+
 
     Game makeGame() {
 

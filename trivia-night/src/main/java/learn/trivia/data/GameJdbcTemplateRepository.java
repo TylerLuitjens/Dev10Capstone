@@ -55,8 +55,7 @@ public class GameJdbcTemplateRepository implements GameRepository {
             return null;
         }
 
-//        game.setGameCode(keyHolder.getKey().toString());
-//        return game;
-        return null;
+        game.setGameCode(keyHolder.getKey().toString());
+        return game;
     }
 }

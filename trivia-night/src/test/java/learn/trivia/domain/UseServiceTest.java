@@ -137,6 +137,7 @@ public class UseServiceTest {
         assertEquals(ResultType.INVALID, actual.getType());
     }
 
+
     @Test
     void shouldUpdate() {
         User user = makeUser();
