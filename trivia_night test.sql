@@ -111,6 +111,10 @@ begin
         (2, 'Second User', 'Unsafe_password', 10, 8),
         (3, 'Third User', 'Poor_practice', 8, 4);
         
+	insert into game (game_code) values
+		('ABCD'),
+        ('DCBA');
+        
 	end //
     
     delimiter ;

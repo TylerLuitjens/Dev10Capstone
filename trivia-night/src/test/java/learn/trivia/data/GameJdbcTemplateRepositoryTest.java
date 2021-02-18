@@ -37,7 +37,7 @@ class GameJdbcTemplateRepositoryTest {
 
     @Test
     void shouldCreateGame() {
-        Game game = repository.createGame("ZZZZ");
+        Game game = repository.createGame("zayb");
         assertNotNull(game);
     }
 }
