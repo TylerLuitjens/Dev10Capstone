@@ -22,7 +22,7 @@ public class UserJdbcTemplateRepository implements UserRepository{
 
     @Override
     public List<User> findAll() {
-        final String sql = "select user_id, username, password, questions_answered, questions_correct "
+        final String sql = "select user_id, username, password, total_questions_answered, total_questions_correct "
                 + "from user;";
         return jdbcTemplate.query(sql, new UserMapper());
     }
@@ -30,7 +30,7 @@ public class UserJdbcTemplateRepository implements UserRepository{
     @Override
     public User findById(int userId) {
 
-        final String sql = "select user_id, username, password, questions_answered, questions_correct "
+        final String sql = "select user_id, username, password, total_questions_answered, total_questions_correct "
                 + "from user "
                 + "where user_id = ?;";
 
@@ -43,7 +43,7 @@ public class UserJdbcTemplateRepository implements UserRepository{
     @Override
     public User findByUserName(String userName) {
 
-        final String sql = "select user_id, username, password, questions_answered, questions_correct "
+        final String sql = "select user_id, username, password, total_questions_answered, total_questions_correct "
                 + "from user "
                 + "where username = ?;";
 
@@ -81,8 +81,8 @@ public class UserJdbcTemplateRepository implements UserRepository{
         final String sql = "update user set "
                 + "username = ?, "
                 + "password = ?, "
-                + "questions_answered = ?, "
-                + "questions_correct = ? "
+                + "total_questions_answered = ?, "
+                + "total_questions_correct = ? "
                 + "where user_id = ?;";
 
         return jdbcTemplate.update(sql,

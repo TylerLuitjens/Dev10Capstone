@@ -40,22 +40,26 @@ public class GameJdbcTemplateRepository implements GameRepository {
     }
 
     @Override
-    public Game createGame(Game game) {
+    public Game createGame(String gameCode) {
         final String sql = "insert into game (game_code) "
                 + " values (?);";
 
-        KeyHolder keyHolder = new GeneratedKeyHolder();
+//        int rowsAffected = jdbcTemplate.update(connection -> {
+//            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+//            ps.setString(1, gameCode);
+//            return ps;
+//        });
+//
+//        if (rowsAffected <= 0) {
+//            return null;
+//        }
+
         int rowsAffected = jdbcTemplate.update(connection -> {
-            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setString(1, game.getGameCode());
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, gameCode);
             return ps;
-        }, keyHolder);
+        });
 
-        if (rowsAffected <= 0) {
-            return null;
-        }
-
-//        game.setGameCode(keyHolder.getKey().toString());
-        return game;
+        return null;
     }
 }

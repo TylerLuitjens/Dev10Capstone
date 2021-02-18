@@ -13,8 +13,8 @@ public class UserMapper implements RowMapper<User> {
         user.setUserId(resultSet.getInt("user_id"));
         user.setUserName(resultSet.getString("username"));
         user.setPassword(resultSet.getString("password"));
-        user.setNumAnswered(resultSet.getInt("questions_answered"));
-        user.setNumCorrect(resultSet.getInt("questions_correct"));
+        user.setNumAnswered(resultSet.getInt("total_questions_answered"));
+        user.setNumCorrect(resultSet.getInt("total_questions_correct"));
         return user;
     }
 
