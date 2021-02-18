@@ -1,14 +1,13 @@
 package learn.trivia.controllers;
 
 import learn.trivia.domain.*;
-import learn.trivia.models.Game;
-import learn.trivia.models.GameQuestion;
-import learn.trivia.models.User;
+import learn.trivia.models.*;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -34,7 +33,15 @@ public class GameController {
 
     @GetMapping("/{gameId}")
     public Game getGame(@PathVariable String gameId) {
+        // TODO get gameQuestions, and gameUsers as well, tie them to the game, and then return it
         return gameService.findGameByCode(gameId);
+    }
+
+    @PostMapping("/user/{userId}/{gameCode}")
+    public ResponseEntity<Object> addUserToGame(@PathVariable int userId, @PathVariable String gameCode) {
+        Result<GameUser> result = gameUserService.createGameUser(gameCode, userId);
+
+        // TODO
     }
 
     @PostMapping("/{category}")
@@ -45,8 +52,53 @@ public class GameController {
             return new ResponseEntity<>(ErrorResponse.build(result), HttpStatus.BAD_REQUEST);
         }
 
+        Game game = (Game) result.getPayload(); // FIXME is there a better way than casting here?
+        gameQuestionService.createGameQuestion(game.getGameCode(), category);
+        gameUserService.createGameUser(game.getGameCode(), user.getUserId());
+
+        game = populateGame(game);
+        // TODO add in validation here to make sure that we actually have a user assigned and questions assigned
+
         return new ResponseEntity<>(result.getPayload(), HttpStatus.CREATED);
     }
 
+    // FIXME might not need, delete later
+    private List<GameQuestion> transformQuestions (List<Question> questions, String gameCode) {
+        List<GameQuestion> gameQuestions = new ArrayList<GameQuestion>();
 
+        for(Question question : questions) {
+            GameQuestion gameQuestion = new GameQuestion();
+            gameQuestion.setQuestionId(question.getQuestionId());
+            gameQuestion.setGameCode(gameCode);
+            gameQuestion.setQuestion(question.getQuestion());
+
+            gameQuestions.add(gameQuestion);
+        }
+        return gameQuestions;
+    }
+
+    //FIXME might not need, delete later
+    private List<GameUser> transformUsers (List<User> users, String gameCode) {
+        List<GameUser> gameUsers = new ArrayList<GameUser>();
+
+        for(User user : users) {
+            GameUser gameUser = new GameUser();
+            gameUser.setUserId(user.getUserId());
+            gameUser.setGameCode(gameCode);
+            gameUser.setNumCorrect(0);
+            gameUser.setNumAnswered(0);
+
+            gameUsers.add(gameUser);
+        }
+        return gameUsers;
+    }
+
+    private Game populateGame(Game game) {
+        List<GameQuestion> gameQuestions =  gameQuestionService.findByGameCode(game.getGameCode());
+        List<GameUser> gameUsers = gameUserService.findByGameCode(game.getGameCode());
+        game.setGameQuestions(gameQuestions);
+        game.setGameUsers(gameUsers);
+
+        return game;
+    }
 }

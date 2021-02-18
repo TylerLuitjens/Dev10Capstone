@@ -1,7 +1,11 @@
 package learn.trivia.domain;
 
+import learn.trivia.data.GameQuestionRepository;
+import learn.trivia.data.GameRepository;
 import learn.trivia.data.QuestionRepository;
+import learn.trivia.models.GameQuestion;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 @Service
 public class GameQuestionService {
