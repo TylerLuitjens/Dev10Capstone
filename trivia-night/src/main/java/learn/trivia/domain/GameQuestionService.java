@@ -1,7 +1,13 @@
 package learn.trivia.domain;
 
+import learn.trivia.data.GameQuestionRepository;
+import learn.trivia.data.GameRepository;
 import learn.trivia.data.QuestionRepository;
+import learn.trivia.models.GameQuestion;
 import org.springframework.stereotype.Service;
+import java.util.List;
+
+import java.util.List;
 
 @Service
 public class GameQuestionService {
@@ -23,7 +29,7 @@ public class GameQuestionService {
     public Result<GameQuestion> createGameQuestion(String gameCode, String category) {
         Result<GameQuestion> result = new Result<>();
 
-        if (gameRepository.findByGameCode == null) {
+        if (gameRepository.findGameByCode(gameCode) == null) {
             String message = String.format("Game code %s not found", gameCode);
             result.addMessage(message, ResultType.NOT_FOUND);
             return result;
@@ -41,3 +47,4 @@ public class GameQuestionService {
     }
 
 }
+C
