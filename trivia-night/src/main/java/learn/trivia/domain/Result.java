@@ -33,5 +33,4 @@ public class Result<T> {
         this.type = type;
     }
 
-
 }

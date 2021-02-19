@@ -1,12 +1,9 @@
 package learn.trivia.domain;
 
-import learn.trivia.data.AnswerRepository;
 import learn.trivia.data.GameRepository;
-import learn.trivia.data.QuestionRepository;
-import learn.trivia.data.UserRepository;
 import learn.trivia.models.Game;
 import org.springframework.stereotype.Service;
-import learn.trivia.models.Game;
+
 import java.util.List;
 import java.util.Random;
 

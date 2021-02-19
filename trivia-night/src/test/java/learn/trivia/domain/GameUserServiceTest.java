@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-
+import learn.trivia.data.GameUserRepository;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
@@ -48,7 +48,7 @@ public class GameUserServiceTest {
     void shouldCreateGameUser() {
         GameUser gameUser = makeGameUser();
 
-        when(gameUserRepository.addGameUser("WXyz", 1)).thenReturn(gameUser);
+        when(gameUserRepository.addGameUser("WXyz", 1)).thenReturn(true);
 
         Result<GameUser> actual = service.createGameUser("WXyz", 1);
         assertEquals(ResultType.SUCCESS, actual.getType());
@@ -86,7 +86,7 @@ public class GameUserServiceTest {
     void shouldUpdateGameUser() {
         GameUser gameUser = makeGameUser();
 
-        when(gameUserRepository.update(gameUser)).thenReturn(gameUser);
+        when(gameUserRepository.updateGameUser(gameUser)).thenReturn(true);
 
         Result<GameUser> actual = service.updateGameUser(gameUser);
         assertEquals(ResultType.SUCCESS, actual.getType());
@@ -98,7 +98,7 @@ public class GameUserServiceTest {
     void shouldNotUpdateNonExistingGameUser() {
         GameUser gameUser = makeGameUser();
 
-        when(gameUserRepository.findGameUser(gameUser)).thenReturn(null);
+        when(gameUserRepository.findGameUser(gameUser.getGameCode(), gameUser.getUserId())).thenReturn(null);
 
         Result<GameUser> actual = service.updateGameUser(gameUser);
         assertEquals(ResultType.NOT_FOUND, actual.getType());
