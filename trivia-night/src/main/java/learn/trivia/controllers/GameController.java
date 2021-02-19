@@ -40,13 +40,18 @@ public class GameController {
     @PostMapping("/user/{userId}/{gameCode}")
     public ResponseEntity<Object> addUserToGame(@PathVariable int userId, @PathVariable String gameCode) {
         Result<GameUser> result = gameUserService.createGameUser(gameCode, userId);
+        if (!result.isSuccess()) {
+            return new ResponseEntity<>(ErrorResponse.build(result), HttpStatus.BAD_REQUEST);
+        }
 
-        // TODO
+        Game game = gameService.findGameByCode(gameCode);
+        return new ResponseEntity<>(game, HttpStatus.OK);
+
     }
 
     @PostMapping("/{category}")
     public ResponseEntity<Object> createGame(@PathVariable String category, @RequestBody User user) {
-        Result result = gameService.createGame();
+        Result<Game> result = gameService.createGame();
 
         if (!result.isSuccess()) {
             return new ResponseEntity<>(ErrorResponse.build(result), HttpStatus.BAD_REQUEST);
@@ -57,9 +62,11 @@ public class GameController {
         gameUserService.createGameUser(game.getGameCode(), user.getUserId());
 
         game = populateGame(game);
-        // TODO add in validation here to make sure that we actually have a user assigned and questions assigned
 
-        return new ResponseEntity<>(result.getPayload(), HttpStatus.CREATED);
+        if (game.getGameUsers().size() == 0 || game.getGameQuestions().size() == 0) {
+            return new ResponseEntity<>(ErrorResponse.build(result), HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(game, HttpStatus.CREATED);
     }
 
     // FIXME might not need, delete later
