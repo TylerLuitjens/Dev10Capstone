@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = {"http://localhost:3000"})
 @RequestMapping("/user")
 public class UserController {
     private UserService userService;
@@ -28,7 +29,7 @@ public class UserController {
         return userService.findAll();
     }
 
-    @PostMapping("/")
+    @PostMapping("/create")
     public ResponseEntity<Object> createUser (@RequestBody User user) {
         Result<User> result  = userService.create(user);
 
@@ -40,7 +41,7 @@ public class UserController {
     }
 
     @PutMapping("/")
-    public ResponseEntity<Object> updateUser (User user) {
+    public ResponseEntity<Object> updateUser (@RequestBody User user) {
         Result<User> result = userService.update(user);
 
         if (!result.isSuccess()) {

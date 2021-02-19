@@ -65,10 +65,10 @@ public class GameUserJdbcTemplateRepository implements GameUserRepository{
 
     @Override
     public boolean updateGameUser(GameUser gameUser) {
-        String sql = "UPDATE game_user SET" +
-                "num_answered = ?," +
-                "num_correct = ?" +
-                "WHERE user_id = ? AND game_code = ?";
+        String sql = "UPDATE game_user SET " +
+                "num_answered = ?, " +
+                "num_correct = ? " +
+                "WHERE user_id = ? AND game_code = ?;";
 
         int rowsAffected = template.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql);

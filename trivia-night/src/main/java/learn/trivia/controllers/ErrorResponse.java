@@ -2,7 +2,6 @@ package learn.trivia.controllers;
 
 import learn.trivia.domain.Result;
 import learn.trivia.domain.ResultType;
-import learn.trivia.models.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;

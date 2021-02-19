@@ -4,6 +4,8 @@
 *.iml
 
 node_modules/
+/.pnp
+.pnp.js
 
 # Compiled class file
 *.class
@@ -34,3 +36,6 @@ hs_err_pid*
 
 # Maven
 target/
+trivia-night/src/main/resources/application.properties
+
+trivia-night/src/test/resources/application.properties

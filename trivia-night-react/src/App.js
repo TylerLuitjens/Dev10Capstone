@@ -17,8 +17,16 @@ function NotFound() {
 }
 
 function App() {
+
+  const [user, setUser] = useState(null);
+
+  const handleSetUser = (user) => {
+    setUser(user);
+  }
+
   return (
-    <Router>
+    <>
+      <Router>
 
       <a>
         <Link to="/">Home</Link>
@@ -27,19 +35,19 @@ function App() {
         <Link to="/user/leaderboard">Leaderboard</Link>
       </a>
 
-      <Switch>
+        <Switch>
 
-        <Route exact path="/"> 
-          <Home />
-        </Route>
+          <Route exact path="/"> 
+            <Home />
+          </Route>
 
-        <Route path="/login">
-          <Login />
-        </Route>
+          <Route path="/login">
+            <Login />
+          </Route>
 
-        <Route path="/user/create">
-          <Create />
-        </Route>
+          <Route path="/user/create">
+            <Create />
+          </Route>
 
         <Route path="/user/leaderboard">
           <Leaderboard />
@@ -49,9 +57,10 @@ function App() {
           <NotFound />
         </Route>
 
-      </Switch>
+        </Switch>
 
-    </Router>
+      </Router>
+    </>
   );
 }
 
