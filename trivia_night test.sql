@@ -106,7 +106,8 @@ begin
 	insert into user (user_id, username, `password`, total_questions_answered, total_questions_correct) values
 		(1, 'First User', 'Clear_text', 5, 2),
         (2, 'Second User', 'Unsafe_password', 10, 8),
-        (3, 'Third User', 'Poor_practice', 8, 4);
+        (3, 'Third User', 'Poor_practice', 8, 4),
+        (4, 'Fourth User', 'Poor_practice', 8, 8);
         
 	insert into game (game_code) values
 		('ABCD'),

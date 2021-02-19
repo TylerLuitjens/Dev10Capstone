@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
@@ -89,10 +90,29 @@ public class UserJdbcTemplateRepository implements UserRepository{
                 user.getUserId()) > 0;
     }
 
+    // delete from game_user first
     @Override
+    @Transactional
     public boolean delete(int userId) {
+        jdbcTemplate.update("delete from game_user where user_id = ?;", userId);
         return jdbcTemplate.update("delete from user where user_id = ?;", userId) > 0;
     }
 
-    // TODO add in method for leaderboard info
+    @Override
+    public List<User> leaderboard() {
+
+        final String sql = "select username, password, total_questions_answered, total_questions_correct "
+                + "from user "
+                + "order by total_questions_correct desc, total_questions_answered asc "
+                + "limit 10;";
+
+        return jdbcTemplate.query(sql, (resultSet, rowNum) -> {
+            User user = new User();
+            user.setUserName(resultSet.getString("username"));
+            user.setNumAnswered(resultSet.getInt("total_questions_answered"));
+            user.setNumCorrect(resultSet.getInt("total_questions_correct"));
+            return user;
+        });
+    }
+
 }

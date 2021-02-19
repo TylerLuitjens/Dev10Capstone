@@ -1,7 +1,7 @@
 import Home from "./components/Home";
 import Create from "./components/user/Create";
 import Login from "./components/Login";
-import {useState} from 'react';
+import Leaderboard from "./components/user/Leaderboard";
 
 import {
   BrowserRouter as Router,
@@ -28,11 +28,12 @@ function App() {
     <>
       <Router>
 
-        <div>
-          <Link to="/">Home</Link>
-          <Link to="/login">Login</Link>
-          <Link to="/user/create">Create User</Link>
-        </div>
+      <a>
+        <Link to="/">Home</Link>
+        <Link to="/login">Login</Link>
+        <Link to="/user/create">Create User</Link>
+        <Link to="/user/leaderboard">Leaderboard</Link>
+      </a>
 
         <Switch>
 
@@ -48,9 +49,13 @@ function App() {
             <Create />
           </Route>
 
-          <Route path="*">
-            <NotFound />
-          </Route>
+        <Route path="/user/leaderboard">
+          <Leaderboard />
+        </Route>
+
+        <Route path="*">
+          <NotFound />
+        </Route>
 
         </Switch>
 

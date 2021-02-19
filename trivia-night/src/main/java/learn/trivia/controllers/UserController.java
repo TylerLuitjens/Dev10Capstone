@@ -52,5 +52,9 @@ public class UserController {
     }
 
     // TODO need endpoint to find user by name
-    // TODO need leaderboard endpoint
+
+    @GetMapping("/leaderboard")
+    public List<User> findLeaderboard() {
+        return userService.leaderboard();
+    }
 }

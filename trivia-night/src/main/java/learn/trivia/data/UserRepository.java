@@ -1,6 +1,7 @@
 package learn.trivia.data;
 
 import learn.trivia.models.User;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,7 +17,9 @@ public interface UserRepository {
 
     boolean update(User user);
 
+    @Transactional
     boolean delete(int userId);
 
+    List<User> leaderboard();
 
 }
