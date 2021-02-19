@@ -63,23 +63,19 @@ create table error_log (
 delimiter //
 create procedure set_known_good_state()
 begin 
-
-	delete from answer;
-    alter table answer auto_increment = 1;
-    delete from question;
-    alter table question auto_increment = 1;
-    delete from question;
-    alter table question auto_increment = 1;
-    delete from answer;
-    alter table answer auto_increment = 1;
-    delete from `user`;
-    alter table `user` auto_increment = 1;
-    delete from game;
-    alter table game auto_increment = 1;
     delete from game_question;
     alter table game_question auto_increment = 1;
     delete from game_user;
     alter table game_user auto_increment = 1;
+	delete from answer;
+    alter table answer auto_increment = 1;
+	delete from question;
+    alter table question auto_increment = 1;
+    delete from `user`;
+    alter table `user` auto_increment = 1;
+    delete from game;
+    alter table game auto_increment = 1;
+
         
         /*
         "Paul McCartney has always used his middle name. What is his real first name? ","correct_answer":"James","incorrect_answers":["John","Jack","Justin"]}
