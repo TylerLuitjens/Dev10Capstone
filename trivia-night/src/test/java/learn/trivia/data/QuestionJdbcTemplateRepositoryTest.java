@@ -27,10 +27,7 @@ class QuestionJdbcTemplateRepositoryTest {
     @Test
     void shouldFindCelebritiesCategory() {
         List<Question> questions = repository.findByCategory("Celebrities");
-        for (Question q : questions) {
-            System.out.println(q.getQuestion());
-        }
-        assertTrue(questions.size() > 0);
+        assertEquals(2, questions.size());
     }
 
     @Test

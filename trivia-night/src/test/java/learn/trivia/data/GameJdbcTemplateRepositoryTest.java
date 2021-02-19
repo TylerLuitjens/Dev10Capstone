@@ -26,25 +26,18 @@ class GameJdbcTemplateRepositoryTest {
     void shouldFindAllGames() {
         List<Game> games = repository.findAll();
         assertNotNull(games);
-        assertEquals(10, games.size());
+        assertEquals(2, games.size());
     }
 
     @Test
     void shouldFindGame() {
-        Game game = repository.findGameByCode("AAAA");
+        Game game = repository.findGameByCode("ABCD");
         assertNotNull(game);
     }
 
     @Test
     void shouldCreateGame() {
-        Game game = makeGame();
-        Game actual = repository.createGame(game.getGameCode());
-        assertNotNull(actual);
-    }
-
-    private Game makeGame() {
-        Game game = new Game();
-        game.setGameCode("ABCD");
-        return game;
+        Game game = repository.createGame("zayb");
+        assertNotNull(game);
     }
 }
