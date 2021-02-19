@@ -34,6 +34,16 @@ public class QuestionJdbcTemplateRepository implements QuestionRepository{
     }
 
     @Override
+    public Question findById(int questionId) {
+        final String sql = "select question_id, question, category_name "
+                + "from question "
+                + "where question_id = ?;";
+
+        return jdbcTemplate.query(sql, new QuestionMapper(), questionId).stream()
+                .findFirst().orElse(null);
+    }
+
+    @Override
     public Question addQuestion(Question question) {
 
         final String sql = "insert into question (question, category_name) "

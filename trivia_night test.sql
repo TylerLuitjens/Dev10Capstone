@@ -64,22 +64,19 @@ delimiter //
 create procedure set_known_good_state()
 begin 
 
-	delete from answer;
-    alter table answer auto_increment = 1;
-    delete from question;
-    alter table question auto_increment = 1;
-    delete from question;
-    alter table question auto_increment = 1;
-    delete from answer;
-    alter table answer auto_increment = 1;
-    delete from `user`;
-    alter table `user` auto_increment = 1;
-    delete from game;
-    alter table game auto_increment = 1;
     delete from game_question;
     alter table game_question auto_increment = 1;
     delete from game_user;
     alter table game_user auto_increment = 1;
+	delete from answer;
+    alter table answer auto_increment = 1;
+	delete from question;
+    alter table question auto_increment = 1;
+    delete from `user`;
+    alter table `user` auto_increment = 1;
+    delete from game;
+    alter table game auto_increment = 1;
+ 
         
         /*
         "Paul McCartney has always used his middle name. What is his real first name? ","correct_answer":"James","incorrect_answers":["John","Jack","Justin"]}
@@ -109,7 +106,8 @@ begin
 	insert into user (user_id, username, `password`, total_questions_answered, total_questions_correct) values
 		(1, 'First User', 'Clear_text', 5, 2),
         (2, 'Second User', 'Unsafe_password', 10, 8),
-        (3, 'Third User', 'Poor_practice', 8, 4);
+        (3, 'Third User', 'Poor_practice', 8, 4),
+        (4, 'Fourth User', 'Poor_practice', 8, 8);
         
 	insert into game (game_code) values
 		('ABCD'),

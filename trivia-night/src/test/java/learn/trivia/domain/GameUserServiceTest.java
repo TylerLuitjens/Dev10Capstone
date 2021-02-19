@@ -2,7 +2,9 @@ package learn.trivia.domain;
 
 import learn.trivia.data.GameRepository;
 import learn.trivia.data.UserRepository;
+import learn.trivia.models.Game;
 import learn.trivia.models.GameUser;
+import learn.trivia.models.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -48,11 +50,12 @@ public class GameUserServiceTest {
     void shouldCreateGameUser() {
         GameUser gameUser = makeGameUser();
 
-        when(gameUserRepository.addGameUser("WXyz", 1)).thenReturn(true);
+        when(gameRepository.findGameByCode("WXyZ")).thenReturn(makeGame());
+        when(userRepository.findById(1)).thenReturn(makeUser());
+        when(gameUserRepository.addGameUser("WXyZ", 1)).thenReturn(true);
 
-        Result<GameUser> actual = service.createGameUser("WXyz", 1);
+        Result<GameUser> actual = service.createGameUser("WXyZ", 1);
         assertEquals(ResultType.SUCCESS, actual.getType());
-        assertEquals(gameUser, actual.getPayload());
     }
 
     // should not create GameUser with blank game code
@@ -60,7 +63,7 @@ public class GameUserServiceTest {
     void shouldNotCreateGameUserWithBlankCode() {
 
         Result<GameUser> actual = service.createGameUser("", 1);
-        assertEquals(ResultType.INVALID, actual.getType());
+        assertEquals(ResultType.NOT_FOUND, actual.getType());
     }
 
     // should not create GameUser with invalid game code
@@ -86,11 +89,11 @@ public class GameUserServiceTest {
     void shouldUpdateGameUser() {
         GameUser gameUser = makeGameUser();
 
+        when(gameUserRepository.findGameUser(gameUser.getGameCode(), gameUser.getUserId())).thenReturn(gameUser);
         when(gameUserRepository.updateGameUser(gameUser)).thenReturn(true);
 
         Result<GameUser> actual = service.updateGameUser(gameUser);
         assertEquals(ResultType.SUCCESS, actual.getType());
-        assertEquals(gameUser, actual.getPayload());
     }
 
     // should not update game user not matching records
@@ -115,4 +118,23 @@ public class GameUserServiceTest {
         return gameUser;
     }
 
+    Game makeGame() {
+
+        Game game = new Game();
+
+        game.setGameCode("WXyZ");
+
+        return game;
+    }
+
+    User makeUser() {
+        User user = new User();
+        user.setUserId(1);
+        user.setUserName("Test");
+        user.setPassword("Pass");
+        user.setNumAnswered(2);
+        user.setNumCorrect(1);
+
+        return user;
+    }
 }

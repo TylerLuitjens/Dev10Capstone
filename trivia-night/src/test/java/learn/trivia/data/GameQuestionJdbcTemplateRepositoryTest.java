@@ -1,5 +1,7 @@
 package learn.trivia.data;
 
+import learn.trivia.models.Game;
+import learn.trivia.models.GameQuestion;
 import learn.trivia.models.GameUser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,7 +14,7 @@ import java.util.List;
 public class GameQuestionJdbcTemplateRepositoryTest {
 
     @Autowired
-    GameUserJdbcTemplateRepository repository;
+    GameQuestionRepository repository;
 
     @Autowired
     KnownGoodState knownGoodState;
@@ -23,16 +25,16 @@ public class GameQuestionJdbcTemplateRepositoryTest {
     }
 
     @Test
-    void shouldFindUsersByGame() {
+    void shouldFindQuestionsByGame() {
         String gameCode = "ABCD";
-        List<GameUser> users = repository.findByGameCode(gameCode);
+        List<GameQuestion> users = repository.findByGameCode(gameCode);
         assertTrue(users.size() > 0);
     }
 
     @Test
-    void shouldFindNoUsersForMissingGame() {
+    void shouldFindNoQuestionsForMissingGame() {
         String gameCode = "zzzz";
-        List<GameUser> users = repository.findByGameCode(gameCode);
+        List<GameQuestion> users = repository.findByGameCode(gameCode);
 
         assertEquals(users.size(), 0);
     }
@@ -40,13 +42,11 @@ public class GameQuestionJdbcTemplateRepositoryTest {
     @Test
     void shouldAdd() {
         String gameCode = "ABCD";
-        GameUser gameUser = new GameUser();
-        gameUser.setGameCode(gameCode);
-        gameUser.setUserId(2);
-        gameUser.setNumAnswered(0);
-        gameUser.setNumCorrect(0);
+        GameQuestion gameQuestion = new GameQuestion();
+        gameQuestion.setGameCode(gameCode);
+        gameQuestion.setQuestionId(3);
 
-        boolean success = repository.addGameUser(gameUser);
+        boolean success = repository.addGameQuestion(gameQuestion);
         assertTrue(success);
         assertTrue(repository.findByGameCode(gameCode).size() > 1);
     }
@@ -54,8 +54,9 @@ public class GameQuestionJdbcTemplateRepositoryTest {
     @Test
     void shouldAddByData() {
         String gameCode = "ABCD";
+        int questionId = 4;
 
-        boolean success = repository.addGameUser(gameCode, 3);
+        boolean success = repository.addGameQuestion(gameCode, questionId);
         assertTrue(success);
         assertTrue(repository.findByGameCode(gameCode).size() > 1);
     }

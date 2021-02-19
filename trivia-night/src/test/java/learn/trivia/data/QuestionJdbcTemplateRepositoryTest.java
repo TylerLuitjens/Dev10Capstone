@@ -31,6 +31,21 @@ class QuestionJdbcTemplateRepositoryTest {
     }
 
     @Test
+    void shouldFindQuestionById() {
+        Question question = repository.findById(1);
+        assertNotNull(question);
+        assertEquals("Paul McCartney has always used his middle name. What is his real first name?",
+                question.getQuestion());
+        assertEquals("Celebrities", question.getCategory());
+    }
+
+    @Test
+    void shouldFindNullById() {
+        Question question = repository.findById(100);
+        assertNull(question);
+    }
+
+    @Test
     void shouldAddQuestion() {
         Question question = makeQuestion();
         Question actual = repository.addQuestion(question);

@@ -126,5 +126,7 @@ public class UserService {
         return result;
     }
 
-    // TODO add method to retrieve leaderboard info
+    public List<User> leaderboard() {
+        return repository.leaderboard();
+    }
 }

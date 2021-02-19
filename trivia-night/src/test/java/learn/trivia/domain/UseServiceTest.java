@@ -195,6 +195,20 @@ public class UseServiceTest {
         assertFalse(result.isSuccess());
     }
 
+    @Test
+    void shouldFindLeaderboard() {
+        User firstUser = makeUser();
+        User secondUser = makeUser();
+        secondUser.setUserId(2);
+        secondUser.setUserName("Another name");
+
+        List<User> expected = List.of(firstUser, secondUser);
+
+        when(userRepository.leaderboard()).thenReturn(expected);
+
+        List<User> actual = service.leaderboard();
+        assertEquals(expected, actual);
+    }
 
     User makeUser() {
         User user = new User();
