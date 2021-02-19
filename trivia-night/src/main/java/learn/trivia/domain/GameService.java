@@ -4,6 +4,7 @@ import learn.trivia.data.AnswerRepository;
 import learn.trivia.data.GameRepository;
 import learn.trivia.data.QuestionRepository;
 import learn.trivia.data.UserRepository;
+import learn.trivia.models.Game;
 import org.springframework.stereotype.Service;
 import learn.trivia.models.Game;
 import java.util.List;
@@ -26,25 +27,9 @@ public class GameService {
         return gameRepository.findGameByCode(gameCode);
     }
 
-    public Result<Game> createGame() {
+    public Result<Game> create() {
         Result<Game> result = new Result<>();
-        String gameCode = gameCodeGenerator();
-        boolean isValid = false;
-
-        while (!isValid) {
-            int loopCount = 0;
-
-            for (Game game : findAllGames()) {
-                if (game.getGameCode().equals(gameCode)) {
-                    gameCode = gameCodeGenerator();
-                    loopCount = 0;
-                } else {
-                    loopCount++;
-                }
-            } if (loopCount == findAllGames().size()) {
-                isValid = true;
-            }
-        }
+        String gameCode = validateGameCode();
 
         Game game = gameRepository.createGame(gameCode);
         result.setPayload(game);
@@ -61,6 +46,27 @@ public class GameService {
                     .toCharArray()[randomNumber.nextInt("aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ"
                     .toCharArray().length)];
             gameCode = gameCode + selectedChar;
+        }
+        return gameCode;
+    }
+
+    private String validateGameCode() {
+        String gameCode = gameCodeGenerator();
+        boolean isValid = false;
+
+        while (!isValid) {
+            int loopCount = 0;
+
+            for (Game game : findAllGames()) {
+                if (game.getGameCode().equals(gameCode)) {
+                    gameCode = gameCodeGenerator();
+                    loopCount = 0;
+                } else {
+                    loopCount++;
+                }
+            } if (loopCount == findAllGames().size()) {
+                isValid = true;
+            }
         }
         return gameCode;
     }

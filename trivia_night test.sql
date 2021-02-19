@@ -68,8 +68,6 @@ begin
     alter table answer auto_increment = 1;
     delete from question;
     alter table question auto_increment = 1;
-	delete from category;
-    alter table category auto_increment = 1;
     delete from question;
     alter table question auto_increment = 1;
     delete from answer;
@@ -82,9 +80,6 @@ begin
     alter table game_question auto_increment = 1;
     delete from game_user;
     alter table game_user auto_increment = 1;
-    
-    insert into category (category_id, category_name) values
-		(1, 'Celebrities'),(2, 'Computer Science'),(3, 'General Knowledge');
         
         /*
         "Paul McCartney has always used his middle name. What is his real first name? ","correct_answer":"James","incorrect_answers":["John","Jack","Justin"]}
@@ -95,13 +90,13 @@ begin
         "What is the full title of the Prime Minister of the UK?","correct_answer":"First Lord of the Treasury","incorrect_answers":["Duke of Cambridge","Her Majesty&#039;s Loyal Opposition","Manager of the Crown Estate"]
        */
         
-	insert into question (question_id, question, category_id) values
-		(1, 'Paul McCartney has always used his middle name. What is his real first name?', 1), 
-        (2, 'Where was Kanye West born?', 1),
-        (3, 'Approximately how many Apple I personal computers were created?', 2),
-        (4, 'What five letter word is the motto of the IBM Computer company', 2),
-        (5, "What is the world's most expensive spice by weight?", 3),
-        (6, 'What is the full title of the Prime Minister of the UK?', 3);
+	insert into question (question_id, question, category_name) values
+		(1, 'Paul McCartney has always used his middle name. What is his real first name?', 'Celebrities'), 
+        (2, 'Where was Kanye West born?', 'Celebrities'),
+        (3, 'Approximately how many Apple I personal computers were created?', 'Computer Science'),
+        (4, 'What five letter word is the motto of the IBM Computer company', 'Computer Science'),
+        (5, "What is the world's most expensive spice by weight?", 'General Knowledge'),
+        (6, 'What is the full title of the Prime Minister of the UK?', 'General Knowledge');
         
 	insert into answer (answer_id, question_id, answer, isCorrect) values
 		(1, 1, 'James', 1), (2, 1, 'John', 0), (3, 1, 'Jack', 0), (4, 1, 'Justin', 0),
@@ -115,6 +110,10 @@ begin
 		(1, 'First User', 'Clear_text', 5, 2),
         (2, 'Second User', 'Unsafe_password', 10, 8),
         (3, 'Third User', 'Poor_practice', 8, 4);
+        
+	insert into game (game_code) values
+		('ABCD'),
+        ('DCBA');
         
 	end //
     

@@ -55,6 +55,27 @@ public class UseServiceTest {
     }
 
     @Test
+    void shouldFindByUserName() {
+        User expected = makeUser();
+
+        when(userRepository.findByUserName("Test")).thenReturn(expected);
+
+        User actual = service.findByUserName("Test");
+        assertEquals(expected, actual);
+    }
+
+
+    @Test
+    void shouldNotFindByInvalidUserName() {
+        User expected = makeUser();
+
+        when(userRepository.findByUserName("Tex")).thenReturn(null);
+
+        User actual = service.findByUserName("Null");
+        assertNull(actual);
+    }
+
+    @Test
     void shouldCreateUser() {
         User user = makeUser();
 
@@ -91,6 +112,52 @@ public class UseServiceTest {
         assertFalse(result.isSuccess());
 
     }
+
+    // should not add with blank userName
+    @Test
+    void shouldNotCreateUserWithBlankUserName() {
+        User user = makeUser();
+
+        user.setUserId(0);
+        user.setUserName("");
+
+        Result<User>actual = service.create(user);
+        assertEquals(ResultType.INVALID, actual.getType());
+    }
+    // should not add with blank password
+    @Test
+    void shouldNotCreateUserWithBlankPassword() {
+        User user = makeUser();
+
+        user.setUserId(0);
+        user.setPassword("");
+
+        Result<User>actual = service.create(user);
+        assertEquals(ResultType.INVALID, actual.getType());
+    }
+    // should not add with numAnswered < 0
+    @Test
+    void shouldNotCreateUserWithNegativeNumAnswered() {
+        User user = makeUser();
+
+        user.setUserId(0);
+        user.setNumAnswered(-1);
+
+        Result<User>actual = service.create(user);
+        assertEquals(ResultType.INVALID, actual.getType());
+    }
+    // should not add with numCorrect < 0
+    @Test
+    void shouldNotCreateUserWithNegativeNumCorrect() {
+        User user = makeUser();
+
+        user.setUserId(0);
+        user.setNumCorrect(-1);
+
+        Result<User>actual = service.create(user);
+        assertEquals(ResultType.INVALID, actual.getType());
+    }
+
 
     @Test
     void shouldUpdate() {

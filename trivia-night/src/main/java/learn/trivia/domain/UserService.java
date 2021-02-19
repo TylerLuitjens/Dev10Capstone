@@ -28,6 +28,10 @@ public class UserService {
         return repository.findById(userId);
     }
 
+    public User findByUserName(String UserName) {
+        return repository.findByUserName(UserName);
+    }
+
     public Result<User> create(User user) {
         Result<User> result = validate(user);
 
