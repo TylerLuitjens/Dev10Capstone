@@ -6,6 +6,8 @@ import learn.trivia.models.GameUser;
 import learn.trivia.data.GameUserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class GameUserService {
 
@@ -21,6 +23,10 @@ public class GameUserService {
 
     public GameUser findGameUser(String gameCode, int userId) {
         return gameUserRepository.findGameUser(gameCode, userId);
+    }
+
+    public List<GameUser> findByGameCode(String gameCode) {
+        return gameUserRepository.findByGameCode(gameCode);
     }
 
     public Result<GameUser> createGameUser(String gameCode, int userId) {

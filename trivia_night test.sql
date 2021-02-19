@@ -70,7 +70,7 @@ begin
     alter table game_user auto_increment = 1;
 	delete from answer;
     alter table answer auto_increment = 1;
-    delete from question;
+	delete from question;
     alter table question auto_increment = 1;
     delete from `user`;
     alter table `user` auto_increment = 1;

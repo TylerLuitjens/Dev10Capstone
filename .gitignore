@@ -4,6 +4,8 @@
 *.iml
 
 node_modules/
+/.pnp
+.pnp.js
 
 # Compiled class file
 *.class
