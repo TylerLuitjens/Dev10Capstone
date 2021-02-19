@@ -36,6 +36,19 @@ public class GameController {
         return gameService.findGameByCode(gameId);
     }
 
+    @PutMapping("/")
+    public ResponseEntity<Object> updateGameUser(@RequestBody GameUser gameUser) {
+
+        Result<GameUser> result = gameUserService.updateGameUser(gameUser);
+
+        if (!result.isSuccess()) {
+            return new ResponseEntity<>(ErrorResponse.build(result), HttpStatus.NO_CONTENT);
+        }
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+
     @PostMapping("/user/{userId}/{gameCode}")
     public ResponseEntity<Object> addUserToGame(@PathVariable int userId, @PathVariable String gameCode) {
         Result<GameUser> result = gameUserService.createGameUser(gameCode, userId);
@@ -60,11 +73,11 @@ public class GameController {
 //        gameQuestionService.createGameQuestion(game.getGameCode(), user.getUserId());
         List<Question> questions = questionService.findByCategory(category);
         List<GameQuestion> gameQuestions = transformQuestions(questions, game.getGameCode());
-        boolean success = gameQuestionService.addAll(gameQuestions);
-
-        if (!success) {
-            return new ResponseEntity<>(ErrorResponse.build(result), HttpStatus.BAD_REQUEST);
-        }
+//        boolean success = gameQuestionService.addAll(gameQuestions);
+//
+//        if (!success) {
+//            return new ResponseEntity<>(ErrorResponse.build(result), HttpStatus.BAD_REQUEST);
+//        }
 
         gameUserService.createGameUser(game.getGameCode(), user.getUserId());
 
@@ -93,12 +106,11 @@ public class GameController {
 
     private Game populateGame(Game game) {
         List<GameQuestion> gameQuestions =  gameQuestionService.findByGameCode(game.getGameCode());
-        List<GameUser> gameUsers = gameUserService.findByGameCode(game.getGameCode());
-        game.setGameQuestions(gameQuestions);
-        game.setGameUsers(gameUsers);
+//        List<GameUser> gameUsers = gameUserService.findByGameCode(game.getGameCode());
+//        game.setGameQuestions(gameQuestions);
+//        game.setGameUsers(gameUsers);
 
         return game;
     }
 
-    // TODO need endpoint to update GameUser num_answered and num_correct
 }

@@ -3,11 +3,13 @@ package learn.trivia.data;
 import learn.trivia.data.mappers.GameUserMapper;
 import learn.trivia.models.GameUser;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
 
+@Repository
 public class GameUserJdbcTemplateRepository implements GameUserRepository{
 
     private JdbcTemplate template;
@@ -63,10 +65,10 @@ public class GameUserJdbcTemplateRepository implements GameUserRepository{
 
     @Override
     public boolean updateGameUser(GameUser gameUser) {
-        String sql = "UPDATE game_user SET" +
-                "num_answered = ?," +
-                "num_correct = ?" +
-                "WHERE user_id = ? AND game_code = ?";
+        String sql = "UPDATE game_user SET " +
+                "num_answered = ?, " +
+                "num_correct = ? " +
+                "WHERE user_id = ? AND game_code = ?;";
 
         int rowsAffected = template.update(connection -> {
             PreparedStatement ps = connection.prepareStatement(sql);
