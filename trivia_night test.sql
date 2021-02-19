@@ -115,6 +115,16 @@ begin
 		('ABCD'),
         ('DCBA');
         
+	insert into game_user (game_code, user_id) values
+		('ABCD',1);
+	
+    insert into game_question (game_code, question_id) values
+		('ABCD', 1),
+        ('ABCD', 2),
+        ('ABCD', 3),
+        ('ABCD', 4),
+        ('ABCD', 5);
+        
 	end //
     
     delimiter ;

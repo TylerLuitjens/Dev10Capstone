@@ -3,6 +3,7 @@ package learn.trivia.domain;
 import learn.trivia.data.GameQuestionRepository;
 import learn.trivia.data.GameRepository;
 import learn.trivia.data.QuestionRepository;
+import learn.trivia.data.UserRepository;
 import learn.trivia.models.GameQuestion;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -12,13 +13,13 @@ import java.util.List;
 @Service
 public class GameQuestionService {
     private final GameQuestionRepository gameQuestionRepository;
-    private final QuestionRepository questionRepository;
+    private final UserRepository userRepository;
     private final GameRepository gameRepository;
 
-    public GameQuestionService(GameQuestionRepository gameQuestionRepository, QuestionRepository questionRepository,
+    public GameQuestionService(GameQuestionRepository gameQuestionRepository, UserRepository userRepository,
                                GameRepository gameRepository) {
         this.gameQuestionRepository = gameQuestionRepository;
-        this.questionRepository = questionRepository;
+        this.userRepository = userRepository;
         this.gameRepository = gameRepository;
     }
 
@@ -26,7 +27,7 @@ public class GameQuestionService {
         return gameQuestionRepository.findByGameCode(gameCode);
     }
 
-    public Result<GameQuestion> createGameQuestion(String gameCode, String category) {
+    public Result<GameQuestion> createGameQuestion(String gameCode, int userId) {
         Result<GameQuestion> result = new Result<>();
 
         if (gameRepository.findGameByCode(gameCode) == null) {
@@ -35,16 +36,19 @@ public class GameQuestionService {
             return result;
         }
 
-        if (questionRepository.findByCategory(category).size() < 0) {
-            String message = String.format("Category %s not found", category);
+        if (userRepository.findById(userId) == null) {
+            String message = String.format("User %s not found", userId);
             result.addMessage(message, ResultType.NOT_FOUND);
             return result;
         }
 
-        GameQuestion gameQuestion = gameQuestionRepository.create(gameCode, category);
-        result.setPayload(gameQuestion);
+        boolean success = gameQuestionRepository.addGameQuestion(gameCode, userId);
+
+        if (!success) {
+            result.addMessage("Database error. Unable to add User to Game", ResultType.INVALID);
+        }
+
         return result;
     }
 
 }
-C

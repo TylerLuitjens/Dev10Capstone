@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public class GameQuestionJdbcTemplateRepository implements GameQuestionRepository{
-    private JdbcTemplate template;
+    private final JdbcTemplate template;
 
     public GameQuestionJdbcTemplateRepository(JdbcTemplate template) {
         this.template = template;
@@ -26,7 +26,7 @@ public class GameQuestionJdbcTemplateRepository implements GameQuestionRepositor
     }
 
     @Override
-    public List<GameQuestion> getGameQuestionsByGame(String gameCode) {
+    public List<GameQuestion> findByGameCode(String gameCode) {
         String sql = "SELECT * FROM game_question " +
                 "INNER JOIN question ON game_question.question_id = question.question_id " +
                 "WHERE game_code = ?;";

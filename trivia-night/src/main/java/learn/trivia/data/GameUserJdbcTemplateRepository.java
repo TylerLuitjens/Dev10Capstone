@@ -17,14 +17,14 @@ public class GameUserJdbcTemplateRepository implements GameUserRepository{
     }
 
     @Override
-    public GameUser getGameUser(String gameCode, int userId) {
+    public GameUser findGameUser(String gameCode, int userId) {
         String sql = "SELECT * FROM game_user WHERE game_code = ? AND user_id = ?;";
 
         return template.query(sql, new GameUserMapper(), gameCode, userId).stream().findFirst().orElse(null);
     }
 
     @Override
-    public List<GameUser> getGameUsersByGame(String gameCode) {
+    public List<GameUser> findByGameCode(String gameCode) {
         String sql = "SELECT * FROM game_user WHERE game_code = ?;";
 
         return template.query(sql, new GameUserMapper(), gameCode);
