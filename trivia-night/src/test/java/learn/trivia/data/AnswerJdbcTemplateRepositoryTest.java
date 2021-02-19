@@ -39,6 +39,12 @@ class AnswerJdbcTemplateRepositoryTest {
     }
 
     @Test
+    void shouldNullByAnswerId() {
+        Answer answer = repository.findByAnswerId(100);
+        assertNull(answer);
+    }
+
+    @Test
     void shouldFindAnswer() {
         Answer answer = repository.findByAnswer("James");
         assertNotNull(answer);
@@ -47,7 +53,7 @@ class AnswerJdbcTemplateRepositoryTest {
     }
 
     @Test
-    void shouldNotFindAnswer() {
+    void shouldNullByAnswer() {
         Answer answer = repository.findByAnswer("NOT FOUND");
         assertNull(answer);
     }

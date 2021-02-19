@@ -42,9 +42,21 @@ class UserJdbcTemplateRepositoryTest {
     }
 
     @Test
+    void shouldFindNullById() {
+        User user = repository.findById(100);
+        assertNull(user);
+    }
+
+    @Test
     void shouldFindByUserName() {
         User user = repository.findByUserName("First User");
         assertNotNull(user);
+    }
+
+    @Test
+    void shouldFindNullByUserName() {
+        User user = repository.findByUserName("Non existing");
+        assertNull(user);
     }
 
     @Test
@@ -74,5 +86,12 @@ class UserJdbcTemplateRepositoryTest {
         user.setNumAnswered(100);
         user.setNumCorrect(1);
         return user;
+    }
+
+    @Test
+    void shouldFindLeaderboard() {
+        List<User> leaderboard = repository.leaderboard();
+        assertNotNull(leaderboard);
+        assertTrue(leaderboard.size() <= 10);
     }
 }

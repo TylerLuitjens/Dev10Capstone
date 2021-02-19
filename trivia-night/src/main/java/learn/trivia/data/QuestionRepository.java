@@ -8,5 +8,7 @@ public interface QuestionRepository {
 
     List<Question> findByCategory(String category);
 
+    Question findById(int questionId);
+
     Question addQuestion(Question question);
 }
