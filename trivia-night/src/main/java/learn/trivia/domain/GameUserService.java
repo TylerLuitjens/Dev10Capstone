@@ -1,6 +1,8 @@
 package learn.trivia.domain;
 
+import learn.trivia.data.GameRepository;
 import learn.trivia.data.UserRepository;
+import learn.trivia.models.GameUser;
 import learn.trivia.models.User;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +27,7 @@ public class GameUserService {
         Result<GameUser> result = validate(userId);
 
         if (gameCode.isBlank()) {
-            result.addMessage("Game code is required.", ResultType.NOT_FOUND);
+            result.addMessage("Game code is required.", ResultType.INVALID);
         }
 
         if (gameRepository.findByCode(gameCode) == null) {
@@ -46,7 +48,7 @@ public class GameUserService {
     }
 
     public Result<GameUser> updateGameUser(GameUser gameUser) {
-        Result<GameUser> result = validate(user.getUserId());
+        Result<GameUser> result = validate(gameUser.getUserId());
 
         if (gameUserRespository.findGameUser(gameUser.getGameCode(), gameUser.getUserId()) == null) {
             String message = "Game user not found";
