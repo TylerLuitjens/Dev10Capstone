@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface GameUserRepository {
 
-    public GameUser getGameUser (String gameCode, int userId);
-    public List<GameUser> getGameUsersByGame(String gameCode);
+    public GameUser findGameUser(String gameCode, int userId);
+    public List<GameUser> findByGameCode(String gameCode);
     public boolean addGameUser(String gameCode, int userId);
     public boolean addGameUser(GameUser gameUser);
     public boolean updateGameUser(GameUser gameUser);

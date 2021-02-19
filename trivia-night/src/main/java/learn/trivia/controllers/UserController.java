@@ -30,7 +30,7 @@ public class UserController {
 
     @PostMapping("/")
     public ResponseEntity<Object> createUser (@RequestBody User user) {
-        Result result  = userService.create(user);
+        Result<User> result  = userService.create(user);
 
         if (!result.isSuccess()) {
             return new ResponseEntity<>(ErrorResponse.build(result), HttpStatus.BAD_REQUEST);
@@ -41,7 +41,7 @@ public class UserController {
 
     @PutMapping("/")
     public ResponseEntity<Object> updateUser (User user) {
-        Result result = userService.update(user);
+        Result<User> result = userService.update(user);
 
         if (!result.isSuccess()) {
             return new ResponseEntity<>(ErrorResponse.build(result), HttpStatus.BAD_REQUEST);
@@ -49,4 +49,7 @@ public class UserController {
 
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    // TODO need endpoint to find user by name
+    // TODO need leaderboard endpoint
 }

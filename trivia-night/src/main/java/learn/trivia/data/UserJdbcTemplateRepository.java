@@ -34,10 +34,8 @@ public class UserJdbcTemplateRepository implements UserRepository{
                 + "from user "
                 + "where user_id = ?;";
 
-        User user = jdbcTemplate.query(sql, new UserMapper(), userId).stream()
+        return jdbcTemplate.query(sql, new UserMapper(), userId).stream()
                 .findFirst().orElse(null);
-
-        return user;
     }
 
     @Override
@@ -47,17 +45,15 @@ public class UserJdbcTemplateRepository implements UserRepository{
                 + "from user "
                 + "where username = ?;";
 
-        User user = jdbcTemplate.query(sql, new UserMapper(), userName).stream()
+        return jdbcTemplate.query(sql, new UserMapper(), userName).stream()
                 .findFirst().orElse(null);
-
-        return user;
     }
 
     @Override
     public User create(User user) {
 
-        final String sql = "insert into user (username, password) "
-                + "values (?,?);";
+        final String sql = "insert into user (username, password, total_questions_answered, total_questions_correct) "
+                + "values (?,?,0,0);";
 
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int rowsAffected = jdbcTemplate.update(connection -> {
@@ -97,4 +93,6 @@ public class UserJdbcTemplateRepository implements UserRepository{
     public boolean delete(int userId) {
         return jdbcTemplate.update("delete from user where user_id = ?;", userId) > 0;
     }
+
+    // TODO add in method for leaderboard info
 }

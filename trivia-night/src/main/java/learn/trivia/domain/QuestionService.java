@@ -1,8 +1,6 @@
 package learn.trivia.domain;
 
-import learn.trivia.data.QuestionJdbcTemplateRepository;
 import learn.trivia.data.QuestionRepository;
-import learn.trivia.models.Answer;
 import learn.trivia.models.Question;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +13,7 @@ import java.util.Set;
 
 @Service
 public class QuestionService {
-    private QuestionRepository repository;
+    private final QuestionRepository repository;
 
     public QuestionService (QuestionRepository repository) {
         this.repository = repository;

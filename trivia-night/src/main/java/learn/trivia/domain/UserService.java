@@ -1,6 +1,5 @@
 package learn.trivia.domain;
 
-import learn.trivia.data.UserJdbcTemplateRepository;
 import learn.trivia.data.UserRepository;
 import learn.trivia.models.User;
 import org.springframework.stereotype.Service;
@@ -126,4 +125,6 @@ public class UserService {
         }
         return result;
     }
+
+    // TODO add method to retrieve leaderboard info
 }

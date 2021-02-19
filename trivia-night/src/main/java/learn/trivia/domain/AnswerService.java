@@ -15,7 +15,7 @@ import java.util.Set;
 
 @Service
 public class AnswerService {
-    private AnswerRepository repository;
+    private final AnswerRepository repository;
 
     public AnswerService(AnswerRepository repository) {
         this.repository = repository;

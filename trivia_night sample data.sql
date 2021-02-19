@@ -48,7 +48,7 @@ insert into answer (answer_id, question_id, answer, isCorrect) values
     (45, 12, 'Russia', 1), (46, 12, 'Canada', 0), (47, 12, 'United States', 0), (48, 12, 'Germany', 0);
     
 	
-insert into user (user_id, username, `password`, questions_answered, questions_correct) values
+insert into user (user_id, username, `password`, total_questions_answered, total_questions_correct) values
 	(1, 'First User', 'Clear_text', 5, 2),
 	(2, 'Second User', 'Unsafe_password', 10, 8),
 	(3, 'Third User', 'Poor_practice', 8, 4);
