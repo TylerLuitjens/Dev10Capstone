@@ -13,41 +13,41 @@ import java.util.List;
 @RequestMapping("/game")
 public class GameController {
 
-//    GameService gameService;
-//    UserService userService;
-//    QuestionService questionService;
-//    GameQuestionService gameQuestionService;
-//    GameUserService gameUserService;
-//
-//    public GameController(GameService gameService, UserService userService,
-//                          GameQuestionService gameQuestionService, GameUserService gameUserService,
-//                          QuestionService questionService) {
-//
-//        this.gameService = gameService;
-//        this.userService = userService;
-//        this.questionService = questionService;
-//        this.gameQuestionService = gameQuestionService;
-//        this.gameUserService = gameUserService;
-//    }
-//
-//    @GetMapping("/{gameId}")
-//    public Game getGame(@PathVariable String gameId) {
-//        // TODO get gameQuestions, and gameUsers as well, tie them to the game, and then return it
-//        return gameService.findGameByCode(gameId);
-//    }
-//
-//    @PostMapping("/user/{userId}/{gameCode}")
-//    public ResponseEntity<Object> addUserToGame(@PathVariable int userId, @PathVariable String gameCode) {
-//        Result<GameUser> result = gameUserService.createGameUser(gameCode, userId);
-//        if (!result.isSuccess()) {
-//            return new ResponseEntity<>(ErrorResponse.build(result), HttpStatus.BAD_REQUEST);
-//        }
-//
-//        Game game = gameService.findGameByCode(gameCode);
-//        return new ResponseEntity<>(game, HttpStatus.OK);
-//
-//    }
-//
+    GameService gameService;
+    UserService userService;
+    QuestionService questionService;
+    GameQuestionService gameQuestionService;
+    GameUserService gameUserService;
+
+    public GameController(GameService gameService, UserService userService,
+                          GameQuestionService gameQuestionService, GameUserService gameUserService,
+                          QuestionService questionService) {
+
+        this.gameService = gameService;
+        this.userService = userService;
+        this.questionService = questionService;
+        this.gameQuestionService = gameQuestionService;
+        this.gameUserService = gameUserService;
+    }
+
+    @GetMapping("/{gameId}")
+    public Game getGame(@PathVariable String gameId) {
+        // TODO get gameQuestions, and gameUsers as well, tie them to the game, and then return it
+        return gameService.findGameByCode(gameId);
+    }
+
+    @PostMapping("/user/{userId}/{gameCode}")
+    public ResponseEntity<Object> addUserToGame(@PathVariable int userId, @PathVariable String gameCode) {
+        Result<GameUser> result = gameUserService.createGameUser(gameCode, userId);
+        if (!result.isSuccess()) {
+            return new ResponseEntity<>(ErrorResponse.build(result), HttpStatus.BAD_REQUEST);
+        }
+
+        Game game = gameService.findGameByCode(gameCode);
+        return new ResponseEntity<>(game, HttpStatus.OK);
+
+    }
+
 //    @PostMapping("/{category}")
 //    public ResponseEntity<Object> createGame(@PathVariable String category, @RequestBody User user) {
 //        Result<Game> result = gameService.create();
@@ -76,71 +76,6 @@ public class GameController {
 //        }
 //        return new ResponseEntity<>(game, HttpStatus.CREATED);
 //    }
-//
-//    private List<GameQuestion> transformQuestions (List<Question> questions, String gameCode) {
-//        List<GameQuestion> gameQuestions = new ArrayList<GameQuestion>();
-//
-//        for(Question question : questions) {
-//            GameQuestion gameQuestion = new GameQuestion();
-//            gameQuestion.setQuestionId(question.getQuestionId());
-//            gameQuestion.setGameCode(gameCode);
-//            gameQuestion.setQuestion(question.getQuestion());
-//
-//            gameQuestions.add(gameQuestion);
-//        }
-//        return gameQuestions;
-//    }
-//
-//    private Game populateGame(Game game) {
-//        List<GameQuestion> gameQuestions =  gameQuestionService.findByGameCode(game.getGameCode());
-//        List<GameUser> gameUsers = gameUserService.findByGameCode(game.getGameCode());
-//        game.setGameQuestions(gameQuestions);
-//        game.setGameUsers(gameUsers);
-//
-//        return game;
-//    }
-
-    public GameController(GameService gameService, UserService userService,
-                          GameQuestionService gameQuestionService, GameUserService gameUserService,
-                          QuestionService questionService) {
-
-        this.gameService = gameService;
-        this.userService = userService;
-        this.questionService = questionService;
-        this.gameQuestionService = gameQuestionService;
-        this.gameUserService = gameUserService;
-    }
-
-    @GetMapping("/{gameId}")
-    public Game getGame(@PathVariable String gameId) {
-        // TODO get gameQuestions, and gameUsers as well, tie them to the game, and then return it
-        return gameService.findGameByCode(gameId);
-    }
-
-    @PutMapping("/")
-    public ResponseEntity<Object> updateGameUser(@RequestBody GameUser gameUser) {
-
-        Result<GameUser> result = gameUserService.updateGameUser(gameUser);
-
-        if (!result.isSuccess()) {
-            return new ResponseEntity<>(ErrorResponse.build(result), HttpStatus.NO_CONTENT);
-        }
-
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-
-    @PostMapping("/user/{userId}/{gameCode}")
-    public ResponseEntity<Object> addUserToGame(@PathVariable int userId, @PathVariable String gameCode) {
-        Result<GameUser> result = gameUserService.createGameUser(gameCode, userId);
-        if (!result.isSuccess()) {
-            return new ResponseEntity<>(ErrorResponse.build(result), HttpStatus.BAD_REQUEST);
-        }
-
-        Game game = gameService.findGameByCode(gameCode);
-        return new ResponseEntity<>(game, HttpStatus.OK);
-
-    }
 
     @PostMapping("/{category}")
     public ResponseEntity<Object> createGame(@PathVariable String category, @RequestBody User user) {
@@ -187,11 +122,32 @@ public class GameController {
 
     private Game populateGame(Game game) {
         List<GameQuestion> gameQuestions =  gameQuestionService.findByGameCode(game.getGameCode());
-//        List<GameUser> gameUsers = gameUserService.findByGameCode(game.getGameCode());
-//        game.setGameQuestions(gameQuestions);
-//        game.setGameUsers(gameUsers);
+        List<GameUser> gameUsers = gameUserService.findByGameCode(game.getGameCode());
+        game.setGameQuestions(gameQuestions);
+        game.setGameUsers(gameUsers);
 
         return game;
     }
+
+
+    @PutMapping("/")
+    public ResponseEntity<Object> updateGameUser(@RequestBody GameUser gameUser) {
+
+        Result<GameUser> result = gameUserService.updateGameUser(gameUser);
+
+        if (!result.isSuccess()) {
+            return new ResponseEntity<>(ErrorResponse.build(result), HttpStatus.NO_CONTENT);
+        }
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+
+
+
+
+
+
+
 
 }
