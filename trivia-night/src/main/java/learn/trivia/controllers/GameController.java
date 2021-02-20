@@ -86,7 +86,7 @@ public class GameController {
         }
 
         Game game = (Game) result.getPayload();
-//        gameQuestionService.createGameQuestion(game.getGameCode(), user.getUserId());
+        gameQuestionService.createGameQuestion(game.getGameCode(), user.getUserId());
         List<Question> questions = questionService.findByCategory(category);
         List<GameQuestion> gameQuestions = transformQuestions(questions, game.getGameCode());
 //        boolean success = gameQuestionService.addAll(gameQuestions);
