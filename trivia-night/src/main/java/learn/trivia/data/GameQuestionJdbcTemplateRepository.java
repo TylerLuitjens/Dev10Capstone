@@ -63,4 +63,13 @@ public class GameQuestionJdbcTemplateRepository implements GameQuestionRepositor
 
         return rowsAffected > 0;
     }
+
+    @Override
+    public boolean addAll(List<GameQuestion> gameQuestions) {
+        boolean success = true;
+        for(GameQuestion question : gameQuestions) {
+            success = addGameQuestion(question);
+        }
+        return success;
+    }
 }
