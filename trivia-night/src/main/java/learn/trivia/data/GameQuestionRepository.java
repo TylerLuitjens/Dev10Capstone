@@ -10,4 +10,5 @@ public interface GameQuestionRepository {
     public List<GameQuestion> findByGameCode(String gameCode);
     public boolean addGameQuestion (String gameCode, int questionId);
     public boolean addGameQuestion (GameQuestion gameQuestion);
+    public boolean addAll (List<GameQuestion> gameQuestions);
 }
