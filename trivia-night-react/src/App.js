@@ -18,11 +18,11 @@ function NotFound() {
 
 function App() {
 
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
 
-  const handleSetUser = (user) => {
-    setUser(user);
-  }
+  // const handleSetUser = (user) => {
+  //   setUser(user);
+  // }
 
   return (
     <>
