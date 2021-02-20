@@ -26,7 +26,7 @@ function App() {
   }
 
   return (
-    <div class="container">
+    <div className="container">
       <Router>
 
       <nav className="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
