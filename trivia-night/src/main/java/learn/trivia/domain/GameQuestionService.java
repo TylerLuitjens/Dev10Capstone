@@ -26,9 +26,9 @@ public class GameQuestionService {
         return gameQuestionRepository.findByGameCode(gameCode);
     }
 
-    public boolean addAll(List<GameQuestion> gameQuestions) {
-        return gameQuestionRepository.addAll(gameQuestions);
-    }
+//    public boolean addAll(List<GameQuestion> gameQuestions) {
+//        return gameQuestionRepository.addAll(gameQuestions);
+//    }
 
     public Result<GameQuestion> createGameQuestion(String gameCode, int questionId) {
         Result<GameQuestion> result = new Result<>();
