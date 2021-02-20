@@ -37,19 +37,6 @@ public class GameController {
         return gameService.findGameByCode(gameId);
     }
 
-    @PutMapping("/")
-    public ResponseEntity<Object> updateGameUser(@RequestBody GameUser gameUser) {
-
-        Result<GameUser> result = gameUserService.updateGameUser(gameUser);
-
-        if (!result.isSuccess()) {
-            return new ResponseEntity<>(ErrorResponse.build(result), HttpStatus.NO_CONTENT);
-        }
-
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-
     @PostMapping("/user/{userId}/{gameCode}")
     public ResponseEntity<Object> addUserToGame(@PathVariable int userId, @PathVariable String gameCode) {
         Result<GameUser> result = gameUserService.createGameUser(gameCode, userId);
@@ -62,6 +49,35 @@ public class GameController {
 
     }
 
+//    @PostMapping("/{category}")
+//    public ResponseEntity<Object> createGame(@PathVariable String category, @RequestBody User user) {
+//        Result<Game> result = gameService.create();
+//
+//        if (!result.isSuccess()) {
+//            return new ResponseEntity<>(ErrorResponse.build(result), HttpStatus.BAD_REQUEST);
+//        }
+//
+//        Game game = (Game) result.getPayload();
+////        gameQuestionService.createGameQuestion(game.getGameCode(), user.getUserId());
+//        List<Question> questions = questionService.findByCategory(category);
+//        List<GameQuestion> gameQuestions = transformQuestions(questions, game.getGameCode());
+//        boolean success = gameQuestionService.addAll(gameQuestions);
+//
+//        if (!success) {
+//            return new ResponseEntity<>(ErrorResponse.build(result), HttpStatus.BAD_REQUEST);
+//        }
+//
+//        gameUserService.createGameUser(game.getGameCode(), user.getUserId());
+//
+//
+//        game = populateGame(game);
+//
+//        if (game.getGameUsers().size() == 0 || game.getGameQuestions().size() == 0) {
+//            return new ResponseEntity<>(ErrorResponse.build(result), HttpStatus.BAD_REQUEST);
+//        }
+//        return new ResponseEntity<>(game, HttpStatus.CREATED);
+//    }
+
     @PostMapping("/{category}")
     public ResponseEntity<Object> createGame(@PathVariable String category, @RequestBody User user) {
         Result<Game> result = gameService.create();
@@ -71,7 +87,7 @@ public class GameController {
         }
 
         Game game = (Game) result.getPayload();
-//        gameQuestionService.createGameQuestion(game.getGameCode(), user.getUserId());
+        gameQuestionService.createGameQuestion(game.getGameCode(), user.getUserId());
         List<Question> questions = questionService.findByCategory(category);
         List<GameQuestion> gameQuestions = transformQuestions(questions, game.getGameCode());
 //        boolean success = gameQuestionService.addAll(gameQuestions);
@@ -113,5 +129,26 @@ public class GameController {
 
         return game;
     }
+
+
+    @PutMapping("/")
+    public ResponseEntity<Object> updateGameUser(@RequestBody GameUser gameUser) {
+
+        Result<GameUser> result = gameUserService.updateGameUser(gameUser);
+
+        if (!result.isSuccess()) {
+            return new ResponseEntity<>(ErrorResponse.build(result), HttpStatus.NO_CONTENT);
+        }
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+
+
+
+
+
+
+
 
 }
