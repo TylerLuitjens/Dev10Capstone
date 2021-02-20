@@ -101,13 +101,14 @@ public class UserJdbcTemplateRepository implements UserRepository{
     @Override
     public List<User> leaderboard() {
 
-        final String sql = "select username, password, total_questions_answered, total_questions_correct "
+        final String sql = "select user_id, username, total_questions_answered, total_questions_correct "
                 + "from user "
                 + "order by total_questions_correct desc, total_questions_answered asc "
                 + "limit 10;";
 
         return jdbcTemplate.query(sql, (resultSet, rowNum) -> {
             User user = new User();
+            user.setUserId(resultSet.getInt("user_id"));
             user.setUserName(resultSet.getString("username"));
             user.setNumAnswered(resultSet.getInt("total_questions_answered"));
             user.setNumCorrect(resultSet.getInt("total_questions_correct"));
