@@ -2,6 +2,7 @@ import Home from "./components/Home";
 import Create from "./components/user/Create";
 import Login from "./components/Login";
 import Leaderboard from "./components/user/Leaderboard";
+import {useState} from 'react';
 
 import {
   BrowserRouter as Router,
@@ -25,15 +26,25 @@ function App() {
   }
 
   return (
-    <>
+    <div class="container">
       <Router>
 
-      <a>
-        <Link to="/">Home</Link>
-        <Link to="/login">Login</Link>
-        <Link to="/user/create">Create User</Link>
-        <Link to="/user/leaderboard">Leaderboard</Link>
-      </a>
+      <nav className="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+                <Link to={'/'} className="navbar-brand">Trivia Night</Link>
+                <div className="collapse navbar-collapse" id="navbarContent">
+                    <ul className="navbar-nav mr-auto">
+                        <li className="nav-item active">
+                            <Link to={'/login'} className="nav-link">Log In</Link>
+                        </li>
+                        <li className="nav-item active">
+                            <Link to={'/user/create'} className="nav-link">Create User</Link>
+                        </li>
+                        <li className="nav-item active">
+                            <Link to={'/user/leaderboard'} className="nav-link">Leaderboard</Link>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
 
         <Switch>
 
@@ -42,7 +53,7 @@ function App() {
           </Route>
 
           <Route path="/login">
-            <Login />
+            <Login handleSetUser={handleSetUser} />
           </Route>
 
           <Route path="/user/create">
@@ -60,7 +71,7 @@ function App() {
         </Switch>
 
       </Router>
-    </>
+    </div>
   );
 }
 

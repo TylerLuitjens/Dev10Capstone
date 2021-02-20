@@ -1,10 +1,6 @@
 import {useState} from 'react';
 import Errors from '../Errors';
-import {
-    BrowserRouter as Router,
-    useHistory,
-    Link
-  } from 'react-router-dom';
+import {BrowserRouter as Router, useHistory,Link} from 'react-router-dom';
 
 function Create() {
     const [userName, setUsername] = useState('');
@@ -89,23 +85,34 @@ function Create() {
 
     return(
         <>
-        <h2>Create User</h2>
+            <div className="jumbotron">
+                <div className="d-flex justify-content-center">
+                    <h1 className="mb-4 display-4">Create User</h1>
+                </div>
+            </div>
+            
             <Errors errors={errors} />
-            <form onSubmit={handleCreateUser}>
-                <div>
-                    <label htmlFor="userName">Username: </label>
-                    <input type="text" id="userName" name="userName" placeholder="Enter your username" onChange={(event) => setUsername(event.target.value)}/>
-                </div>
+            <div className="d-flex justify-content-center mt-5">
+                <form className="form, " onSubmit={handleCreateUser}>
+                    <div className="input-group input-group-lg">
+                        <div className = "input-group-prepend">
+                            <label htmlFor="userName" className="input-group-text bg-warning text-light mt-5">Username: </label>
+                        </div>
+                        <input type="text" id="userName" className="form-control bg-light mt-5" name="userName" placeholder="Enter your username" onChange={(event) => setUsername(event.target.value)}/>
+                    </div>
 
-                <div>
-                    <label htmlFor="pwd" >Password: </label>
-                    <input type="password" id="pwd" name="pwd" placeholder="Enter your password" onChange={(event) => setPassword(event.target.value)} />
-                </div>
-                <div>
-                    <button type="submit">Create User</button>
-                    <Link to={'/login'}>Login</Link>
-                </div>
-            </form>
+                    <div className="my-4 input-group input-group-lg mt-5">
+                        <div className = "input-group-prepend">
+                            <label htmlFor="pwd" className="input-group-text bg-warning text-light">Password: </label>
+                        </div>
+                        <input type="password" id="pwd"  className="form-control bg-light" name="pwd" placeholder="Enter your password" onChange={(event) => setPassword(event.target.value)} />
+                    </div>
+                    <div className="d-flex justify-content-center">
+                        <button type="submit" className="btn btn-lg btn-success mr-3 mt-4">Create User</button>
+                        <Link to={'/login'} className="btn btn-lg btn-info mt-4">Go To Log In</Link>
+                    </div>
+                </form>
+            </div>
         </>
         
     )
