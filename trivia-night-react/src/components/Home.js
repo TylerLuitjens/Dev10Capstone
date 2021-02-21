@@ -1,11 +1,24 @@
 import triviaNightLogo from '../images/TriviaNightLogoTransparentScaled.png';
-import {Link} from 'react-router-dom';
+import AuthContext from './AuthContext';
+import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+
 function Home() {
-    return(
+    const auth = useContext(AuthContext);
+    return (
         <>
             <div className="d-flex justify-content-center mb-5">
-                <Link to={'/login'} className="btn btn-lg btn-primary">Log In</Link>
-                <Link to={'/user/create'} className="btn btn-lg mx-5 btn-warning">Create User</Link>
+                {!auth.user && (
+                    <>
+                        <Link to={'/login'} className="btn btn-lg btn-primary">Log In</Link>
+                        <Link to={'/user/create'} className="btn btn-lg mx-5 btn-warning">Create User</Link>
+                    </>
+                )}
+                {auth.user && (
+                    <>
+                    <Link to={'/'} className="btn btn-lg btn-primary" onClick={auth.logout}>Log Out</Link>
+                    </>
+                )}
                 <Link to={'/user/leaderboard'} className="btn btn-lg btn-info">Leaderboard</Link>
                 <Link to={'/newgame'} className="btn btn-lg ml-5 btn-secondary">New Game</Link>
                 <Link to={'/joingame'} className="btn btn-lg ml-5 btn-success">Join Game</Link>
@@ -13,7 +26,7 @@ function Home() {
 
             <div className="d-flex justify-content-center">
                 <img src={triviaNightLogo} alt="Trivia Night Logo" />
-            </div>    
+            </div>
         </>
     )
 }
