@@ -1,18 +1,30 @@
 import { useState } from "react";
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Errors from './Errors';
 
 
-function JoinGame({handleSetUser}) {
+function JoinGame({setGame, game}) {
     const [gameCode, setGamecode] = useState('');
     const [errors, setErrors] = useState([]);
-  
+    const history = useHistory();
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = (event) => {     
+        setErrors([]);
         event.preventDefault();
-        // TODO endpoint is localhost:8080/game/{gameCode}
-        // response contains all of the game Users, and Questions
-    }
+        event.stopPropagation();
+
+        let url = "http://localhost:8080/game/" + gameCode;
+        
+        fetch(url)
+            .then(response => response.json())
+            .then(data => setGame(data))
+            .then(console.log(game)) // history.push("/Game")
+            .catch(error => {
+                let errs = [];
+                errs.push("Invalid Game Code");
+                setErrors(errs)
+            });
+    };
 
     return(
         <>
@@ -29,7 +41,7 @@ function JoinGame({handleSetUser}) {
                     <div className = "input-group-prepend">
                         <label htmlFor="gameCode" className="input-group-text bg-warning text-light mt-5">Game Code: </label>
                     </div>
-                    <input type="text" id="gameCode" className="form-control bg-light mt-5" name="userName" placeholder="Enter the Game Code" onChange={(event) => setGamecode(event.target.value)}/>
+                    <input type="text" id="gameCode" className="form-control bg-light mt-5" name="gameCode" placeholder="Enter the Game Code" onChange={(event) => setGamecode(event.target.value)}/>
                 </div>
 
                 <div className="d-flex justify-content-center">

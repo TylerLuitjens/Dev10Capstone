@@ -58,7 +58,6 @@ public class GameController {
         }
 
         Game game = (Game) result.getPayload();
-        gameQuestionService.createGameQuestion(game.getGameCode(), user.getUserId());
         List<Question> questions = questionService.findByCategory(category);
         List<GameQuestion> gameQuestions = transformQuestions(questions, game.getGameCode());
         boolean success = gameQuestionService.addAll(gameQuestions);
@@ -68,7 +67,6 @@ public class GameController {
         }
 
         gameUserService.createGameUser(game.getGameCode(), user.getUserId());
-
 
         game = populateGame(game);
 
@@ -93,6 +91,14 @@ public class GameController {
     }
 
     private Game populateGame(Game game) {
+
+        if (game == null) {
+            System.out.println("Unable to find game.");
+            return null;
+        } else if (game.getGameCode() == null) {
+            System.out.println("Invalid game code");
+            return null;
+        }
         List<GameQuestion> gameQuestions =  gameQuestionService.findByGameCode(game.getGameCode());
         List<GameUser> gameUsers = gameUserService.findByGameCode(game.getGameCode());
         game.setGameQuestions(gameQuestions);

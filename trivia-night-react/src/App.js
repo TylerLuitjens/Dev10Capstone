@@ -12,6 +12,7 @@ import {
   Route,
   Link
 } from 'react-router-dom';
+import Game from "./components/Game";
 
 function NotFound() {
   return(
@@ -22,15 +23,15 @@ function NotFound() {
 function App() {
 
   const [user, setUser] = useState(null);
+  const [game, setGame] = useState([]);
 
   const handleSetUser = (user) => {
     setUser(user);
   }
 
-  const [game, setGame] = useState(null);
 
   return (
-    <div class="container">
+    <div className="container">
       <Router>
 
       <nav className="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
@@ -51,7 +52,6 @@ function App() {
             </nav>
 
         <Switch>
-
           <Route exact path="/"> 
             <Home />
           </Route>
@@ -73,7 +73,11 @@ function App() {
         </Route>
 
         <Route path="/newgame">
-          <NewGame setGame={setGame} setGame={setGame} game={game}/>
+          <NewGame setGame={setGame} game={game}/>
+        </Route>
+
+        <Route path="/Game">
+          <Game game={game} setGame={setGame} />
         </Route>
 
         <Route path="*">

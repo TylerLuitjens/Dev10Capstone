@@ -6,7 +6,7 @@ import Errors from './Errors';
 function NewGame({setGame, game, user}) {
     const [category, setCategory] = useState('');
     const [errors, setErrors] = useState([]);
-  
+    const history = useHistory();
 
     const handleSubmit = async (event) => {
         // TODO delete this
@@ -34,7 +34,7 @@ function NewGame({setGame, game, user}) {
         fetch(url, init)
             .then(response => response.json())
             .then(data => setGame(data))
-            .then(console.log(game))
+            .then(history.push('/Game'))
             .catch(error => console.log(error));
     }
 
