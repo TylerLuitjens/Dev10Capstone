@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useHistory, useLocation } from 'react-router-dom';
-import jwt_decode from 'jwt-decode';
+import AuthContext from './AuthContext';
 import Errors from './Errors';
 
 
-function Login({ handleSetUser }) {
+function Login() {
+    const auth = useContext(AuthContext);
+
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState([]);
@@ -12,48 +14,14 @@ function Login({ handleSetUser }) {
     const history = useHistory();
     const location = useLocation();
 
-    const { state: { from } = { from : '/'} } = location;
-
-    // MAY NEED TO CHANGE VARIABLES
-    const login = (token) => {
-        const { userId, sub: userName, authorities } = jwt_decode(token);
-        const roles = authorities.split(','); // used to define multiple roles DOUBLE CHECK IT WORKS
-
-        const user = {
-            userId,
-            userName,
-            roles,
-            token
-        }
-
-        handleSetUser(user);
-    }
+    const { state: { from } = { from: '/' } } = location;
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
         try {
-            const response = await fetch('http://localhost:8080/authenticate', {
-                method: 'POST',
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    username,
-                    password
-                })
-            });
-
-            // GOTTA DOUBLE CHECK RESPONSE STATUSES
-            if (response.status === 200) {
-                const { jwt_token } = await response.json();
-                login(jwt_token);
-                history.push(from);
-            } else if (response.status === 403) {
-                throw new Error('Bad username or password');
-            } else {
-                throw new Error('There was a problem logging in...');
-            }
+            await auth.authenticate(username, password)
+            history.push(from);
         } catch (err) {
             setErrors([err.message]);
         }

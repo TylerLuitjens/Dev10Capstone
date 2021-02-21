@@ -2,6 +2,8 @@ import Home from "./components/Home";
 import Create from "./components/user/Create";
 import Login from "./components/Login";
 import Leaderboard from "./components/user/Leaderboard";
+import jwt_decode from 'jwt-decode';
+import AuthContext from './components/AuthContext';
 import { useState } from 'react';
 
 import {
@@ -21,70 +23,116 @@ function App() {
 
   const [user, setUser] = useState(null);
 
-  const handleSetUser = (user) => {
+  // MAY NEED TO CHANGE VARIABLES
+  const login = (token) => {
+    const { userId, sub: userName, authorities } = jwt_decode(token);
+    const roles = authorities.split(','); // used to define multiple roles DOUBLE CHECK IT WORKS
+
+    const user = {
+      userId,
+      userName,
+      roles,
+      token
+    }
+
     setUser(user);
   }
 
-  const handleLogout = () => {
+  const authenticate = async (username, password) => {
+    const response = await fetch('http://localhost:8080/authenticate', {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        username,
+        password
+      })
+    });
+
+    // GOTTA DOUBLE CHECK RESPONSE STATUSES
+    if (response.status === 200) {
+      const { jwt_token } = await response.json();
+      login(jwt_token);
+
+    } else if (response.status === 403) {
+      throw new Error('Bad username or password');
+    } else {
+      throw new Error('There was a problem logging in...');
+    }
+
+  }
+
+  const logout = () => {
     setUser(null);
+  }
+
+  const auth = {
+    user,
+    login,
+    authenticate,
+    logout
   }
 
   return (
     <div className="container">
-      <Router>
 
-        <nav className="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
-          <Link to={'/'} className="navbar-brand">Trivia Night</Link>
-          <div className="collapse navbar-collapse" id="navbarContent">
-            <ul className="navbar-nav mr-auto">
-              {!user && (
-                <>
+      <AuthContext.Provider value={auth}>
+        <Router>
+
+          <nav className="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+            <Link to={'/'} className="navbar-brand">Trivia Night</Link>
+            <div className="collapse navbar-collapse" id="navbarContent">
+              <ul className="navbar-nav mr-auto">
+                {!user && (
+                  <>
+                    <li className="nav-item active">
+                      <Link to={'/login'} className="nav-link">Log In</Link>
+                    </li>
+                    <li className="nav-item active">
+                      <Link to={'/user/create'} className="nav-link">Create User</Link>
+                    </li>
+                  </> 
+                )}
+                {user && (
                   <li className="nav-item active">
-                    <Link to={'/login'} className="nav-link">Log In</Link>
+                    <Link to={''} className="nav-link" onClick={logout}>Log Out</Link>
                   </li>
-                  <li className="nav-item active">
-                    <Link to={'/user/create'} className="nav-link">Create User</Link>
-                  </li>
-                </>
-              )}
-              {user && (
-                  <li className="nav-item active">
-                    <Link to={''} className="nav-link" onClick={handleLogout}>Log Out</Link>
-                    <a onClick={handleLogout}></a>
-                  </li>
-              )}
-              <li className="nav-item active">
-                <Link to={'/user/leaderboard'} className="nav-link">Leaderboard</Link>
-              </li>
-            </ul>
-          </div>
-        </nav>
+                )}
+                <li className="nav-item active">
+                  <Link to={'/user/leaderboard'} className="nav-link">Leaderboard</Link>
+                </li>
+              </ul>
+            </div>
+          </nav>
 
-        <Switch>
+          <Switch>
 
-          <Route exact path="/">
-            <Home user={user} />
-          </Route>
+            <Route exact path="/">
+              <Home />
+            </Route>
 
-          <Route path="/login">
-            <Login handleSetUser={handleSetUser} />
-          </Route>
+            <Route path="/login">
+              <Login />
+            </Route>
 
-          <Route path="/user/create">
-            <Create />
-          </Route>
+            <Route path="/user/create">
+              <Create />
+            </Route>
 
-          <Route path="/user/leaderboard">
-            <Leaderboard />
-          </Route>
+            <Route path="/user/leaderboard">
+              <Leaderboard />
+            </Route>
 
-          <Route path="*">
-            <NotFound />
-          </Route>
+            <Route path="*">
+              <NotFound />
+            </Route>
 
-        </Switch>
+          </Switch>
 
-      </Router>
+        </Router>
+
+      </AuthContext.Provider>
     </div>
   );
 }
