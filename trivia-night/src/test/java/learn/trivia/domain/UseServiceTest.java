@@ -55,27 +55,6 @@ public class UseServiceTest {
     }
 
     @Test
-    void shouldFindByUserName() {
-        User expected = makeUser();
-
-        when(userRepository.findByUserName("Test")).thenReturn(expected);
-
-        User actual = service.findByUserName("Test");
-        assertEquals(expected, actual);
-    }
-
-
-    @Test
-    void shouldNotFindByInvalidUserName() {
-        User expected = makeUser();
-
-        when(userRepository.findByUserName("Tex")).thenReturn(null);
-
-        User actual = service.findByUserName("Null");
-        assertNull(actual);
-    }
-
-    @Test
     void shouldCreateUser() {
         User user = makeUser();
 

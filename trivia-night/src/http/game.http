@@ -1,0 +1,36 @@
+### Get game (working)
+GET http://localhost:8080/game/LPcs HTTP/1.1
+Accept: application/json;
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ0cml2aWEtbmlnaHQiLCJzdWIiOiJ1c2VyIiwiYXV0aG9yaXRpZXMiOiJST0xFX1VTRVIiLCJleHAiOjE2MTM5MjgyOTJ9.z9boW6u1AwecfnB-ZzDnNKUdbm4EUoe-zLRsNGv9f-g
+
+
+### add user to game (working) 
+POST http://localhost:8080/game/user/2/LPcs HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ0cml2aWEtbmlnaHQiLCJzdWIiOiJ1c2VyIiwiYXV0aG9yaXRpZXMiOiJST0xFX1VTRVIiLCJleHAiOjE2MTM5MjgyOTJ9.z9boW6u1AwecfnB-ZzDnNKUdbm4EUoe-zLRsNGv9f-g
+
+### create game (working)
+
+POST http://localhost:8080/game/history HTTP/1.1
+Content-Type: application/json;
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ0cml2aWEtbmlnaHQiLCJzdWIiOiJFaWdodCIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjEzOTM2NDg3fQ.IEIqo9_joKFf5ytxG9zpwlbcvFGAY6cvCkmiNwSAnQ0
+
+{  
+    "userId": 8,
+    "userName": "Eight",
+    # "password": "new_password",
+    "numAnswered": 0,
+    "numCorrect": 0
+}
+
+### update game user (working)
+PUT http://localhost:8080/game/ HTTP/1.1
+Content-Type: application/json;
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ0cml2aWEtbmlnaHQiLCJzdWIiOiJ1c2VyIiwiYXV0aG9yaXRpZXMiOiJST0xFX1VTRVIiLCJleHAiOjE2MTM5MjgyOTJ9.z9boW6u1AwecfnB-ZzDnNKUdbm4EUoe-zLRsNGv9f-g
+
+{
+  "userId": 13,
+  "gameCode": "gbgN",
+  "numAnswered": 10,
+  "numCorrect": 7
+}
+

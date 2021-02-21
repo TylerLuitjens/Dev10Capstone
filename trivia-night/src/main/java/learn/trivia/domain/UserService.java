@@ -2,21 +2,29 @@ package learn.trivia.domain;
 
 import learn.trivia.data.UserRepository;
 import learn.trivia.models.User;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
+import javax.validation.*;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
-public class UserService {
-    private final UserRepository repository;
+public class UserService implements UserDetailsService {
 
-    public UserService(UserRepository repository) {
+    private final UserRepository repository;
+    private final PasswordEncoder encoder;
+
+    public UserService(UserRepository repository, PasswordEncoder encoder) {
         this.repository = repository;
+        this.encoder = encoder;
     }
 
     public List<User> findAll() {
@@ -27,12 +35,26 @@ public class UserService {
         return repository.findById(userId);
     }
 
-    public User findByUserName(String UserName) {
-        return repository.findByUserName(UserName);
+    @Override
+    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+        User user = repository.findByUserName(userName);
+
+        if (user == null) {
+            throw new UsernameNotFoundException(userName + " not found.");
+        }
+
+        List<String> roles = List.of(user.getRole());
+
+        List<GrantedAuthority> authorities = roles.stream()
+                .map(roleName -> new SimpleGrantedAuthority("ROLE_" + roleName))
+                .collect(Collectors.toList());
+
+        return new org.springframework.security.core.userdetails
+                .User(user.getUserName(), user.getPassword(), authorities);
     }
 
     public Result<User> create(User user) {
-        Result<User> result = validate(user);
+        Result<User> result = domainValidation(user);
 
         if (!result.isSuccess()) {
             return result;
@@ -49,13 +71,15 @@ public class UserService {
             return result;
         }
 
+        user.setPassword(encoder.encode(user.getPassword()));
+
         user = repository.create(user);
         result.setPayload(user);
         return result;
     }
 
     public Result<User> update(User user) {
-        Result<User> result = validate(user);
+        Result<User> result = domainValidation(user);
 
         if (!result.isSuccess()) {
             return result;
@@ -85,7 +109,6 @@ public class UserService {
         return repository.delete(userId);
     }
 
-
     private Result<User> validateDuplicateCreate(User user) {
         Result<User> result = new Result<>();
 
@@ -109,24 +132,35 @@ public class UserService {
         return result;
     }
 
-    private Result<User> validate (User user) {
+    private Result<User> domainValidation(User user) {
         Result<User> result = new Result<>();
 
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
-
-        Set<ConstraintViolation<User>> violations = validator.validate(user);
-
-        if (!violations.isEmpty()) {
-            for (ConstraintViolation<User> violation : violations) {
-                result.addMessage(violation.getMessage(), ResultType.INVALID);
-            }
-            return result;
+        if (user.getUserName() == null || user.getUserName().isBlank()) {
+            result.addMessage("Username is required.", ResultType.INVALID);
         }
+
+        if (user.getUserName().length() > 30) {
+            result.addMessage("Username cannot be more than 30 characters.", ResultType.INVALID);
+        }
+
+        if (user.getPassword() == null || user.getPassword().isBlank()) {
+            result.addMessage("Password is required.", ResultType.INVALID);
+        }
+
+        if (user.getNumAnswered() < 0) {
+            result.addMessage("Questions answered cannot be less than 0.", ResultType.INVALID);
+        }
+
+        if (user.getNumCorrect() < 0) {
+            result.addMessage("Questions correct cannot be less than 0", ResultType.INVALID);
+        }
+
         return result;
     }
 
     public List<User> leaderboard() {
         return repository.leaderboard();
     }
+
+
 }

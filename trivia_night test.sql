@@ -5,7 +5,7 @@ use trivia_night_test;
 create table question (
 	question_id int primary key auto_increment,
     question varchar(500) not null,
-    category_name varchar(50)
+    category_name varchar(50) not null
 );
 
 create table answer (
@@ -22,6 +22,7 @@ create table `user` (
 	user_id int primary key auto_increment,
     username varchar(30) not null,
     `password` varchar(512) not null,
+    user_role varchar(50) not null,
     total_questions_answered int,
     total_questions_correct int
 );
@@ -90,8 +91,8 @@ begin
 	insert into question (question_id, question, category_name) values
 		(1, 'Paul McCartney has always used his middle name. What is his real first name?', 'Celebrities'), 
         (2, 'Where was Kanye West born?', 'Celebrities'),
-        (3, 'Approximately how many Apple I personal computers were created?', 'Computer Science'),
-        (4, 'What five letter word is the motto of the IBM Computer company', 'Computer Science'),
+        (3, 'Approximately how many Apple I personal computers were created?', 'Science: Computers'),
+        (4, 'What five letter word is the motto of the IBM Computer company', 'Science: Computers'),
         (5, "What is the world's most expensive spice by weight?", 'General Knowledge'),
         (6, 'What is the full title of the Prime Minister of the UK?', 'General Knowledge');
         
@@ -103,11 +104,11 @@ begin
         (17, 5, 'Saffron', 1), (18, 5, 'Cinnamon', 0), (19, 5, 'Cardamom', 0), (20, 5, 'Vanilla', 0),
         (21, 6, 'First Lord of the Treasury', 1), (22, 6, 'Duke of Cambridge', 0), (23, 6, "Her Majesty's Loyal Opposition", 0), (24, 6, 'Manager of the Crown Estate', 0);
         
-	insert into user (user_id, username, `password`, total_questions_answered, total_questions_correct) values
-		(1, 'First User', 'Clear_text', 5, 2),
-        (2, 'Second User', 'Unsafe_password', 10, 8),
-        (3, 'Third User', 'Poor_practice', 8, 4),
-        (4, 'Fourth User', 'Poor_practice', 8, 8);
+	insert into user (user_id, username, `password`, user_role, total_questions_answered, total_questions_correct) values
+		(1, 'First User', 'Clear_text', 'USER', 5, 2),
+        (2, 'Second User', 'Unsafe_password', 'USER', 10, 8),
+        (3, 'Third User', 'Poor_practice', 'USER', 8, 4),
+        (4, 'Fourth User', 'Poor_practice', 'USER', 8, 8);
         
 	insert into game (game_code) values
 		('ABCD'),
