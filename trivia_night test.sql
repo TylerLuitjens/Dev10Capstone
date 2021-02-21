@@ -5,7 +5,7 @@ use trivia_night_test;
 create table question (
 	question_id int primary key auto_increment,
     question varchar(500) not null,
-    category_name varchar(50)
+    category_name varchar(50) not null
 );
 
 create table answer (
@@ -90,8 +90,8 @@ begin
 	insert into question (question_id, question, category_name) values
 		(1, 'Paul McCartney has always used his middle name. What is his real first name?', 'Celebrities'), 
         (2, 'Where was Kanye West born?', 'Celebrities'),
-        (3, 'Approximately how many Apple I personal computers were created?', 'Computer Science'),
-        (4, 'What five letter word is the motto of the IBM Computer company', 'Computer Science'),
+        (3, 'Approximately how many Apple I personal computers were created?', 'Science: Computers'),
+        (4, 'What five letter word is the motto of the IBM Computer company', 'Science: Computers'),
         (5, "What is the world's most expensive spice by weight?", 'General Knowledge'),
         (6, 'What is the full title of the Prime Minister of the UK?', 'General Knowledge');
         

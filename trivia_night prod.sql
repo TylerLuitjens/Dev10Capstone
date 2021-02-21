@@ -5,7 +5,7 @@ use trivia_night;
 create table question (
 	question_id int primary key auto_increment,
     question varchar(500) not null,
-    category_name varchar(50)
+    category_name varchar(50) not null
 );
 
 create table answer (
