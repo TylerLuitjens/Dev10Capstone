@@ -33,7 +33,6 @@ function JoinGame({setGame, game}) {
         if (game !== [] && game['gameCode'] === gameCode) {
             history.push("/Game")
         }
-        console.log(game);;
     }, [game]);
 
     return(

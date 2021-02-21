@@ -77,7 +77,7 @@ function App() {
         </Route>
 
         <Route path="/Game">
-          <Game game={game} setGame={setGame} />
+          <Game game={game} setGame={setGame} user={user}/>
         </Route>
 
         <Route path="*">

@@ -18,7 +18,6 @@ function NewGame({setGame, game, user}) {
         newUser["numCorrect"] = 0;
 
         const userJson = JSON.stringify(newUser); // TODO change to user
-        console.log("Json: " + userJson);
         event.preventDefault();
         let url = "http://localhost:8080/game/" + event.target.value;
 
