@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
+import './Leaderboard.css';
+import {Link} from 'react-router-dom';
 
 function Leaderboard() {
     const [leaderboard, setLeaderboard] = useState([]);
-    const [rank, setRank] = useState(0);
 
     const fetchLeaderboard = () => {
         fetch('http://localhost:8080/user/leaderboard')
@@ -17,9 +18,13 @@ function Leaderboard() {
 
     return (
         <>
-            <h2>Leaderboard</h2>
-            <table>
-                <thead>
+            <div className="jumbotron mb-3">
+                <div className="d-flex justify-content-center">
+                    <h1 className="display-4">Leaderboard</h1>
+                </div>
+            </div>
+            <table className="table table-dark">
+                <thead className="thead-dark">
                     <tr>
                         <th scope="col">Rank</th>
                         <th scope="col">Username</th>
@@ -30,7 +35,7 @@ function Leaderboard() {
                 <tbody>
                     {leaderboard.map(leader => (
                         <tr key={leader.userId}>
-                            {<td>{rank}</td>}
+                            <td></td>
                             <td>{leader.userName}</td>
                             <td>{leader.numAnswered}</td>
                             <td>{leader.numCorrect}</td>
@@ -38,6 +43,9 @@ function Leaderboard() {
                     ))}
                 </tbody>
             </table>
+            <div className="d-flex justify-content-center">
+                <Link to={'/'} className="btn btn-lg btn-info mt-4">Return to Home</Link>
+            </div>
         </>
     );
 }
