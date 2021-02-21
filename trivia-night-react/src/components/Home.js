@@ -20,7 +20,8 @@ function Home() {
                     </>
                 )}
                 <Link to={'/user/leaderboard'} className="btn btn-lg btn-info">Leaderboard</Link>
-                <Link className="btn btn-lg ml-5 btn-success">New Game</Link>
+                <Link to={'/newgame'} className="btn btn-lg ml-5 btn-secondary">New Game</Link>
+                <Link to={'/joingame'} className="btn btn-lg ml-5 btn-success">Join Game</Link>
             </div>
 
             <div className="d-flex justify-content-center">

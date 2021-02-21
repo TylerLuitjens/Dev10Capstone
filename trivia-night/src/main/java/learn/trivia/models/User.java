@@ -1,18 +1,12 @@
 package learn.trivia.models;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-
 public class User {
     private int userId;
-    @NotBlank
-    String userName;
-    @NotBlank
-    String password;
-    @Min(0)
-    int numAnswered;
-    @Min(0)
-    int numCorrect;
+    private String userName;
+    private String password;
+    private String role;
+    private int numAnswered;
+    private int numCorrect;
 
     public int getUserId() {
         return userId;
@@ -52,5 +46,13 @@ public class User {
 
     public void setNumCorrect(int numCorrect) {
         this.numCorrect = numCorrect;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

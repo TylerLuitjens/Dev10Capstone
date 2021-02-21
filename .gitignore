@@ -39,3 +39,5 @@ target/
 trivia-night/src/main/resources/application.properties
 
 trivia-night/src/test/resources/application.properties
+
+*.properties
