@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/game")
+@CrossOrigin("http://localhost:3000")
 public class GameController {
 
     GameService gameService;
@@ -33,8 +34,7 @@ public class GameController {
 
     @GetMapping("/{gameId}")
     public Game getGame(@PathVariable String gameId) {
-        // TODO get gameQuestions, and gameUsers as well, tie them to the game, and then return it
-        return gameService.findGameByCode(gameId);
+        return populateGame(gameService.findGameByCode(gameId));
     }
 
     @PostMapping("/user/{userId}/{gameCode}")
@@ -68,7 +68,6 @@ public class GameController {
 
         gameUserService.createGameUser(game.getGameCode(), user.getUserId());
 
-
         game = populateGame(game);
 
         if (game.getGameUsers().size() == 0 || game.getGameQuestions().size() == 0) {
@@ -92,6 +91,14 @@ public class GameController {
     }
 
     private Game populateGame(Game game) {
+
+        if (game == null) {
+            System.out.println("Unable to find game.");
+            return null;
+        } else if (game.getGameCode() == null) {
+            System.out.println("Invalid game code");
+            return null;
+        }
         List<GameQuestion> gameQuestions =  gameQuestionService.findByGameCode(game.getGameCode());
         List<GameUser> gameUsers = gameUserService.findByGameCode(game.getGameCode());
         game.setGameQuestions(gameQuestions);

@@ -5,6 +5,9 @@ import Leaderboard from "./components/user/Leaderboard";
 import jwt_decode from 'jwt-decode';
 import AuthContext from './components/AuthContext';
 import { useState } from 'react';
+import JoinGame from "./components/JoinGame";
+import NewGame from "./components/NewGame";
+import {useState} from 'react';
 
 import {
   BrowserRouter as Router,
@@ -12,6 +15,7 @@ import {
   Route,
   Link
 } from 'react-router-dom';
+import Game from "./components/Game";
 
 function NotFound() {
   return (
@@ -22,6 +26,7 @@ function NotFound() {
 function App() {
 
   const [user, setUser] = useState(null);
+  const [game, setGame] = useState([]);
 
   // MAY NEED TO CHANGE VARIABLES
   const login = (token) => {
@@ -74,6 +79,7 @@ function App() {
     logout
   }
 
+
   return (
     <div className="container">
 
@@ -107,6 +113,9 @@ function App() {
           </nav>
 
           <Switch>
+          <Route exact path="/"> 
+            <Home />
+          </Route>
 
             <Route exact path="/">
               <Home />
@@ -123,6 +132,21 @@ function App() {
             <Route path="/user/leaderboard">
               <Leaderboard />
             </Route>
+        <Route path="/joingame">
+          <JoinGame setGame={setGame} game={game}/>
+        </Route>
+
+        <Route path="/newgame">
+          <NewGame setGame={setGame} game={game}/>
+        </Route>
+
+        <Route path="/Game">
+          <Game game={game} setGame={setGame} user={user}/>
+        </Route>
+
+        <Route path="*">
+          <NotFound />
+        </Route>
 
             <Route path="*">
               <NotFound />
