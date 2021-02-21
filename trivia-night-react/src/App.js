@@ -2,6 +2,8 @@ import Home from "./components/Home";
 import Create from "./components/user/Create";
 import Login from "./components/Login";
 import Leaderboard from "./components/user/Leaderboard";
+import JoinGame from "./components/JoinGame";
+import NewGame from "./components/NewGame";
 import {useState} from 'react';
 
 import {
@@ -24,6 +26,8 @@ function App() {
   const handleSetUser = (user) => {
     setUser(user);
   }
+
+  const [game, setGame] = useState(null);
 
   return (
     <div class="container">
@@ -62,6 +66,14 @@ function App() {
 
         <Route path="/user/leaderboard">
           <Leaderboard />
+        </Route>
+
+        <Route path="/joingame">
+          <JoinGame setGame={setGame} game={game}/>
+        </Route>
+
+        <Route path="/newgame">
+          <NewGame setGame={setGame} setGame={setGame} game={game}/>
         </Route>
 
         <Route path="*">

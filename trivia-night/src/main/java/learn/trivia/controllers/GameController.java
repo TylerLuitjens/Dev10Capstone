@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/game")
+@CrossOrigin("http://localhost:3000")
 public class GameController {
 
     GameService gameService;
@@ -33,8 +34,7 @@ public class GameController {
 
     @GetMapping("/{gameId}")
     public Game getGame(@PathVariable String gameId) {
-        // TODO get gameQuestions, and gameUsers as well, tie them to the game, and then return it
-        return gameService.findGameByCode(gameId);
+        return populateGame(gameService.findGameByCode(gameId));
     }
 
     @PostMapping("/user/{userId}/{gameCode}")
@@ -49,35 +49,6 @@ public class GameController {
 
     }
 
-//    @PostMapping("/{category}")
-//    public ResponseEntity<Object> createGame(@PathVariable String category, @RequestBody User user) {
-//        Result<Game> result = gameService.create();
-//
-//        if (!result.isSuccess()) {
-//            return new ResponseEntity<>(ErrorResponse.build(result), HttpStatus.BAD_REQUEST);
-//        }
-//
-//        Game game = (Game) result.getPayload();
-////        gameQuestionService.createGameQuestion(game.getGameCode(), user.getUserId());
-//        List<Question> questions = questionService.findByCategory(category);
-//        List<GameQuestion> gameQuestions = transformQuestions(questions, game.getGameCode());
-//        boolean success = gameQuestionService.addAll(gameQuestions);
-//
-//        if (!success) {
-//            return new ResponseEntity<>(ErrorResponse.build(result), HttpStatus.BAD_REQUEST);
-//        }
-//
-//        gameUserService.createGameUser(game.getGameCode(), user.getUserId());
-//
-//
-//        game = populateGame(game);
-//
-//        if (game.getGameUsers().size() == 0 || game.getGameQuestions().size() == 0) {
-//            return new ResponseEntity<>(ErrorResponse.build(result), HttpStatus.BAD_REQUEST);
-//        }
-//        return new ResponseEntity<>(game, HttpStatus.CREATED);
-//    }
-
     @PostMapping("/{category}")
     public ResponseEntity<Object> createGame(@PathVariable String category, @RequestBody User user) {
         Result<Game> result = gameService.create();
@@ -90,11 +61,11 @@ public class GameController {
         gameQuestionService.createGameQuestion(game.getGameCode(), user.getUserId());
         List<Question> questions = questionService.findByCategory(category);
         List<GameQuestion> gameQuestions = transformQuestions(questions, game.getGameCode());
-//        boolean success = gameQuestionService.addAll(gameQuestions);
-//
-//        if (!success) {
-//            return new ResponseEntity<>(ErrorResponse.build(result), HttpStatus.BAD_REQUEST);
-//        }
+        boolean success = gameQuestionService.addAll(gameQuestions);
+
+        if (!success) {
+            return new ResponseEntity<>(ErrorResponse.build(result), HttpStatus.BAD_REQUEST);
+        }
 
         gameUserService.createGameUser(game.getGameCode(), user.getUserId());
 
