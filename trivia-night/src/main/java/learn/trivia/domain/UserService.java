@@ -2,6 +2,7 @@ package learn.trivia.domain;
 
 import learn.trivia.data.UserRepository;
 import learn.trivia.models.User;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -53,7 +54,7 @@ public class UserService implements UserDetailsService {
     }
 
     public Result<User> create(User user) {
-        Result<User> result = validate(user);
+        Result<User> result = domainValidation(user);
 
         if (!result.isSuccess()) {
             return result;
@@ -77,12 +78,8 @@ public class UserService implements UserDetailsService {
         return result;
     }
 
-
-
-
-
     public Result<User> update(User user) {
-        Result<User> result = validate(user);
+        Result<User> result = domainValidation(user);
 
         if (!result.isSuccess()) {
             return result;
@@ -112,29 +109,6 @@ public class UserService implements UserDetailsService {
         return repository.delete(userId);
     }
 
-
-//    private void nonResultValidate(User user) {
-//        if (user == null) {
-//            throw new ValidationException("User cannot be null.");
-//        }
-//
-//        if (user.getUserName() == null || user.getUserName().isBlank()) {
-//            throw new ValidationException("Username is required");
-//        }
-//
-//        if (user.getUserName().length() > 30) {
-//            throw new ValidationException("Username cannot be more than 30 characters.");
-//        }
-//
-//        for (User userFromRecords : findAll()) {
-//            if (userFromRecords.getUserName().equals(user.getUserName())) {
-//                throw new ValidationException("Username cannot be duplicate.");
-//            }
-//        }
-//
-//
-//    }
-
     private Result<User> validateDuplicateCreate(User user) {
         Result<User> result = new Result<>();
 
@@ -158,20 +132,29 @@ public class UserService implements UserDetailsService {
         return result;
     }
 
-    private Result<User> validate (User user) {
+    private Result<User> domainValidation(User user) {
         Result<User> result = new Result<>();
 
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
-
-        Set<ConstraintViolation<User>> violations = validator.validate(user);
-
-        if (!violations.isEmpty()) {
-            for (ConstraintViolation<User> violation : violations) {
-                result.addMessage(violation.getMessage(), ResultType.INVALID);
-            }
-            return result;
+        if (user.getUserName() == null || user.getUserName().isBlank()) {
+            result.addMessage("Username is required.", ResultType.INVALID);
         }
+
+        if (user.getUserName().length() > 30) {
+            result.addMessage("Username cannot be more than 30 characters.", ResultType.INVALID);
+        }
+
+        if (user.getPassword() == null || user.getPassword().isBlank()) {
+            result.addMessage("Password is required.", ResultType.INVALID);
+        }
+
+        if (user.getNumAnswered() < 0) {
+            result.addMessage("Questions answered cannot be less than 0.", ResultType.INVALID);
+        }
+
+        if (user.getNumCorrect() < 0) {
+            result.addMessage("Questions correct cannot be less than 0", ResultType.INVALID);
+        }
+
         return result;
     }
 

@@ -35,14 +35,14 @@ function Create() {
             }
 
             if (response.status === 400) {
-                
-                if (userName === "") {
-                    throw new Error('Error: username is required.');
-                }
-                if (password === "") {
-                    throw new Error('Error: password is required.');
-                }
-                throw new Error('Error: there is something wrong with your username and password.');
+                response.json().then( (data) => {
+                    console.log(data);
+                    let newErrors = [];
+                    data["body"].forEach(element => {
+                        newErrors.push(element);
+                    })
+                    setErrors(newErrors);
+                });
             }
         } catch (err) {
             setErrors([err.message]);

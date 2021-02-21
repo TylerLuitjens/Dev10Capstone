@@ -1,18 +1,11 @@
 package learn.trivia.models;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-
 public class User {
     private int userId;
-    @NotBlank
     private String userName;
-    @NotBlank
     private String password;
     private String role;
-    @Min(0)
     private int numAnswered;
-    @Min(0)
     private int numCorrect;
 
     public int getUserId() {
