@@ -3,10 +3,12 @@ package learn.trivia.controllers;
 import learn.trivia.domain.Result;
 import learn.trivia.domain.UserService;
 import learn.trivia.models.User;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.ValidationException;
 import java.util.List;
 
 @RestController
@@ -30,7 +32,8 @@ public class UserController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Object> createUser (@RequestBody User user) {
+    public ResponseEntity<?> createUser (@RequestBody User user) {
+
         Result<User> result  = userService.create(user);
 
         if (!result.isSuccess()) {

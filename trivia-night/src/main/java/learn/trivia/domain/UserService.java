@@ -2,21 +2,28 @@ package learn.trivia.domain;
 
 import learn.trivia.data.UserRepository;
 import learn.trivia.models.User;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
+import javax.validation.*;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
-public class UserService {
-    private final UserRepository repository;
+public class UserService implements UserDetailsService {
 
-    public UserService(UserRepository repository) {
+    private final UserRepository repository;
+    private final PasswordEncoder encoder;
+
+    public UserService(UserRepository repository, PasswordEncoder encoder) {
         this.repository = repository;
+        this.encoder = encoder;
     }
 
     public List<User> findAll() {
@@ -27,8 +34,22 @@ public class UserService {
         return repository.findById(userId);
     }
 
-    public User findByUserName(String UserName) {
-        return repository.findByUserName(UserName);
+    @Override
+    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+        User user = repository.findByUserName(userName);
+
+        if (user == null) {
+            throw new UsernameNotFoundException(userName + " not found.");
+        }
+
+        List<String> roles = List.of(user.getRole());
+
+        List<GrantedAuthority> authorities = roles.stream()
+                .map(roleName -> new SimpleGrantedAuthority("ROLE_" + roleName))
+                .collect(Collectors.toList());
+
+        return new org.springframework.security.core.userdetails
+                .User(user.getUserName(), user.getPassword(), authorities);
     }
 
     public Result<User> create(User user) {
@@ -49,10 +70,16 @@ public class UserService {
             return result;
         }
 
+        user.setPassword(encoder.encode(user.getPassword()));
+
         user = repository.create(user);
         result.setPayload(user);
         return result;
     }
+
+
+
+
 
     public Result<User> update(User user) {
         Result<User> result = validate(user);
@@ -85,6 +112,28 @@ public class UserService {
         return repository.delete(userId);
     }
 
+
+//    private void nonResultValidate(User user) {
+//        if (user == null) {
+//            throw new ValidationException("User cannot be null.");
+//        }
+//
+//        if (user.getUserName() == null || user.getUserName().isBlank()) {
+//            throw new ValidationException("Username is required");
+//        }
+//
+//        if (user.getUserName().length() > 30) {
+//            throw new ValidationException("Username cannot be more than 30 characters.");
+//        }
+//
+//        for (User userFromRecords : findAll()) {
+//            if (userFromRecords.getUserName().equals(user.getUserName())) {
+//                throw new ValidationException("Username cannot be duplicate.");
+//            }
+//        }
+//
+//
+//    }
 
     private Result<User> validateDuplicateCreate(User user) {
         Result<User> result = new Result<>();
@@ -129,4 +178,6 @@ public class UserService {
     public List<User> leaderboard() {
         return repository.leaderboard();
     }
+
+
 }

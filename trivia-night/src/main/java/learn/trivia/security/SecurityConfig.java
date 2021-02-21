@@ -26,6 +26,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
 
+        http.cors();
+
         http.authorizeRequests()
                 .antMatchers("/authenticate").permitAll()
                 .antMatchers(HttpMethod.POST, "/user/create").permitAll()
@@ -48,22 +50,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManager();
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//    @Override
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//
+//        var userBuilder = User.withUsername("user")
+//                .password("password").passwordEncoder(password -> encoder.encode(password))
+//                .roles("USER");
+//
+//        auth.inMemoryAuthentication()
+//                .withUser(userBuilder);
+//    }
 
-        var userBuilder = User.withUsername("user")
-                .password("password").passwordEncoder(password -> encoder.encode(password))
-                .roles("USER");
-
-        auth.inMemoryAuthentication()
-                .withUser(userBuilder);
-    }
+//    @Autowired
+//    private PasswordEncoder encoder;
 
     @Bean
     public PasswordEncoder getEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    @Autowired
-    private PasswordEncoder encoder;
+
 }

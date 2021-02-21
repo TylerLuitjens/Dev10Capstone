@@ -21,7 +21,8 @@ create table answer (
 create table `user` (
 	user_id int primary key auto_increment,
     username varchar(30) not null,
-    `password` varchar(512) not null,
+    `password` varchar(2048) not null,
+    user_role varchar(50) not null,
     total_questions_answered int,
     total_questions_correct int
 );

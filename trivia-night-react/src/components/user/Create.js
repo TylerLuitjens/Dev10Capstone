@@ -9,37 +9,6 @@ function Create() {
 
     const history = useHistory();
 
-    // const handleCreateUser = (event) => {
-
-    //     const init = {
-    //         method: 'POST',
-    //         headers: {
-    //             "Content-Type": "application/json"
-    //         },
-    //         body: JSON.stringify({
-    //             userName,
-    //             password
-    //         })
-    //     }
-
-    //     fetch('http://localhost:8080/user/create', init)
-    //         .then(response => {
-    //             if (response.status === 201) {
-    //                 history.push('/');
-    //             } else if (response.status === 400) {
-    //                 return response.json();
-    //             } else {
-    //                 return Promise.reject(`Bad status: ${response.status}. Success requires '201 Created.'`)
-    //             }
-    //         })
-    //         .then (data => {
-    //             if (!data.userId) {
-    //                 setErrors(data);
-    //             }
-    //         })
-    //         .catch(error => console.log(error))
-    // }
-
 
     const handleCreateUser = async (event) => {
         event.preventDefault();
