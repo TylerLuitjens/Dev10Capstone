@@ -1,10 +1,21 @@
 package learn.trivia.models;
 
+import java.util.List;
+
 public class GameQuestion {
 
     private String gameCode;
     private String question;
     private int questionId;
+    private List<Answer> answers;
+
+    public List<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(List<Answer> answers) {
+        this.answers = answers;
+    }
 
     public String getGameCode() {
         return gameCode;
