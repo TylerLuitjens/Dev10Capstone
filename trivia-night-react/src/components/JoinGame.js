@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { Link, useHistory } from 'react-router-dom';
 import Errors from './Errors';
+import AuthContext from './AuthContext';
 
 
 function JoinGame({setGame, game}) {
-
+    const auth = useContext(AuthContext);
     const [gameCode, setGamecode] = useState('');
     const [errors, setErrors] = useState([]);
     const history = useHistory();
@@ -16,7 +17,15 @@ function JoinGame({setGame, game}) {
 
         let url = "http://localhost:8080/game/" + gameCode;
         
-        fetch(url)
+        const init = {
+            method: "GET",
+            headers: {
+                "Content-Type" : "application/json",
+                "Authorization": `Bearer ${auth.user.token}`
+            }
+        }
+
+        fetch(url, init)
             .then(response => response.json())
             .then(data => setGame(data))
             .catch(error => {
