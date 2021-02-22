@@ -16,10 +16,10 @@ function Home() {
                 )}
                 {auth.user && (
                     <>
-                    <Link to={'/'} className="btn btn-lg btn-primary" onClick={auth.logout}>Log Out</Link>
+                    <Link to={'/'} className="btn btn-lg btn-primary mr-5" onClick={auth.logout}>Log Out</Link>
                     </>
                 )}
-                <Link to={'/user/leaderboard'} className="btn btn-lg btn-info">Leaderboard</Link>
+                <Link to={'/user/leaderboard'} className="btn btn-lg ml-5 btn-info">Leaderboard</Link>
                 <Link to={'/newgame'} className="btn btn-lg ml-5 btn-secondary">New Game</Link>
                 <Link to={'/joingame'} className="btn btn-lg ml-5 btn-success">Join Game</Link>
             </div>

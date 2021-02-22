@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import Errors from './Errors';
 
@@ -7,6 +7,7 @@ function NewGame({setGame, game, user}) {
     const [category, setCategory] = useState('');
     const [errors, setErrors] = useState([]);
     const history = useHistory();
+    const [gameCode, setGameCode] = useState("");
 
     const handleSubmit = async (event) => {
         // TODO delete this
@@ -32,10 +33,15 @@ function NewGame({setGame, game, user}) {
 
         fetch(url, init)
             .then(response => response.json())
-            .then(data => setGame(data))
+            .then((data) => {
+                setGame(data);
+                setGameCode(data['gameCode']);
+            })
             .then(history.push('/Game'))
             .catch(error => console.log(error));
     }
+
+
 
     return(
         <>

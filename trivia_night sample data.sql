@@ -48,16 +48,16 @@ insert into answer (answer_id, question_id, answer, isCorrect) values
     (45, 12, 'Russia', 1), (46, 12, 'Canada', 0), (47, 12, 'United States', 0), (48, 12, 'Germany', 0);
     
 	
-insert into user (user_id, username, `password`, total_questions_answered, total_questions_correct) values
-	(1, 'First User', 'Clear_text', 5, 2),
-	(2, 'Second User', 'Unsafe_password', 10, 8),
-	(3, 'Third User', 'Poor_practice', 8, 4),
-	(4, 'Fourth User', 'Unsafe_password', 100, 8),
-	(5, 'Fifth User', 'Poor_practice', 50, 4),
-	(6, 'Sixth User', 'Unsafe_password', 40, 39),
-	(7, 'Seventh User', 'Poor_practice', 19, 6),
-	(8, 'Eigth User', 'Unsafe_password', 5, 4),
-	(9, 'Ninth User', 'Poor_practice', 200, 100),
-	(10, 'Tenth User', 'Unsafe_password', 44, 13),
-	(11, 'Eleventh User', 'Poor_practice', 1, 1),
-	(12, 'Twelth User', 'Poor_practice', 1, 0);
+insert into user (user_id, username, `password`, user_role, total_questions_answered, total_questions_correct) values
+	(1, 'First User', 'Clear_text', 'USER', 5, 2),
+	(2, 'Second User', 'Unsafe_password', 'USER', 10, 8),
+	(3, 'Third User', 'Poor_practice', 'USER', 8, 4),
+	(4, 'Fourth User', 'Unsafe_password', 'USER', 100, 8),
+	(5, 'Fifth User', 'Poor_practice', 'USER', 50, 4),
+	(6, 'Sixth User', 'Unsafe_password', 'USER', 40, 39),
+	(7, 'Seventh User', 'Poor_practice', 'USER', 19, 6),
+	(8, 'Eigth User', 'Unsafe_password', 'USER', 5, 4),
+	(9, 'Ninth User', 'Poor_practice', 'USER', 200, 100),
+	(10, 'Tenth User', 'Unsafe_password', 'USER', 44, 13),
+	(11, 'Eleventh User', 'Poor_practice', 'USER', 1, 1),
+	(12, 'Twelth User', 'Poor_practice', 'USER', 1, 0);

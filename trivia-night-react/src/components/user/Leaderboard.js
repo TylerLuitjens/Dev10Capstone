@@ -1,8 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import './Leaderboard.css';
 import {Link} from 'react-router-dom';
+import AuthContext from '../AuthContext';
 
 function Leaderboard() {
+
+    const auth = useContext(AuthContext);
+
     const [leaderboard, setLeaderboard] = useState([]);
 
     const fetchLeaderboard = () => {
