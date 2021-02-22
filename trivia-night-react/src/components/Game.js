@@ -3,7 +3,7 @@ import { Link, useHistory, useLocation, useParams } from 'react-router-dom';
 import Errors from './Errors';
 import SelectionMessage from './SelectionMessage';
 
-function Game({game, user, setGame}) {
+function Game({ game, user, setGame }) {
 
     const [errors, setErrors] = useState([]);
     const [currentUser, setCurrentUser] = useState([]);
@@ -30,7 +30,7 @@ function Game({game, user, setGame}) {
     };
 
     // Current question is going to be based off of the current number of questions answered by the user
-   
+
     let question = [];
     question['question'] = "Loading...";
 
@@ -91,34 +91,42 @@ function Game({game, user, setGame}) {
                         <h4>{game['gameCode']}</h4>
                     </div>
                     <div className="d-flex justify-content-center center">
-                        <h1 className="display-4">{question['question']}</h1>
+                        <h1 className="display-5">{question['question']}</h1>
                     </div>
                 </div>
                 <Errors errors={errors} />
                 <SelectionMessage selectedCorrect={selectedCorrect} selected={selected} />
     
-                <div className="d-flex justify-content-center mt-5">
-                    <button id="0" className="button btn-info btn-lg btn-block col-md-8" onClick={(event) => handleChosenAnswer(event)} disabled={selected}>{question['answers'][0]['answer']}</button>
-                </div>
-                <div className="d-flex justify-content-center mt-5">
-                    <button id="1" className="button btn-info btn-lg btn-block col-md-8" onClick={(event) => handleChosenAnswer(event)} disabled={selected}>{question['answers'][1]['answer']}</button>
-                </div>
-                <div className="d-flex justify-content-center mt-5">
-                    <button id="2" className="button btn-info btn-lg btn-block col-md-8" onClick={(event) => handleChosenAnswer(event)} disabled={selected}>{question['answers'][2]['answer']}</button>
-                </div>
-                <div className="d-flex justify-content-center mt-5">
-                    <button id="3" className="button btn-info btn-lg btn-block col-md-8" onClick={(event) => handleChosenAnswer(event)} disabled={selected}>{question['answers'][3]['answer']}</button>
+                <div id="buttons">
+                {!selected && (
+                <>
+                    <div className="d-flex justify-content-center mt-5">
+                        <button id="0" className="button btn-info btn-lg btn-block col-md-8" onClick={(event) => handleChosenAnswer(event)} disabled={selected}>{question['answers'][0]['answer']}</button>
+                    </div>
+                    <div className="d-flex justify-content-center mt-5">
+                        <button id="1" className="button btn-info btn-lg btn-block col-md-8" onClick={(event) => handleChosenAnswer(event)} disabled={selected}>{question['answers'][1]['answer']}</button>
+                    </div>
+                    <div className="d-flex justify-content-center mt-5">
+                        <button id="2" className="button btn-info btn-lg btn-block col-md-8" onClick={(event) => handleChosenAnswer(event)} disabled={selected}>{question['answers'][2]['answer']}</button>
+                    </div>
+                    <div className="d-flex justify-content-center mt-5">
+                        <button id="3" className="button btn-info btn-lg btn-block col-md-8" onClick={(event) => handleChosenAnswer(event)} disabled={selected}>{question['answers'][3]['answer']}</button>
+                    </div>
+                </>
+                )}
                 </div>
     
                 <div className="d-flex justify-content-center mt-5">
+                     { selected && (
                     <button className="button btn-warning btn-lg btn-block col-md-4" onClick={ () => handleSelection()} disabled={!selected}>Next</button>
+                     )}
                 </div>
             </>
         )
     } else {
         return (
             <>
-            <div className="jumbotron mb-3">
+                <div className="jumbotron mb-3">
                     <div className="d-flex justify-content-center center">
                         <h1 className="display-4">Loading...</h1>
                     </div>
@@ -127,7 +135,7 @@ function Game({game, user, setGame}) {
         )
     }
 
-    
+
 }
 
 export default Game;
