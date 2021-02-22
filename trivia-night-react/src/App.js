@@ -58,6 +58,18 @@ function App() {
     if (response.status === 200) {
       const { jwt_token } = await response.json();
       login(jwt_token);
+      await fetch(`http://localhost:8080/user/username/${username}`, {
+        method: 'GET',
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${auth.user.token}`
+        }
+      })
+        .then(response => response.json())
+        .then((data) => { 
+          data.token = jwt_token;
+          setUser(data);
+        });
     } else if (response.status === 403) {
       throw new Error('Bad username or password');
     } else {
@@ -95,7 +107,7 @@ function App() {
                     <li className="nav-item active">
                       <Link to={'/user/create'} className="nav-link">Create User</Link>
                     </li>
-                  </> 
+                  </>
                 )}
                 {user && (
                   <li className="nav-item active">
@@ -110,9 +122,9 @@ function App() {
           </nav>
 
           <Switch>
-          <Route exact path="/"> 
-            <Home />
-          </Route>
+            <Route exact path="/">
+              <Home />
+            </Route>
 
             <Route exact path="/">
               <Home />
@@ -129,21 +141,21 @@ function App() {
             <Route path="/user/leaderboard">
               <Leaderboard />
             </Route>
-        <Route path="/joingame">
-          <JoinGame setGame={setGame} game={game}/>
-        </Route>
+            <Route path="/joingame">
+              <JoinGame setGame={setGame} game={game} />
+            </Route>
 
-        <Route path="/newgame">
-          <NewGame setGame={setGame} game={game}/>
-        </Route>
+            <Route path="/newgame">
+              <NewGame setGame={setGame} game={game} />
+            </Route>
 
-        <Route path="/Game">
-          <Game game={game} setGame={setGame} user={user}/>
-        </Route>
+            <Route path="/Game">
+              <Game game={game} setGame={setGame} user={user} />
+            </Route>
 
-        <Route path="*">
-          <NotFound />
-        </Route>
+            <Route path="*">
+              <NotFound />
+            </Route>
 
             <Route path="*">
               <NotFound />
