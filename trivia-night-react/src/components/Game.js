@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useHistory, useLocation, useParams } from 'react-router-dom';
 import Errors from './Errors';
-
+import SelectionMessage from './SelectionMessage';
 
 function Game({game, user, setGame}) {
 
@@ -15,6 +15,9 @@ function Game({game, user, setGame}) {
     const [currentUser, setCurrentUser] = useState([]);
     const history = useHistory();
     const [activeIndex, setActiveIndex] = useState(tempUser['numAnswered']); // FIXME change this to currently logged in user instead
+    const [selected, setSelected] = useState(false);
+    const [selectedCorrect, setSelectedCorrect] = useState(false);
+
     let  { gameCode } = useParams();
     
     // if ( currentUser === [] && user !== null) {
@@ -40,10 +43,22 @@ function Game({game, user, setGame}) {
     }
 
     const handleSelection = (event) => {
+        // TODO update GameUser's numAnswered
+        if (selectedCorrect) {
+            // TODO update GameUser's numCorrect
+        }
         setActiveIndex(activeIndex + 1);
+        setSelected(false);
         if (activeIndex >= 10) {
             handleSubmit();
         }
+    }
+
+    const handleChosenAnswer = (event) => {
+        setSelected(true);
+        let index = event.target.id;
+        let answerSelected = question['answers'][index];
+        setSelectedCorrect(answerSelected['correct']);
     }
 
     if (game !== [] && game['gameQuestions'] !== undefined && game['gameQuestions'] !== null) {
@@ -58,22 +73,23 @@ function Game({game, user, setGame}) {
                     </div>
                 </div>
                 <Errors errors={errors} />
+                <SelectionMessage selectedCorrect={selectedCorrect} selected={selected} />
     
                 <div className="d-flex justify-content-center mt-5">
-                    <button className="button btn-info btn-lg btn-block col-md-8">{question['answers'][0]['answer']}</button>
+                    <button id="0" className="button btn-info btn-lg btn-block col-md-8" onClick={(event) => handleChosenAnswer(event)} disabled={selected}>{question['answers'][0]['answer']}</button>
                 </div>
                 <div className="d-flex justify-content-center mt-5">
-                    <button className="button btn-info btn-lg btn-block col-md-8">{question['answers'][1]['answer']}</button>
+                    <button id="1" className="button btn-info btn-lg btn-block col-md-8" onClick={(event) => handleChosenAnswer(event)} disabled={selected}>{question['answers'][1]['answer']}</button>
                 </div>
                 <div className="d-flex justify-content-center mt-5">
-                    <button className="button btn-info btn-lg btn-block col-md-8">{question['answers'][2]['answer']}</button>
+                    <button id="2" className="button btn-info btn-lg btn-block col-md-8" onClick={(event) => handleChosenAnswer(event)} disabled={selected}>{question['answers'][2]['answer']}</button>
                 </div>
                 <div className="d-flex justify-content-center mt-5">
-                    <button className="button btn-info btn-lg btn-block col-md-8">{question['answers'][3]['answer']}</button>
+                    <button id="3" className="button btn-info btn-lg btn-block col-md-8" onClick={(event) => handleChosenAnswer(event)} disabled={selected}>{question['answers'][3]['answer']}</button>
                 </div>
     
                 <div className="d-flex justify-content-center mt-5">
-                    <button className="button btn-warning btn-lg btn-block col-md-4" onClick={ () => handleSelection()}>Next</button>
+                    <button className="button btn-warning btn-lg btn-block col-md-4" onClick={ () => handleSelection()} disabled={!selected}>Next</button>
                 </div>
             </>
         )
