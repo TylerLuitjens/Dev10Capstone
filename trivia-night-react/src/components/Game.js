@@ -3,7 +3,7 @@ import { Link, useHistory, useLocation, useParams } from 'react-router-dom';
 import Errors from './Errors';
 import SelectionMessage from './SelectionMessage';
 
-function Game({game, user, setGame}) {
+function Game({ game, user, setGame }) {
 
     const [errors, setErrors] = useState([]);
     const [currentUser, setCurrentUser] = useState([]);
@@ -30,7 +30,7 @@ function Game({game, user, setGame}) {
     };
 
     // Current question is going to be based off of the current number of questions answered by the user
-   
+
     let question = [];
     question['question'] = "Loading...";
 
@@ -126,7 +126,7 @@ function Game({game, user, setGame}) {
     } else {
         return (
             <>
-            <div className="jumbotron mb-3">
+                <div className="jumbotron mb-3">
                     <div className="d-flex justify-content-center center">
                         <h1 className="display-4">Loading...</h1>
                     </div>
@@ -135,7 +135,7 @@ function Game({game, user, setGame}) {
         )
     }
 
-    
+
 }
 
 export default Game;
