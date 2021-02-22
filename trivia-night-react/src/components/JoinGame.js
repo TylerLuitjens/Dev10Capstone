@@ -8,8 +8,6 @@ function JoinGame({setGame, game}) {
     const [gameCode, setGamecode] = useState('');
     const [errors, setErrors] = useState([]);
     const history = useHistory();
-    const dependencies = [];
-    dependencies.push(game);
 
     const handleSubmit = (event) => {     
         setErrors([]);
