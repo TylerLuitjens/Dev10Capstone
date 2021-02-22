@@ -24,7 +24,8 @@ public class AnswerJdbcTemplateRepository implements AnswerRepository {
     public List<Answer> findByQuestionId(int questionId) {
         final String sql = "select answer_id, question_id, answer, isCorrect "
                 + "from answer "
-                + "where question_id = ?;";
+                + "where question_id = ? "
+                + "order by rand();";
 
         return jdbcTemplate.query(sql, new AnswerMapper(), questionId);
     }

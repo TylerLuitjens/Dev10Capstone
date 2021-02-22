@@ -5,8 +5,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ0cml2aWEtbmlnaHQiLCJzdWIiO
 
 
 ### add user to game (working) 
-POST http://localhost:8080/game/user/2/LPcs HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ0cml2aWEtbmlnaHQiLCJzdWIiOiJ1c2VyIiwiYXV0aG9yaXRpZXMiOiJST0xFX1VTRVIiLCJleHAiOjE2MTM5MjgyOTJ9.z9boW6u1AwecfnB-ZzDnNKUdbm4EUoe-zLRsNGv9f-g
+POST http://localhost:8080/game/user/2/xuhA HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ0cml2aWEtbmlnaHQiLCJzdWIiOiJUcml2aWFOSWdodCIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjE0MDA4NzQ1fQ.r448z6kXrJiH1Fartp1dQXA1X7dH1Y32D8oG9DHw5CU
 
 ### create game (working)
 
