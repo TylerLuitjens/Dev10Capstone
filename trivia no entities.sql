@@ -75,7 +75,7 @@ INSERT INTO answer (question_id, answer, isCorrect) VALUES ( (SELECT MAX(questio
 INSERT INTO answer (question_id, answer, isCorrect) VALUES ( (SELECT MAX(question_id) FROM question), 'Historic Landmarks', 0);
 INSERT INTO answer (question_id, answer, isCorrect) VALUES ( (SELECT MAX(question_id) FROM question), 'Action Films', 0);
 INSERT INTO answer (question_id, answer, isCorrect) VALUES ( (SELECT MAX(question_id) FROM question), 'Documentaries ', 0);
-INSERT INTO question (question, category_name) VALUES ("What was the cause of Marilyn Monroe's suicide?",'Celebrities');
+INSERT INTO question (question, category_name) VALUES ('What was the cause of Marilyn Monroes suicide?','Celebrities');
 INSERT INTO answer (question_id, answer, isCorrect) VALUES ( (SELECT MAX(question_id) FROM question), 'Drug Overdose', 1);
 INSERT INTO answer (question_id, answer, isCorrect) VALUES ( (SELECT MAX(question_id) FROM question), 'Knife Attack', 0);
 INSERT INTO answer (question_id, answer, isCorrect) VALUES ( (SELECT MAX(question_id) FROM question), 'House Fire', 0);
@@ -191,7 +191,7 @@ INSERT INTO answer (question_id, answer, isCorrect) VALUES ( (SELECT MAX(questio
 INSERT INTO answer (question_id, answer, isCorrect) VALUES ( (SELECT MAX(question_id) FROM question), 'Ramon Sheen', 0);
 INSERT INTO answer (question_id, answer, isCorrect) VALUES ( (SELECT MAX(question_id) FROM question), 'Emilio Estevez', 0);
 INSERT INTO question (question, category_name) VALUES ("Who was Donald Trump's first wife?",'Celebrities');
-INSERT INTO answer (question_id, answer, isCorrect) VALUES ( (SELECT MAX(question_id) FROM question), 'Ivana Zelníčková', 1);
+INSERT INTO answer (question_id, answer, isCorrect) VALUES ( (SELECT MAX(question_id) FROM question), 'Ivana Zelníčková;', 1);
 INSERT INTO answer (question_id, answer, isCorrect) VALUES ( (SELECT MAX(question_id) FROM question), 'Melania Knauss', 0);
 INSERT INTO answer (question_id, answer, isCorrect) VALUES ( (SELECT MAX(question_id) FROM question), 'Marla Maples', 0);
 INSERT INTO answer (question_id, answer, isCorrect) VALUES ( (SELECT MAX(question_id) FROM question), 'Nancy Davis', 0);
