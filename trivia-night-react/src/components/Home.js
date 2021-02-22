@@ -16,7 +16,7 @@ function Home({ Alert }) {
                 )}
                 {auth.user && (
                     <>
-                        <Link to={'/'} className="btn btn-lg btn-primary" onClick={auth.logout}>Log Out</Link>
+                    <Link to={'/'} className="btn btn-lg btn-primary" onClick={auth.logout}>Log Out</Link>
                     </>
                 )}
                 <Link to={'/user/leaderboard'} className="btn btn-lg ml-5 btn-info">Leaderboard</Link>

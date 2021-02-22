@@ -32,15 +32,20 @@ function App() {
   const login = (token) => {
     const { userId, sub: userName, authorities } = jwt_decode(token);
     const roles = authorities.split(','); // used to define multiple roles DOUBLE CHECK IT WORKS
+    
+    fetch(`http://localhost:8080/user/username/${userName}`, {
+      method: 'GET',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      }
+    })
+      .then(response => response.json())
+      .then((data) => { 
+        data.token = token;
+        setUser(data);
+      });
 
-    const user = {
-      userId,
-      userName,
-      roles,
-      token
-    }
-
-    setUser(user);
   }
 
   const authenticate = async (username, password) => {
@@ -59,18 +64,7 @@ function App() {
     if (response.status === 200) {
       const { jwt_token } = await response.json();
       login(jwt_token);
-      await fetch(`http://localhost:8080/user/username/${username}`, {
-        method: 'GET',
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${auth.user.token}`
-        }
-      })
-        .then(response => response.json())
-        .then((data) => {
-          data.token = jwt_token;
-          setUser(data);
-        });
+
     } else if (response.status === 403) {
       throw new Error('Bad username or password');
     } else {
