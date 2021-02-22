@@ -58,13 +58,11 @@ function App() {
     if (response.status === 200) {
       const { jwt_token } = await response.json();
       login(jwt_token);
-
     } else if (response.status === 403) {
       throw new Error('Bad username or password');
     } else {
       throw new Error('There was a problem logging in...');
     }
-
   }
 
   const logout = () => {
@@ -125,7 +123,7 @@ function App() {
             </Route>
 
             <Route path="/user/create">
-              <Create />
+              <Create setUser={setUser} />
             </Route>
 
             <Route path="/user/leaderboard">

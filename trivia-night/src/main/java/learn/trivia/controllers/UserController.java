@@ -31,6 +31,11 @@ public class UserController {
         return userService.findAll();
     }
 
+    @GetMapping("/{userName}")
+    public User findUserByUserName(@PathVariable String userName) {
+        return userService.findByUserName(userName);
+    }
+
     @PostMapping("/create")
     public ResponseEntity<?> createUser (@RequestBody User user) {
 
