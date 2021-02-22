@@ -3,7 +3,7 @@ import AuthContext from '../AuthContext';
 import Errors from '../Errors';
 import { BrowserRouter as Router, useHistory, Link } from 'react-router-dom';
 
-function Create() {
+function Create( {setUser} ) {
     const auth = useContext(AuthContext);
 
     const [userName, setUsername] = useState('');
@@ -27,6 +27,7 @@ function Create() {
                     password
                 })
             })
+
             console.log(response.status);
 
             if (response.status === 201) {

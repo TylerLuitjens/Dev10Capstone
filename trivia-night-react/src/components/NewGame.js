@@ -1,32 +1,29 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import Errors from './Errors';
+import AuthContext from './AuthContext';
 
 
-function NewGame({setGame, game, user}) {
+function NewGame({setGame, game} ) {
+    const auth = useContext(AuthContext);
     const [category, setCategory] = useState('');
     const [errors, setErrors] = useState([]);
     const history = useHistory();
     const [gameCode, setGameCode] = useState("");
 
     const handleSubmit = async (event) => {
-        // TODO delete this once we can tie user in here
-        const newUser = {...user};
-        newUser["userId"] = 1;
-        newUser["userName"] = "Temp User Name";
-        newUser["password"] = "SuperSecure123";
-        newUser["numAnswered"] = 0;
-        newUser["numCorrect"] = 0;
 
-        const userJson = JSON.stringify(newUser); // TODO change to user
+        const userJson = JSON.stringify(auth.user); // TODO change to user
         event.preventDefault();
+        console.log(auth.user);
         let url = "http://localhost:8080/game/" + event.target.value;
 
         const init = {
             method: "POST",
             headers: {
                 "Content-Type" : "application/json",
-                "Accept": "application/json"
+                "Accept": "application/json",
+                "Authorization": `Bearer ${auth.user.token}`
             },
             body: userJson
         }
