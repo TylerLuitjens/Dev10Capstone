@@ -13,7 +13,7 @@ import learn.trivia.data.GameUserRepository;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
+@SpringBootTest
 public class GameUserServiceTest {
 
     @Autowired
