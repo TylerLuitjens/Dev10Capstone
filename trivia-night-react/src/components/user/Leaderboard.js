@@ -9,21 +9,16 @@ function Leaderboard() {
 
     const [leaderboard, setLeaderboard] = useState([]);
 
-    const auth = useContext(AuthContext);
-
     const fetchLeaderboard = () => {
-        fetch('http://localhost:8080/user/leaderboard', {
-            method: "GET",
-            headers: {
-                "Authorization": `Bearer ${auth.user.token}`
-            }
-        })
+        fetch('http://localhost:8080/user/leaderboard')
             .then(response => response.json())
             .then(data => setLeaderboard(data))
             .catch(error => console.log(error));
     };
 
-        }
+    useEffect(() => {
+        fetchLeaderboard();
+    }, []);
 
     return (
         <>
