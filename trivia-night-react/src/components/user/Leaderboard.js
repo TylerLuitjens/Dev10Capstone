@@ -1,9 +1,12 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import './Leaderboard.css';
 import {Link} from 'react-router-dom';
 import AuthContext from '../AuthContext';
 
 function Leaderboard() {
+
+    const auth = useContext(AuthContext);
+
     const [leaderboard, setLeaderboard] = useState([]);
 
     const auth = useContext(AuthContext);
@@ -15,6 +18,10 @@ function Leaderboard() {
                 "Authorization": `Bearer ${auth.user.token}`
             }
         })
+            .then(response => response.json())
+            .then(data => setLeaderboard(data))
+            .catch(error => console.log(error));
+    };
 
         }
 
