@@ -16,6 +16,7 @@ import {
   Redirect
 } from 'react-router-dom';
 import Game from "./components/Game";
+import Summary from "./components/Summary";
 
 function NotFound() {
   return (
@@ -167,6 +168,10 @@ function App() {
 
             <Route path="/Game">
               <Game game={game} setGame={setGame} user={user} />
+            </Route>
+
+            <Route path="/game/summary">
+              <Summary game={game} />
             </Route>
 
             <Route path="*">
