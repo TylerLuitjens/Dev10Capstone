@@ -10,7 +10,7 @@ function NewGame({setGame, game, user}) {
     const [gameCode, setGameCode] = useState("");
 
     const handleSubmit = async (event) => {
-        // TODO delete this
+        // TODO delete this once we can tie user in here
         const newUser = {...user};
         newUser["userId"] = 1;
         newUser["userName"] = "Temp User Name";
@@ -37,11 +37,16 @@ function NewGame({setGame, game, user}) {
                 setGame(data);
                 setGameCode(data['gameCode']);
             })
-            .then(history.push('/Game'))
+            .then(history.push('/Game/' + gameCode))
             .catch(error => console.log(error));
     }
 
 
+    useEffect( () => {
+        if (game !== [] && gameCode != "") {
+            history.push("/Game")
+        }
+    }, [game]);
 
     return(
         <>
