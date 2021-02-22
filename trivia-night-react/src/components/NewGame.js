@@ -15,7 +15,7 @@ function NewGame({setGame, game} ) {
 
         const userJson = JSON.stringify(auth.user); // TODO change to user
         event.preventDefault();
-        console.log(auth.user);
+        
         let url = "http://localhost:8080/game/" + event.target.value;
 
         const init = {

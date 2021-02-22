@@ -1,32 +1,33 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useHistory, useLocation, useParams } from 'react-router-dom';
 import Errors from './Errors';
 import SelectionMessage from './SelectionMessage';
 
 function Game({game, user, setGame}) {
 
-    // TODO delete and refactor this to use the current logged in user once that is all up and running
-    let tempUser = [];
-    tempUser['userId'] = 10;
-    tempUser['numAnswered'] = 0;
-    tempUser['numCorrect'] = 0;
-
     const [errors, setErrors] = useState([]);
     const [currentUser, setCurrentUser] = useState([]);
+    const [gameNumAnswered, setGameNumAnswered] = useState(0);
+    const [gameNumCorrect, setGameNumCorrect] = useState(0);
     const history = useHistory();
-    const [activeIndex, setActiveIndex] = useState(tempUser['numAnswered']); // FIXME change this to currently logged in user instead
+    const [activeIndex, setActiveIndex] = useState(0);
     const [selected, setSelected] = useState(false);
     const [selectedCorrect, setSelectedCorrect] = useState(false);
 
-    let  { gameCode } = useParams();
-    
-    // if ( currentUser === [] && user !== null) {
-    //     game['gameUsers'].forEach(element => {
-    //         if (element['userId'] === user['userId']) {
-    //             setCurrentUser(element);
-    //         }
-    //     });
-    // }
+    // Find the correct GameUser
+
+    const findUser = () => {
+        if (currentUser['userId'] !== null && currentUser['userId'] !== user['userId']) {
+            game['gameUsers'].forEach(element => {
+                if (element['userId'] == user['userId']) {
+                    setCurrentUser(element);
+                    setGameNumAnswered(element['numAnswered']);
+                    setGameNumCorrect(element['numCorrect']);
+                    setActiveIndex(element['numAnswered']);
+                }
+            });
+        }
+    };
 
     // Current question is going to be based off of the current number of questions answered by the user
    
@@ -36,32 +37,53 @@ function Game({game, user, setGame}) {
     if (game['gameQuestions'] !== undefined) {
         question = game['gameQuestions'][activeIndex];
     }
+
     const handleSubmit = () => {
+        // TODO set current user's numAnswered and numCorrect
         // TODO update gameUser after completing all of the questions
+        let tempUser = [];
+        tempUser['gameCode'] = currentUser['gameCode'];
+        tempUser['userId'] = currentUser['userId'];
+        tempUser['numAnswered'] = gameNumAnswered;
+        tempUser['numCorrect'] = gameNumCorrect;
+
         setGame([]);
+        setCurrentUser([]);
         history.push("/user/leaderboard"); // FIXME this will need to go to the summary page instead
     }
 
     const handleSelection = (event) => {
-        // TODO update GameUser's numAnswered
-        if (selectedCorrect) {
-            // TODO update GameUser's numCorrect
-        }
+
+        console.log("Num answered: " + gameNumAnswered);
+        console.log("Num correct: " + gameNumCorrect);
+
         setActiveIndex(activeIndex + 1);
         setSelected(false);
-        if (activeIndex >= 10) {
+
+        if (activeIndex >= 9) {
             handleSubmit();
         }
     }
 
     const handleChosenAnswer = (event) => {
-        setSelected(true);
+        if (currentUser['userId'] !== null && currentUser['userId'] !== user['userId']) {
+            findUser();
+        }
+
         let index = event.target.id;
         let answerSelected = question['answers'][index];
-        setSelectedCorrect(answerSelected['correct']);
+        
+        setSelected(true);
+        setGameNumAnswered(gameNumAnswered + 1);
+        setSelectedCorrect(answerSelected.correct);
+
+        if (answerSelected.correct) {
+            setGameNumCorrect(gameNumCorrect + 1);
+        }
+
     }
 
-    if (game !== [] && game['gameQuestions'] !== undefined && game['gameQuestions'] !== null) {
+    if (game !== [] && game['gameQuestions'] !== undefined && game['gameQuestions'] !== null && currentUser !== []) {
         return(
             <>
                 <div className="jumbotron mb-3">
