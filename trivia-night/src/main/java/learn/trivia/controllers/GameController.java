@@ -19,17 +19,18 @@ public class GameController {
     QuestionService questionService;
     GameQuestionService gameQuestionService;
     GameUserService gameUserService;
-
+    AnswerService answerService;
 
     public GameController(GameService gameService, UserService userService,
                           GameQuestionService gameQuestionService, GameUserService gameUserService,
-                          QuestionService questionService) {
+                          QuestionService questionService, AnswerService answerService) {
 
         this.gameService = gameService;
         this.userService = userService;
         this.questionService = questionService;
         this.gameQuestionService = gameQuestionService;
         this.gameUserService = gameUserService;
+        this.answerService = answerService;
     }
 
     @GetMapping("/{gameId}")
@@ -84,7 +85,7 @@ public class GameController {
             gameQuestion.setQuestionId(question.getQuestionId());
             gameQuestion.setGameCode(gameCode);
             gameQuestion.setQuestion(question.getQuestion());
-
+            gameQuestion.setAnswers(answerService.findByQuestionId(question.getQuestionId()));
             gameQuestions.add(gameQuestion);
         }
         return gameQuestions;
@@ -100,6 +101,9 @@ public class GameController {
             return null;
         }
         List<GameQuestion> gameQuestions =  gameQuestionService.findByGameCode(game.getGameCode());
+        for (GameQuestion question : gameQuestions) {
+            question.setAnswers(answerService.findByQuestionId(question.getQuestionId()));
+        }
         List<GameUser> gameUsers = gameUserService.findByGameCode(game.getGameCode());
         game.setGameQuestions(gameQuestions);
         game.setGameUsers(gameUsers);

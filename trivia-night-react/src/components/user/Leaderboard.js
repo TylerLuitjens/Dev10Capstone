@@ -9,8 +9,6 @@ function Leaderboard() {
 
     const [leaderboard, setLeaderboard] = useState([]);
 
-    const auth = useContext(AuthContext);
-
     const fetchLeaderboard = () => {
         fetch('http://localhost:8080/user/leaderboard', {
             method: "GET",
@@ -23,7 +21,6 @@ function Leaderboard() {
             .catch(error => console.log(error));
     };
 
-        }
 
     return (
         <>
