@@ -12,7 +12,8 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Link,
+  Redirect
 } from 'react-router-dom';
 import Game from "./components/Game";
 
@@ -66,7 +67,7 @@ function App() {
         }
       })
         .then(response => response.json())
-        .then((data) => { 
+        .then((data) => {
           data.token = jwt_token;
           setUser(data);
         });
@@ -88,6 +89,9 @@ function App() {
     logout
   }
 
+  function Alert() {
+    alert("Must log in first");
+  }
 
   return (
     <div className="container">
@@ -117,17 +121,27 @@ function App() {
                 <li className="nav-item active">
                   <Link to={'/user/leaderboard'} className="nav-link">Leaderboard</Link>
                 </li>
+                <li className="nav-item active">
+                  {user ? (
+                    <Link to={'/newgame'} className="nav-link">New Game</Link>
+                  ) : (
+                      <Link to={'/newgame'} className="nav-link" onClick={Alert}>New Game</Link>
+                    )}
+                </li>
+                <li className="nav-item active">
+                  {user ? (
+                    <Link to={'/joingame'} className="nav-link">Join Game</Link>
+                  ) : (
+                      <Link to={'/joingame'} className="nav-link" onClick={Alert}>Join Game</Link>
+                    )}
+                </li>
               </ul>
             </div>
           </nav>
 
           <Switch>
             <Route exact path="/">
-              <Home />
-            </Route>
-
-            <Route exact path="/">
-              <Home />
+              <Home Alert={Alert}/>
             </Route>
 
             <Route path="/login">
@@ -142,11 +156,19 @@ function App() {
               <Leaderboard />
             </Route>
             <Route path="/joingame">
-              <JoinGame setGame={setGame} game={game} />
+              {user ? (
+                <JoinGame setGame={setGame} game={game} />
+              ) : (
+                  <Redirect to="/login" />
+                )}
             </Route>
 
             <Route path="/newgame">
-              <NewGame setGame={setGame} game={game} />
+              {user ? (
+                <NewGame setGame={setGame} game={game} />
+              ) : (
+                  <Redirect to="/login" />
+                )}
             </Route>
 
             <Route path="/Game">

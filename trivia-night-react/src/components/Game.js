@@ -3,7 +3,7 @@ import { Link, useHistory, useLocation, useParams } from 'react-router-dom';
 import Errors from './Errors';
 import SelectionMessage from './SelectionMessage';
 
-function Game({game, user, setGame}) {
+function Game({ game, user, setGame }) {
 
     // TODO delete and refactor this to use the current logged in user once that is all up and running
     let tempUser = [];
@@ -18,8 +18,8 @@ function Game({game, user, setGame}) {
     const [selected, setSelected] = useState(false);
     const [selectedCorrect, setSelectedCorrect] = useState(false);
 
-    let  { gameCode } = useParams();
-    
+    let { gameCode } = useParams();
+
     // if ( currentUser === [] && user !== null) {
     //     game['gameUsers'].forEach(element => {
     //         if (element['userId'] === user['userId']) {
@@ -29,7 +29,7 @@ function Game({game, user, setGame}) {
     // }
 
     // Current question is going to be based off of the current number of questions answered by the user
-   
+
     let question = [];
     question['question'] = "Loading...";
 
@@ -49,7 +49,7 @@ function Game({game, user, setGame}) {
         }
         setActiveIndex(activeIndex + 1);
         setSelected(false);
-        if (activeIndex >= 10) {
+        if (activeIndex >= 9) {
             handleSubmit();
         }
     }
@@ -62,7 +62,7 @@ function Game({game, user, setGame}) {
     }
 
     if (game !== [] && game['gameQuestions'] !== undefined && game['gameQuestions'] !== null) {
-        return(
+        return (
             <>
                 <div className="jumbotron mb-3">
                     <div className="d-flex justify-content-center">
@@ -74,7 +74,7 @@ function Game({game, user, setGame}) {
                 </div>
                 <Errors errors={errors} />
                 <SelectionMessage selectedCorrect={selectedCorrect} selected={selected} />
-    
+
                 <div className="d-flex justify-content-center mt-5">
                     <button id="0" className="button btn-info btn-lg btn-block col-md-8" onClick={(event) => handleChosenAnswer(event)} disabled={selected}>{question['answers'][0]['answer']}</button>
                 </div>
@@ -87,16 +87,16 @@ function Game({game, user, setGame}) {
                 <div className="d-flex justify-content-center mt-5">
                     <button id="3" className="button btn-info btn-lg btn-block col-md-8" onClick={(event) => handleChosenAnswer(event)} disabled={selected}>{question['answers'][3]['answer']}</button>
                 </div>
-    
+
                 <div className="d-flex justify-content-center mt-5">
-                    <button className="button btn-warning btn-lg btn-block col-md-4" onClick={ () => handleSelection()} disabled={!selected}>Next</button>
+                    <button className="button btn-warning btn-lg btn-block col-md-4" onClick={() => handleSelection()} disabled={!selected}>Next</button>
                 </div>
             </>
         )
     } else {
         return (
             <>
-            <div className="jumbotron mb-3">
+                <div className="jumbotron mb-3">
                     <div className="d-flex justify-content-center center">
                         <h1 className="display-4">Loading...</h1>
                     </div>
@@ -105,7 +105,7 @@ function Game({game, user, setGame}) {
         )
     }
 
-    
+
 }
 
 export default Game;
