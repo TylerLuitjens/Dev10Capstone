@@ -19,6 +19,13 @@ function Game({ game, user, setGame }) {
 
     // Find the correct GameUser
 
+
+    useEffect(() => {
+        if (game.gameUsers !== null && game.gameUsers !== undefined) {
+            findUser();
+        }
+    }, []);
+
     const findUser = () => {
         if (currentUser['userId'] !== null && currentUser['userId'] !== user['userId']) {
             game['gameUsers'].forEach(element => {
@@ -27,6 +34,9 @@ function Game({ game, user, setGame }) {
                     setGameNumAnswered(element['numAnswered']);
                     setGameNumCorrect(element['numCorrect']);
                     setActiveIndex(element['numAnswered']);
+                    if (element['numAnswered'] > 0) {
+                        history.push("/summary");
+                    }
                 }
             });
         }
@@ -56,7 +66,7 @@ function Game({ game, user, setGame }) {
         const init = {
             method: "PUT",
             headers: {
-                "Content-Type" : "application/json",
+                "Content-Type": "application/json",
                 "Accept": "application/json",
                 "Authorization": `Bearer ${auth.user.token}`
             },
@@ -72,7 +82,7 @@ function Game({ game, user, setGame }) {
                 setErrors(errs)
             });
 
-        setGame([]);
+        // setGame([]);
         setCurrentUser([]);
         history.push(`/summary`); // FIXME this will need to go to the summary page instead
     }
@@ -94,7 +104,7 @@ function Game({ game, user, setGame }) {
 
         let index = event.target.id;
         let answerSelected = question['answers'][index];
-        
+
         setSelected(true);
         setGameNumAnswered(gameNumAnswered + 1);
         setSelectedCorrect(answerSelected.correct);
@@ -106,7 +116,7 @@ function Game({ game, user, setGame }) {
     }
 
     if (game !== [] && game['gameQuestions'] !== undefined && game['gameQuestions'] !== null && currentUser !== []) {
-        return(
+        return (
             <>
                 <div className="jumbotron mb-3">
                     <div className="d-flex justify-content-center">
@@ -118,30 +128,30 @@ function Game({ game, user, setGame }) {
                 </div>
                 <Errors errors={errors} />
                 <SelectionMessage selectedCorrect={selectedCorrect} selected={selected} />
-    
+
                 <div id="buttons">
-                {!selected && (
-                <>
-                    <div className="d-flex justify-content-center mt-5">
-                        <button id="0" className="button btn-info btn-lg btn-block col-md-8" onClick={(event) => handleChosenAnswer(event)} disabled={selected}>{question['answers'][0]['answer']}</button>
-                    </div>
-                    <div className="d-flex justify-content-center mt-5">
-                        <button id="1" className="button btn-info btn-lg btn-block col-md-8" onClick={(event) => handleChosenAnswer(event)} disabled={selected}>{question['answers'][1]['answer']}</button>
-                    </div>
-                    <div className="d-flex justify-content-center mt-5">
-                        <button id="2" className="button btn-info btn-lg btn-block col-md-8" onClick={(event) => handleChosenAnswer(event)} disabled={selected}>{question['answers'][2]['answer']}</button>
-                    </div>
-                    <div className="d-flex justify-content-center mt-5">
-                        <button id="3" className="button btn-info btn-lg btn-block col-md-8" onClick={(event) => handleChosenAnswer(event)} disabled={selected}>{question['answers'][3]['answer']}</button>
-                    </div>
-                </>
-                )}
+                    {!selected && (
+                        <>
+                            <div className="d-flex justify-content-center mt-5">
+                                <button id="0" className="button btn-info btn-lg btn-block col-md-8" onClick={(event) => handleChosenAnswer(event)} disabled={selected}>{question['answers'][0]['answer']}</button>
+                            </div>
+                            <div className="d-flex justify-content-center mt-5">
+                                <button id="1" className="button btn-info btn-lg btn-block col-md-8" onClick={(event) => handleChosenAnswer(event)} disabled={selected}>{question['answers'][1]['answer']}</button>
+                            </div>
+                            <div className="d-flex justify-content-center mt-5">
+                                <button id="2" className="button btn-info btn-lg btn-block col-md-8" onClick={(event) => handleChosenAnswer(event)} disabled={selected}>{question['answers'][2]['answer']}</button>
+                            </div>
+                            <div className="d-flex justify-content-center mt-5">
+                                <button id="3" className="button btn-info btn-lg btn-block col-md-8" onClick={(event) => handleChosenAnswer(event)} disabled={selected}>{question['answers'][3]['answer']}</button>
+                            </div>
+                        </>
+                    )}
                 </div>
-    
+
                 <div className="d-flex justify-content-center mt-5">
-                     { selected && (
-                    <button className="button btn-warning btn-lg btn-block col-md-4" onClick={ () => handleSelection()} disabled={!selected}>Next</button>
-                     )}
+                    {selected && (
+                        <button className="button btn-warning btn-lg btn-block col-md-4" onClick={() => handleSelection()} disabled={!selected}>Next</button>
+                    )}
                 </div>
             </>
         )
