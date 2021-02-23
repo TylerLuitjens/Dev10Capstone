@@ -2,14 +2,15 @@ import { useEffect, useState, useContext } from "react";
 import '../components/user/Leaderboard.css';
 import {Link} from 'react-router-dom';
 
-function Summary( ) {
+function Summary({game} ) {
 
     // create set state for game users
+    const [gameUsers, setGameUsers] = useState([]);
 
     const fetchSummary = () => {
-        fetch('http://localhost:8080/user/leaderboard') // change end point
+        fetch('http://localhost:8080/game/gameusers') // change end point
             .then(response => response.json())
-            .then(data => setLeaderboard(data))
+            .then(data => setGameUsers(data))
             .catch(error => console.log(error));
     };
 
