@@ -40,12 +40,23 @@ public class GameController {
 
     @PostMapping("/user/{userId}/{gameCode}")
     public ResponseEntity<Object> addUserToGame(@PathVariable int userId, @PathVariable String gameCode) {
-        Result<GameUser> result = gameUserService.createGameUser(gameCode, userId);
-        if (!result.isSuccess()) {
-            return new ResponseEntity<>(ErrorResponse.build(result), HttpStatus.BAD_REQUEST);
+        // Verify that we don't already have current user in the game. We don't want to add a user twice to a game.
+        boolean userFound = false;
+        for (GameUser user : gameUserService.findByGameCode(gameCode)) {
+            if (user.getUserId() == userId) {
+                userFound = true;
+                break;
+            }
+        }
+        if (!userFound) {
+            Result<GameUser> result = gameUserService.createGameUser(gameCode, userId);
+            if (!result.isSuccess()) {
+                return new ResponseEntity<>(ErrorResponse.build(result), HttpStatus.BAD_REQUEST);
+            }
         }
 
         Game game = gameService.findGameByCode(gameCode);
+        game = populateGame(game);
         return new ResponseEntity<>(game, HttpStatus.OK);
 
     }

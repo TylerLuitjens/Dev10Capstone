@@ -151,7 +151,7 @@ function App() {
             </Route>
             <Route path="/joingame">
               {user ? (
-                <JoinGame setGame={setGame} game={game} />
+                <JoinGame setGame={setGame} game={game} user={user}/>
               ) : (
                   <Redirect to="/login" />
                 )}
