@@ -2,29 +2,31 @@ import { useEffect, useState, useContext } from "react";
 import '../components/user/Leaderboard.css';
 import {Link} from 'react-router-dom';
 
-function Summary({game} ) {
+function Summary( { game } ) {
 
     // create set state for game users
     const [gameUsers, setGameUsers] = useState([]);
 
     const fetchSummary = () => {
-        fetch('http://localhost:8080/game/gameusers') // change end point
+        fetch(`http://localhost:8080/game/gameusers/${game.gameCode}`)
             .then(response => response.json())
             .then(data => setGameUsers(data))
             .catch(error => console.log(error));
     };
 
     useEffect(() => {
-        fetchSummary();
-    }, []);
+        console.log(game.gameCode);
+        console.log(game);
+        if (game !== [] && gameUsers === []) {
+            fetchSummary();
+        }
+    }, [game]);
 
     return (
-
-        // update map below
         <>
             <div className="jumbotron mb-3">
                 <div className="d-flex justify-content-center">
-                    <h1 className="display-4">{game['gameCode']} Leaderboard</h1>
+                    <h1 className="display-4">{game['gameCode']} Summary</h1>
                 </div>
             </div>
             <table className="table table-dark">
@@ -37,12 +39,12 @@ function Summary({game} ) {
                     </tr>
                 </thead>
                 <tbody> 
-                    {game['gameUsers'].map(u => (
-                        <tr key={u.userId}>
+                    {gameUsers.map(users => (
+                        <tr key={users.userId}>
                             <td></td>
-                            <td>{u.userName}</td>
-                            <td>{u.numAnswered}</td>
-                            <td>{u.numCorrect}</td>
+                            <td>{users.userName}</td>
+                            <td>{users.numAnswered}</td>
+                            <td>{users.numCorrect}</td>
                         </tr>
                     ))}
                 </tbody>

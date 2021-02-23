@@ -182,7 +182,7 @@ function App() {
               <Game game={game} setGame={setGame} user={user} />
             </Route>
 
-            <Route path="/Game/summary">
+            <Route path="/summary">
               <Summary game={game} />
             </Route>
 
