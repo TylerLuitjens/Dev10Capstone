@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/TylerLuitjens/Dev10Capstone/issues"
   },
-  "homepage": "https://github.com/TylerLuitjens/Dev10Capstone#readme"
+  "homepage": "https://github.com/TylerLuitjens/Dev10Capstone#readme",
+  "dependencies": {
+    "react-audio-player": "^0.14.0"
+  }
 }
