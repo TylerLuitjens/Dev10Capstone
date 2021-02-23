@@ -31,7 +31,7 @@ public class GameUserService {
 
         for (GameUser gameUser : gameUsers) {
             User user = userRepository.findById(gameUser.getUserId());
-            gameUser.setUserName(gameUser.getUserName());
+            gameUser.setUserName(user.getUserName());
         }
 
         return gameUsers;
