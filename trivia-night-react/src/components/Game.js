@@ -1,7 +1,9 @@
-import { useState, useEffect } from "react";
+import React, {useState, useEffect } from "react";
 import { Link, useHistory, useLocation, useParams } from 'react-router-dom';
 import Errors from './Errors';
 import SelectionMessage from './SelectionMessage';
+
+
 
 function Game({ game, user, setGame }) {
 
