@@ -4,6 +4,7 @@ import learn.trivia.data.GameRepository;
 import learn.trivia.data.UserRepository;
 import learn.trivia.models.GameUser;
 import learn.trivia.data.GameUserRepository;
+import learn.trivia.models.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,7 +27,14 @@ public class GameUserService {
     }
 
     public List<GameUser> findByGameCode(String gameCode) {
-        return gameUserRepository.findByGameCode(gameCode);
+        List<GameUser> gameUsers =  gameUserRepository.findByGameCode(gameCode);
+
+        for (GameUser gameUser : gameUsers) {
+            User user = userRepository.findById(gameUser.getUserId());
+            gameUser.setUserName(gameUser.getUserName());
+        }
+
+        return gameUsers;
     }
 
     public Result<GameUser> createGameUser(String gameCode, int userId) {

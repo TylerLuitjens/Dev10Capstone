@@ -28,8 +28,6 @@ function Create( {setUser} ) {
                 })
             })
 
-            console.log(response.status);
-
             if (response.status === 201) {
                 try {
                     await auth.authenticate(userName, password);
