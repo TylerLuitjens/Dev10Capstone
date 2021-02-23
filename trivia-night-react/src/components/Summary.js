@@ -2,9 +2,24 @@ import { useEffect, useState, useContext } from "react";
 import '../components/user/Leaderboard.css';
 import {Link} from 'react-router-dom';
 
-function Summary( {game} ) {
+function Summary( ) {
+
+    // create set state for game users
+
+    const fetchSummary = () => {
+        fetch('http://localhost:8080/user/leaderboard') // change end point
+            .then(response => response.json())
+            .then(data => setLeaderboard(data))
+            .catch(error => console.log(error));
+    };
+
+    useEffect(() => {
+        fetchSummary();
+    }, []);
 
     return (
+
+        // update map below
         <>
             <div className="jumbotron mb-3">
                 <div className="d-flex justify-content-center">
@@ -20,7 +35,7 @@ function Summary( {game} ) {
                         <th scope="col">Correct</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody> 
                     {game['gameUsers'].map(u => (
                         <tr key={u.userId}>
                             <td></td>

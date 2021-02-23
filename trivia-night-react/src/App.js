@@ -170,7 +170,7 @@ function App() {
               <Game game={game} setGame={setGame} user={user} />
             </Route>
 
-            <Route path="/game/summary">
+            <Route path="/Game/summary">
               <Summary game={game} />
             </Route>
 
