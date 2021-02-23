@@ -14,6 +14,7 @@ public class GameUserMapper implements RowMapper<GameUser> {
         gameUser.setGameCode(resultSet.getString("game_code"));
         gameUser.setNumAnswered(resultSet.getInt("num_answered"));
         gameUser.setNumCorrect(resultSet.getInt("num_correct"));
+        gameUser.setUserName(resultSet.getString("username"));
         return gameUser;
     }
 }

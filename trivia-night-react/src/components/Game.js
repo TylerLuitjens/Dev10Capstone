@@ -1,8 +1,8 @@
-import React, {useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link, useHistory, useLocation, useParams } from 'react-router-dom';
 import Errors from './Errors';
 import SelectionMessage from './SelectionMessage';
-
+import AuthContext from './AuthContext';
 
 
 function Game({ game, user, setGame }) {
@@ -12,6 +12,7 @@ function Game({ game, user, setGame }) {
     const [gameNumAnswered, setGameNumAnswered] = useState(0);
     const [gameNumCorrect, setGameNumCorrect] = useState(0);
     const history = useHistory();
+    const auth = useContext(AuthContext);
     const [activeIndex, setActiveIndex] = useState(0);
     const [selected, setSelected] = useState(false);
     const [selectedCorrect, setSelectedCorrect] = useState(false);
@@ -41,13 +42,35 @@ function Game({ game, user, setGame }) {
     }
 
     const handleSubmit = () => {
-        // TODO set current user's numAnswered and numCorrect
-        // TODO update gameUser after completing all of the questions
-        let tempUser = [];
+
+        let tempUser = {};
         tempUser['gameCode'] = currentUser['gameCode'];
         tempUser['userId'] = currentUser['userId'];
         tempUser['numAnswered'] = gameNumAnswered;
         tempUser['numCorrect'] = gameNumCorrect;
+        setCurrentUser(tempUser);
+
+        let url = "http://localhost:8080/game/";
+        const userJson = JSON.stringify(tempUser);
+
+        const init = {
+            method: "PUT",
+            headers: {
+                "Content-Type" : "application/json",
+                "Accept": "application/json",
+                "Authorization": `Bearer ${auth.user.token}`
+            },
+            body: userJson
+        }
+
+        fetch(url, init)
+            .then(response => response.json())
+            .then(data => setGame(data))
+            .catch(error => {
+                let errs = [];
+                errs.push("Invalid Game Code");
+                setErrors(errs)
+            });
 
         setGame([]);
         setCurrentUser([]);
