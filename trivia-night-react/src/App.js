@@ -97,6 +97,7 @@ function App() {
             src={audioFile}
             autoPlay
             controls
+            volume={0.2}
             loop
           />
       </div>
