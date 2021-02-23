@@ -79,9 +79,6 @@ function Game({ game, user, setGame }) {
 
     const handleSelection = (event) => {
 
-        console.log("Num answered: " + gameNumAnswered);
-        console.log("Num correct: " + gameNumCorrect);
-
         setActiveIndex(activeIndex + 1);
         setSelected(false);
 
