@@ -93,7 +93,7 @@ function App() {
   return (
     <div className="container">
 
-      <div class="mb-4">
+      <div className="mb-4">
             <ReactAudioPlayer 
             src={audioFile}
             autoPlay
