@@ -1,14 +1,29 @@
 import { useEffect, useState, useContext } from "react";
 import '../components/user/Leaderboard.css';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import AuthContext from './AuthContext';
 
-function Summary( { game } ) {
+function Summary({ game }) {
+
+    const auth = useContext(AuthContext);
 
     // create set state for game users
     const [gameUsers, setGameUsers] = useState([]);
 
+    function sleep(time) {
+        return new Promise((resolve) => setTimeout(resolve, time)
+        )
+    }
+
     const fetchSummary = () => {
-        fetch(`http://localhost:8080/game/gameusers/${game.gameCode}`)
+        fetch(`http://localhost:8080/game/gameusers/${game.gameCode}`
+            , {
+                headers: {
+                    "Accept": "application/json",
+                    "Authorization": `Bearer ${auth.user.token}`
+                }
+            }
+        )
             .then(response => response.json())
             .then(data => setGameUsers(data))
             .catch(error => console.log(error));
@@ -17,10 +32,10 @@ function Summary( { game } ) {
     useEffect(() => {
         console.log(game.gameCode);
         console.log(game);
-        if (game !== [] && gameUsers === []) {
+        sleep(200).then(() => {
             fetchSummary();
-        }
-    }, [game]);
+        })
+    }, []);
 
     return (
         <>
@@ -38,7 +53,7 @@ function Summary( { game } ) {
                         <th scope="col">Correct</th>
                     </tr>
                 </thead>
-                <tbody> 
+                <tbody>
                     {gameUsers.map(users => (
                         <tr key={users.userId}>
                             <td></td>
@@ -54,6 +69,7 @@ function Summary( { game } ) {
             </div>
         </>
     );
+
 }
 
 export default Summary;
