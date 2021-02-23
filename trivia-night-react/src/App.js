@@ -7,6 +7,8 @@ import AuthContext from './components/AuthContext';
 import { useState } from 'react';
 import JoinGame from "./components/JoinGame";
 import NewGame from "./components/NewGame";
+import ReactAudioPlayer from 'react-audio-player';
+import audioFile from './audio/bensound-perception.mp3'
 
 import {
   BrowserRouter as Router,
@@ -91,10 +93,20 @@ function App() {
   return (
     <div className="container">
 
+      <div class="mb-4">
+            <ReactAudioPlayer 
+            src={audioFile}
+            autoPlay
+            controls
+            volume={0.2}
+            loop
+          />
+      </div>
+
       <AuthContext.Provider value={auth}>
         <Router>
 
-          <nav className="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+          <nav className="navbar navbar-expand-lg navbar-dark bg-secondary mb-4">
             <Link to={'/'} className="navbar-brand">Trivia Night</Link>
             <div className="collapse navbar-collapse" id="navbarContent">
               <ul className="navbar-nav mr-auto">
@@ -152,7 +164,7 @@ function App() {
             </Route>
             <Route path="/joingame">
               {user ? (
-                <JoinGame setGame={setGame} game={game} />
+                <JoinGame setGame={setGame} game={game} user={user}/>
               ) : (
                   <Redirect to="/login" />
                 )}
@@ -186,7 +198,12 @@ function App() {
 
         </Router>
 
+
+
       </AuthContext.Provider>
+      
+
+
     </div>
   );
 }

@@ -27,7 +27,7 @@ public class GameUserJdbcTemplateRepository implements GameUserRepository{
 
     @Override
     public List<GameUser> findByGameCode(String gameCode) {
-        String sql = "SELECT * FROM game_user WHERE game_code = ?;";
+        String sql = "SELECT * FROM game_user INNER JOIN user ON game_user.user_id = user.user_id WHERE game_code = ?;";
 
         return template.query(sql, new GameUserMapper(), gameCode);
 

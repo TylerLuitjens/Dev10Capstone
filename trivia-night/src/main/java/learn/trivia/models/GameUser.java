@@ -2,6 +2,7 @@ package learn.trivia.models;
 
 public class GameUser {
     private String gameCode;
+    private String userName;
     private int numAnswered;
     private int numCorrect;
     private int userId;
@@ -36,5 +37,13 @@ public class GameUser {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

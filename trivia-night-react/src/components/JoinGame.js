@@ -4,7 +4,7 @@ import Errors from './Errors';
 import AuthContext from './AuthContext';
 
 
-function JoinGame({setGame, game}) {
+function JoinGame({setGame, game, user}) {
     const auth = useContext(AuthContext);
     const [gameCode, setGamecode] = useState('');
     const [errors, setErrors] = useState([]);
@@ -15,10 +15,10 @@ function JoinGame({setGame, game}) {
         event.preventDefault();
         event.stopPropagation();
 
-        let url = "http://localhost:8080/game/" + gameCode;
+        let url = "http://localhost:8080/game/user/" + user.userId + "/" + gameCode;
         
         const init = {
-            method: "GET",
+            method: "POST",
             headers: {
                 "Content-Type" : "application/json",
                 "Authorization": `Bearer ${auth.user.token}`
