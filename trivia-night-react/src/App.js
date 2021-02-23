@@ -100,6 +100,7 @@ function App() {
             controls
             volume={0.2}
             loop
+            style={{display: 'none'}}
           />
       </div>
 
@@ -183,7 +184,7 @@ function App() {
             </Route>
 
             <Route path="/summary">
-              <Summary game={game} />
+              <Summary game={game} setGame={setGame}/>
             </Route>
 
             <Route path="*">

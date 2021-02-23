@@ -3,7 +3,7 @@ import '../components/user/Leaderboard.css';
 import { Link } from 'react-router-dom';
 import AuthContext from './AuthContext';
 
-function Summary({ game }) {
+function Summary({ game, setGame }) {
 
     const auth = useContext(AuthContext);
 
@@ -26,6 +26,7 @@ function Summary({ game }) {
         )
             .then(response => response.json())
             .then(data => setGameUsers(data))
+            .then(setGame([]))
             .catch(error => console.log(error));
     };
 
@@ -49,7 +50,7 @@ function Summary({ game }) {
                     <tr>
                         <th scope="col">Rank</th>
                         <th scope="col">Username</th>
-                        <th scope="col">Attempts</th>
+                        <th scope="col">Attempted</th>
                         <th scope="col">Correct</th>
                     </tr>
                 </thead>

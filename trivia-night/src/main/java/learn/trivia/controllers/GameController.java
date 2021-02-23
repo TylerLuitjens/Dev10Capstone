@@ -131,6 +131,10 @@ public class GameController {
     @PutMapping("/")
     public ResponseEntity<Object> updateGameUser(@RequestBody GameUser gameUser) {
 
+        User user = userService.findById(gameUser.getUserId());
+        user.setNumAnswered(user.getNumAnswered() + gameUser.getNumAnswered());
+        user.setNumCorrect((user.getNumCorrect() + gameUser.getNumCorrect()));
+        userService.update(user);
         Result<GameUser> result = gameUserService.updateGameUser(gameUser);
 
         if (!result.isSuccess()) {
