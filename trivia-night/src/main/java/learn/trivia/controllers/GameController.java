@@ -61,6 +61,11 @@ public class GameController {
 
     }
 
+    @GetMapping("/gameusers/{gameCode}")
+    public List<GameUser> getGameUsers(@PathVariable String gameCode) {
+        return gameUserService.findByGameCode(gameCode);
+    }
+
     @PostMapping("/{category}")
     public ResponseEntity<Object> createGame(@PathVariable String category, @RequestBody User user) {
         Result<Game> result = gameService.create();
