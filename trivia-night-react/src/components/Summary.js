@@ -8,7 +8,7 @@ function Summary( { game } ) {
     const [gameUsers, setGameUsers] = useState([]);
 
     const fetchSummary = () => {
-        fetch(`http://localhost:8080/game/gameusers/${game.gameCode}`)
+        fetch(`${process.env.REACT_APP_API_URL}/game/gameusers/${game.gameCode}`)
             .then(response => response.json())
             .then(data => setGameUsers(data))
             .catch(error => console.log(error));

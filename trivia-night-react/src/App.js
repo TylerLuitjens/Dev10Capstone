@@ -36,7 +36,7 @@ function App() {
     const { userId, sub: userName, authorities } = jwt_decode(token);
     const roles = authorities.split(','); // used to define multiple roles DOUBLE CHECK IT WORKS
     
-    fetch(`http://localhost:8080/user/username/${userName}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/user/username/${userName}`, {
       method: 'GET',
       headers: {
         "Content-Type": "application/json",
@@ -52,7 +52,7 @@ function App() {
   }
 
   const authenticate = async (username, password) => {
-    const response = await fetch('http://localhost:8080/authenticate', {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/authenticate`, {
       method: 'POST',
       headers: {
         "Content-Type": "application/json"
