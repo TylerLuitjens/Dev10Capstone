@@ -51,7 +51,7 @@ function Game({ game, user, setGame }) {
 
         setGame([]);
         setCurrentUser([]);
-        history.push("/user/leaderboard"); // FIXME this will need to go to the summary page instead
+        history.push(`/game/gameusers/${game['gameUsers']}`); // FIXME this will need to go to the summary page instead
     }
 
     const handleSelection = (event) => {
