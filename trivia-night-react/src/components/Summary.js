@@ -9,6 +9,7 @@ function Summary({ game, setGame }) {
 
     // create set state for game users
     const [gameUsers, setGameUsers] = useState([]);
+    const [gameCode, setGameCode] = useState("");
 
     function sleep(time) {
         return new Promise((resolve) => setTimeout(resolve, time)
@@ -26,7 +27,10 @@ function Summary({ game, setGame }) {
         )
             .then(response => response.json())
             .then(data => setGameUsers(data))
-            .then(setGame([]))
+            .then(() => {
+                setGameCode(game.gameCode);
+                setGame([]);
+            })
             .catch(error => console.log(error));
     };
 
@@ -40,7 +44,7 @@ function Summary({ game, setGame }) {
         <>
             <div className="jumbotron mb-3">
                 <div className="d-flex justify-content-center">
-                    <h1 className="display-4">{game['gameCode']} Summary</h1>
+                    <h1 className="display-4">{gameCode} Summary</h1>
                 </div>
             </div>
             <table className="table table-dark">
