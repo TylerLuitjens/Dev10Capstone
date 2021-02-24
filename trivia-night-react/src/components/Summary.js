@@ -9,7 +9,11 @@ function Summary({ game, setGame }) {
 
     // create set state for game users
     const [gameUsers, setGameUsers] = useState([]);
+<<<<<<< HEAD
     const [gameCode, setGameCode] = useState('');
+=======
+    const [gameCode, setGameCode] = useState("");
+>>>>>>> c0cba3ddd904c2cf6d6687b3b0b56991c642fb69
 
     function sleep(time) {
         return new Promise((resolve) => setTimeout(resolve, time)
