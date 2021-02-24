@@ -3,7 +3,7 @@ import '../components/user/Leaderboard.css';
 import { Link } from 'react-router-dom';
 import AuthContext from './AuthContext';
 
-function Summary({ game, setGame }) {
+function UserSummary({ user }) {
 
     const auth = useContext(AuthContext);
 
@@ -16,7 +16,7 @@ function Summary({ game, setGame }) {
     }
 
     const fetchSummary = () => {
-        fetch(`http://localhost:8080/game/gameusers/${game.gameCode}`
+        fetch(`http://localhost:8080/game/games/${user.userId}`
             , {
                 headers: {
                     "Accept": "application/json",
@@ -26,7 +26,6 @@ function Summary({ game, setGame }) {
         )
             .then(response => response.json())
             .then(data => setGameUsers(data))
-            .then(setGame([]))
             .catch(error => console.log(error));
     };
 
@@ -40,23 +39,23 @@ function Summary({ game, setGame }) {
         <>
             <div className="jumbotron mb-3">
                 <div className="d-flex justify-content-center">
-                    <h1 className="display-4">{game['gameCode']} Summary</h1>
+                    <h1 className="display-4">{user['userName']} User Summary</h1>
                 </div>
             </div>
             <table className="table table-dark">
                 <thead className="thead-dark">
                     <tr>
-                        <th scope="col">Rank</th>
-                        <th scope="col">Username</th>
+                        <th></th>
+                        <th scope="col">Game</th>
                         <th scope="col">Attempted</th>
                         <th scope="col">Correct</th>
                     </tr>
                 </thead>
                 <tbody>
                     {gameUsers.map(users => (
-                        <tr key={users.userId}>
+                        <tr key={users.gameCode}>
                             <td></td>
-                            <td>{users.userName}</td>
+                            <td>{users.gameCode}</td>
                             <td>{users.numAnswered}</td>
                             <td>{users.numCorrect}</td>
                         </tr>
@@ -71,4 +70,4 @@ function Summary({ game, setGame }) {
 
 }
 
-export default Summary;
+export default UserSummary;

@@ -11,4 +11,5 @@ public interface GameUserRepository {
     public boolean addGameUser(String gameCode, int userId);
     public boolean addGameUser(GameUser gameUser);
     public boolean updateGameUser(GameUser gameUser);
+    public List<GameUser> findByUser(int userId);
 }

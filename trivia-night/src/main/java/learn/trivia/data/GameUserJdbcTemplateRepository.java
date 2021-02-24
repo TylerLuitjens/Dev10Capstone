@@ -34,6 +34,13 @@ public class GameUserJdbcTemplateRepository implements GameUserRepository{
     }
 
     @Override
+    public List<GameUser> findByUser(int userId) {
+        String sql = "SELECT * FROM game_user WHERE user_id = ? ORDER BY num_correct DESC;";
+
+        return template.query(sql, new GameUserMapper(), userId);
+    }
+
+    @Override
     public boolean addGameUser(String gameCode, int userId) {
         String sql = "INSERT INTO game_user (game_code,user_id, num_answered, num_correct) " +
                 "VALUES (?,?,0,0);";
