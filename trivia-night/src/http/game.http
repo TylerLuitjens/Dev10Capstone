@@ -1,7 +1,7 @@
 ### Get game (working)
-GET http://localhost:8080/game/xuhA HTTP/1.1
+GET http://localhost:8080/game/ExnY HTTP/1.1
 Accept: application/json;
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ0cml2aWEtbmlnaHQiLCJzdWIiOiJUcml2aWFOSWdodCIsImF1dGhvcml0aWVzIjoiUk9MRV9VU0VSIiwiZXhwIjoxNjE0MDA4NzQ1fQ.r448z6kXrJiH1Fartp1dQXA1X7dH1Y32D8oG9DHw5CU
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ0cml2aWEtbmlnaHQiLCJzdWIiOiJVc2VyIiwiYXV0aG9yaXRpZXMiOiJST0xFX1VTRVIiLCJleHAiOjE2MTQxMDU2NDl9.TF8N7odrk6E3BsP_G4N3GtGC7EiJmoaEyOF-C52e4YY
 
 
 ### add user to game (working) 
@@ -25,7 +25,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ0cml2aWEtbmlnaHQiLCJzdWIiO
 ### update game user (working)
 PUT http://localhost:8080/game/ HTTP/1.1
 Content-Type: application/json;
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ0cml2aWEtbmlnaHQiLCJzdWIiOiJ1c2VyIiwiYXV0aG9yaXRpZXMiOiJST0xFX1VTRVIiLCJleHAiOjE2MTM5MjgyOTJ9.z9boW6u1AwecfnB-ZzDnNKUdbm4EUoe-zLRsNGv9f-g
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ0cml2aWEtbmlnaHQiLCJzdWIiOiJVc2VyIiwiYXV0aG9yaXRpZXMiOiJST0xFX1VTRVIiLCJleHAiOjE2MTQxMDU2NDl9.TF8N7odrk6E3BsP_G4N3GtGC7EiJmoaEyOF-C52e4YY
+
 
 {
   "userId": 13,
@@ -34,3 +35,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJ0cml2aWEtbmlnaHQiLCJzdWIiO
   "numCorrect": 7
 }
 
+### get game user data
+
+GET http://localhost:8080/game/gameusers/ExnY/ HTTP/1.1

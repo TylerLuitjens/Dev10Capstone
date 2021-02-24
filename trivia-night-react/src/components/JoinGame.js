@@ -15,7 +15,7 @@ function JoinGame({setGame, game, user}) {
         event.preventDefault();
         event.stopPropagation();
 
-        let url = "http://localhost:8080/game/user/" + user.userId + "/" + gameCode;
+        let url = `${process.env.REACT_APP_API_URL}/game/user/` + user.userId + "/" + gameCode;
         
         const init = {
             method: "POST",
@@ -57,7 +57,7 @@ function JoinGame({setGame, game, user}) {
                     <div className = "input-group-prepend">
                         <label htmlFor="gameCode" className="input-group-text bg-warning text-light mt-5">Game Code: </label>
                     </div>
-                    <input type="text" id="gameCode" className="form-control bg-light mt-5" name="gameCode" placeholder="Enter the Game Code" onChange={(event) => setGamecode(event.target.value)}/>
+                    <input type="text" id="gameCode" maxLength={4} className="form-control bg-light mt-5" name="gameCode" placeholder="Enter the Game Code" onChange={(event) => setGamecode(event.target.value)}/>
                 </div>
 
                 <div className="d-flex justify-content-center">

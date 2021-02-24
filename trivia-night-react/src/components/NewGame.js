@@ -16,7 +16,7 @@ function NewGame({setGame, game} ) {
         const userJson = JSON.stringify(auth.user); // TODO change to user
         event.preventDefault();
         
-        let url = "http://localhost:8080/game/" + event.target.value;
+        let url = `${process.env.REACT_APP_API_URL}/game/` + event.target.value;
 
         const init = {
             method: "POST",
