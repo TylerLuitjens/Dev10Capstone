@@ -65,6 +65,11 @@ public class GameController {
         return gameUserService.findByGameCode(gameCode);
     }
 
+    @GetMapping("/games/{userId}")
+    public List<GameUser> getGamesByUser(@PathVariable int userId) {
+        return gameUserService.findByUser(userId);
+    }
+
     @PostMapping("/{category}")
     public ResponseEntity<Object> createGame(@PathVariable String category, @RequestBody User user) {
         Result<Game> result = gameService.create();
@@ -130,6 +135,10 @@ public class GameController {
     @PutMapping("/")
     public ResponseEntity<Object> updateGameUser(@RequestBody GameUser gameUser) {
 
+        User user = userService.findById(gameUser.getUserId());
+        user.setNumAnswered(user.getNumAnswered() + gameUser.getNumAnswered());
+        user.setNumCorrect((user.getNumCorrect() + gameUser.getNumCorrect()));
+        userService.update(user);
         Result<GameUser> result = gameUserService.updateGameUser(gameUser);
 
         if (!result.isSuccess()) {

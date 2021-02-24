@@ -37,6 +37,17 @@ public class GameUserService {
         return gameUsers;
     }
 
+    public List<GameUser> findByUser(int userId) {
+        List<GameUser> gameUsers = gameUserRepository.findByUser(userId);
+
+        for (GameUser gameUser : gameUsers) {
+            User user = userRepository.findById(gameUser.getUserId());
+            gameUser.setUserName(user.getUserName());
+        }
+
+        return gameUsers;
+    }
+
     public Result<GameUser> createGameUser(String gameCode, int userId) {
         Result<GameUser> result = validate(userId);
 

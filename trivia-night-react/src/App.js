@@ -8,7 +8,8 @@ import { useState } from 'react';
 import JoinGame from "./components/JoinGame";
 import NewGame from "./components/NewGame";
 import ReactAudioPlayer from 'react-audio-player';
-import audioFile from './audio/bensound-perception.mp3'
+import audioFile from './audio/bensound-perception.mp3';
+import UserSummary from './components/UserSummary';
 
 import {
   BrowserRouter as Router,
@@ -100,6 +101,7 @@ function App() {
             controls
             volume={0.2}
             loop
+            style={{display: 'none'}}
           />
       </div>
 
@@ -183,7 +185,11 @@ function App() {
             </Route>
 
             <Route path="/summary">
-              <Summary game={game} />
+              <Summary game={game} setGame={setGame}/>
+            </Route>
+
+            <Route path="/UserSummary">
+              <UserSummary user={user}/>
             </Route>
 
             <Route path="*">

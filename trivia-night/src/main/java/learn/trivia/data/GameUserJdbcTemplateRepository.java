@@ -27,10 +27,17 @@ public class GameUserJdbcTemplateRepository implements GameUserRepository{
 
     @Override
     public List<GameUser> findByGameCode(String gameCode) {
-        String sql = "SELECT * FROM game_user WHERE game_code = ?;";
+        String sql = "SELECT * FROM game_user WHERE game_code = ? ORDER BY num_correct DESC;";
 
         return template.query(sql, new GameUserMapper(), gameCode);
 
+    }
+
+    @Override
+    public List<GameUser> findByUser(int userId) {
+        String sql = "SELECT * FROM game_user WHERE user_id = ? ORDER BY num_correct DESC;";
+
+        return template.query(sql, new GameUserMapper(), userId);
     }
 
     @Override

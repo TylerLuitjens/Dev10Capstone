@@ -32,7 +32,7 @@ function Leaderboard() {
                     <tr>
                         <th scope="col">Rank</th>
                         <th scope="col">Username</th>
-                        <th scope="col">Attempts</th>
+                        <th scope="col">Attempted</th>
                         <th scope="col">Correct</th>
                     </tr>
                 </thead>
