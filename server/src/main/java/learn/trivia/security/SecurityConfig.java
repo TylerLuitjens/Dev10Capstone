@@ -73,15 +73,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public WebMvcConfigurer corsConfigurer() {
+
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                    .allowedOrigins("http://localhost:3000")
-                    .allowedOrigins("http://localhost") 
-                    .allowedOrigins("http://frontend")   
-                    .allowedOrigins("https://dev10-capstone-team8-max.azurewebsites.net")
-                    .allowedMethods("*");
+                        .allowedOrigins(
+                                "http://localhost",
+                                "http://localhost:3000",
+                                "http://frontend",
+                                "https://dev10-capstone-team8-max.azurewebsites.net")
+                        .allowedMethods("*");
             }
         };
     }
