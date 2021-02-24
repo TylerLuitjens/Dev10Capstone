@@ -1,5 +1,12 @@
 USE trivia_night;
 
+INSERT INTO user (user_id, username, password, user_role, total_questions_answered, total_questions_correct) VALUES 
+  (1, 'FirstUser', 'INSECURE','USER', 10, 5),
+  (2, 'Second User', 'Unsafe_password', 'USER', 10, 8),
+	(3, 'Third User', 'Poor_practice', 'USER', 8, 4),
+	(4, 'Fourth User', 'Unsafe_password', 'USER', 100, 8),
+	(5, 'Fifth User', 'Poor_practice', 'USER', 50, 4);
+
 INSERT INTO question (question, category_name) VALUES ('Named after a character he played in a 1969 film, what is the name of the ski resort in Utah that Robert Redford bought in 1968?','Celebrities');
 INSERT INTO answer (question_id, answer, isCorrect) VALUES ( (SELECT MAX(question_id) FROM question), 'Sundance', 1);
 INSERT INTO answer (question_id, answer, isCorrect) VALUES ( (SELECT MAX(question_id) FROM question), 'Woodward', 0);

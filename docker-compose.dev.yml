@@ -29,3 +29,5 @@ services:
     build: ./database
     # update this to the name of your database image
     image: capstone-db
+    ports:
+      - "3306:3306"
