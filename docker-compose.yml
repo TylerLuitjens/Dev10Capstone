@@ -1,0 +1,21 @@
+version: "3.9"
+services:
+  frontend:
+    image: dev10capstoneteam8images.azurecr.io/capstone-client:v2
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+      - db
+    # change this domain name to something unique
+    domainname: "dev10-capstone-trivia-night"
+  api:
+    image: dev10capstoneteam8images.azurecr.io/capstone-server:v2
+    environment:
+      DB_URL: jdbc:mysql://db:3306/trivia_night
+      DB_USERNAME: root
+      DB_PASSWORD: trivia_night_passkey
+    depends_on:
+      - db
+  db:
+    image: dev10capstoneteam8images.azurecr.io/capstone-db:v2

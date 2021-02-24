@@ -1,4 +1,4 @@
-ARG API_URL=https://dev10-capstone-team8-max.azurewebsites.net
+ARG API_URL=https://dev10-capstone-trivia-night.azurewebsites.net
 
 # Base
 

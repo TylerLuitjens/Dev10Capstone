@@ -16,7 +16,7 @@ function UserSummary({ user }) {
     }
 
     const fetchSummary = () => {
-        fetch(`${process.env.REACT_APP_API_URL}/${user.userId}`
+        fetch(`${process.env.REACT_APP_API_URL}/game/games/${user.userId}`
             , {
                 headers: {
                     "Accept": "application/json",

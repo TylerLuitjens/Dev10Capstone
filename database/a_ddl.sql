@@ -2,14 +2,14 @@ use trivia_night;
 
 create table question (
 	question_id int primary key auto_increment,
-    question varchar(500) not null,
+    question nvarchar(500) not null,
     category_name varchar(50) not null
 );
 
 create table answer (
 	answer_id int primary key auto_increment,
     question_id int not null,
-    answer varchar(100) not null,
+    answer nvarchar(100) not null,
     isCorrect int not null,
     constraint fk_answer_question_id
 		foreign key (question_id)
