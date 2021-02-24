@@ -15,7 +15,7 @@ function JoinGame({setGame, game, user}) {
         event.preventDefault();
         event.stopPropagation();
 
-        let url = "http://localhost:8080/game/user/" + user.userId + "/" + gameCode;
+        let url = `${process.env.REACT_APP_API_URL}/game/user/` + user.userId + "/" + gameCode;
         
         const init = {
             method: "POST",

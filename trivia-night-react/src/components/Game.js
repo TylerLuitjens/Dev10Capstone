@@ -60,7 +60,7 @@ function Game({ game, user, setGame }) {
         tempUser['numCorrect'] = gameNumCorrect;
         setCurrentUser(tempUser);
 
-        let url = "http://localhost:8080/game/";
+        let url = `${process.env.REACT_APP_API_URL}/game/`;
         const userJson = JSON.stringify(tempUser);
 
         const init = {

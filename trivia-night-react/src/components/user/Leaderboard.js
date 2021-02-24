@@ -10,7 +10,7 @@ function Leaderboard() {
     const [leaderboard, setLeaderboard] = useState([]);
 
     const fetchLeaderboard = () => {
-        fetch('http://localhost:8080/user/leaderboard')
+        fetch(`${process.env.REACT_APP_API_URL}/user/leaderboard`)
             .then(response => response.json())
             .then(data => setLeaderboard(data))
             .catch(error => console.log(error));

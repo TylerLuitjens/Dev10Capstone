@@ -16,7 +16,7 @@ function Summary({ game }) {
     }
 
     const fetchSummary = () => {
-        fetch(`http://localhost:8080/game/gameusers/${game.gameCode}`
+        fetch(`${process.env.REACT_APP_API_URL}/game/gameusers/${game.gameCode}`
             , {
                 headers: {
                     "Accept": "application/json",
