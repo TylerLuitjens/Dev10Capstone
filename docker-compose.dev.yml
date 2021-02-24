@@ -16,7 +16,7 @@ services:
       - db
   api:
     # update this path to the root of your Spring Boot project
-    build: ./server
+    build: ./trivia-night
     # update this to the name of your Spring Boot image
     image: capstone-server
     environment:
